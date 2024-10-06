@@ -1,0 +1,66 @@
+/* Styling for images inside the carousel */
+.itemP img {
+  height: 500px;
+  width: 100%;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+/* Custom styles for the caption */
+.caption {
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  padding: 20px;
+  border-radius: 10px;
+  color: white; /* White text for contrast */
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 80%;
+}
+
+/* Title styles */
+.caption h3 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Body text styling */
+.caption p {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+/* Button styling */
+.caption .btn {
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+  .itemP {
+    height: 300px; /* Adjust height for smaller screens */
+  }
+
+  .caption {
+    bottom: 10px;
+    width: 90%;
+  }
+
+  .caption h3 {
+    font-size: 1.5rem;
+  }
+
+  .caption p {
+    font-size: 1rem;
+  }
+
+  .caption .btn {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}
