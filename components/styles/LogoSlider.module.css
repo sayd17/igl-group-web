@@ -1,10 +1,12 @@
-.logoSlider {
+/* styles/LogoSlider.module.css */
+.logoSliderContainer {
+  padding: 20px;
+  background-color: #f8f9fa;
   max-width: 100%;
-  margin: 0 auto;
-  padding: 20px 0;
+  margin: auto;
 }
 
-.carouselItem {
+.logoItem {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,12 +14,12 @@
 
 .logoImage {
   max-width: 150px;
-  max-height: 80px;
+  max-height: 100px;
   object-fit: contain;
-  filter: grayscale(100%); /* Optional: makes logos grayscale */
+  filter: grayscale(100%);
   transition: filter 0.3s ease;
 }
 
 .logoImage:hover {
-  filter: grayscale(0); /* Optional: remove grayscale on hover */
+  filter: grayscale(0); /* Removes grayscale on hover */
 }
