@@ -1,5 +1,7 @@
 "use client";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Link from "next/link";
+import axiosApi from "./api/axios-common";
 // import "@/app/assets/css/app.css";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -8,7 +10,9 @@ import { ContextProvider } from "./context/contextProvider";
 import Head from "next/head";
 import { useEffect } from "react";
 import BootstrapClient from "@/components/BootstrapClient.js";
+import toast, { Toaster, useToasterStore } from "react-hot-toast";
 import Script from "next/script";
+import "animate.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,6 +32,17 @@ const geistMono = localFont({
 // };
 
 export default function RootLayout({ children }) {
+  const { toasts } = useToasterStore();
+  const TOAST_LIMIT = 1;
+
+  // Enforce Limit
+  useEffect(() => {
+    toasts
+      .filter((t) => t.visible) // Only consider visible toasts
+      .filter((_, i) => i >= TOAST_LIMIT) // Is toast index over limit
+      .forEach((t) => toast.dismiss(t.id)); // Dismiss – Use toast.remove(t.id) removal without animation
+  }, [toasts]);
+
   useEffect(() => {
     // Function to open the overlay navigation
     function openNav() {
@@ -42,42 +57,27 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <Head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>Notex - Corporate Business Bootstrap 5 Template</title>
-        <link rel="icon" href="/assets/img/favicon.png" sizes="16x16" />
-        <link
-          rel="stylesheet"
-          href="/assets/libs/bootstrap/dist/css/bootstrap.min.css"
-        />
-
-        <link
-          rel="stylesheet"
-          href="/assets/libs/magnific-popup/dist/magnific-popup.css"
-        />
-        <link
-          rel="stylesheet"
-          href="/assets/libs/owl.carousel/dist/assets/owl.carousel.css"
-        />
-        <link
-          rel="stylesheet"
-          href="/assets/libs/owl.carousel/dist/assets/owl.theme.default.css"
-        />
-        <link
-          rel="stylesheet"
-          href="/assets/libs/%40fortawesome/fontawesome-free/css/all.css"
-        />
-        <link rel="stylesheet" href="/assets/libs/sal.js/dist/sal.css" />
-        <link rel="stylesheet" href="/assets/fonts/fonts.css" />
-        <link rel="stylesheet" href="/assets/css/app.css" />
-      </Head>
-
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ContextProvider>{children}</ContextProvider>
 
         <BootstrapClient />
+
+        <Toaster
+          position="top-center"
+          reverseOrder={true}
+          gutter={8}
+          containerClassName=""
+          containerStyle={{ top: 140 }}
+          toastOptions={{
+            // Define default options
+            className: "",
+            duration: 3000,
+            style: {
+              width: "20%",
+              fontWeight: "bold",
+            },
+          }}
+        />
         {/* <Script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
           strategy="beforeInteractive"

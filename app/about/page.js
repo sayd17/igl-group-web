@@ -1,17 +1,10 @@
-"use client";
-
+import Image from "next/image";
+import styles from "./about.module.css"; // Import custom CSS
+import aboutImage from "@/public/assets/img/blog-post-img-4.jpg";
+import teamImage from "@/public/assets/img/about-img-2.jpg";
 import Link from "next/link";
-import axiosApi from "./api/axios-common";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import BootstrapCarousel from "../components/carousels/Bootstrap";
-import styles from "./page.module.css";
-import LogoSlider from "@/components/carousels/LogoSlider";
-import SistersConcern from "@/components/SistersConcern";
 
-export default function Home() {
-  const router = useRouter();
-
+export default function About() {
   return (
     <>
       <header>
@@ -136,13 +129,66 @@ export default function Home() {
         </nav>
       </header>
 
-      <BootstrapCarousel />
+      <div className="container py-5">
+        <div className="row mb-4">
+          <div className="col text-center">
+            <h1 className={`display-4 ${styles.fadeIn}`}>About Us</h1>
+            <p className={`lead ${styles.fadeIn}`}>
+              Learn more about our company, values, and the team behind our
+              success.
+            </p>
+          </div>
+        </div>
 
-      <div className={styles.sistersConcern}>Our Sisters Concern</div>
+        <div className="row">
+          {/* About Section */}
+          <div className="col-md-6">
+            <h2 className={styles.fadeIn}>Our Mission</h2>
+            <p className={styles.fadeIn}>
+              At our company, we aim to provide the best products and services
+              to our customers, ensuring quality, reliability, and innovation in
+              every project we undertake.
+            </p>
+          </div>
+          <div className={`col-md-6 ${styles.zoomIn}`}>
+            <Image
+              src={aboutImage}
+              alt="About Us"
+              className="img-fluid rounded"
+              width={500}
+              height={300}
+            />
+          </div>
+        </div>
 
-      <SistersConcern />
+        <div className="row mt-5">
+          <div className="col-md-6">
+            <h2 className={styles.fadeIn}>Meet the Team</h2>
+            <p className={styles.fadeIn}>
+              Our dedicated team of professionals is committed to delivering
+              outstanding results.
+            </p>
+          </div>
+          <div className={`col-md-6 ${styles.zoomIn}`}>
+            <Image
+              src={teamImage}
+              alt="Our Team"
+              className="img-fluid rounded"
+              width={500}
+              height={300}
+            />
+          </div>
+        </div>
 
-      <LogoSlider />
+        <div className="row mt-5 text-center">
+          <div className={`col ${styles.fadeIn}`}>
+            <h3 className="my-4">Want to Know More?</h3>
+            <a href="/contact" className="btn btn-primary btn-lg">
+              Contact Us
+            </a>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

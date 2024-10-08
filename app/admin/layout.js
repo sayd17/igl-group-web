@@ -28,7 +28,7 @@ export default function AdminLayout({ children }) {
 
   useEffect(() => {
     UserService.getAll().then(({ data }) => {
-      setUser(data.data[0]);
+      setUser(data?.data[0]);
     });
   }, []);
 
