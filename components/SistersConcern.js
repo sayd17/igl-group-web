@@ -6,8 +6,6 @@ import Link from "next/link";
 export default function SistersConcern() {
   const [items, setItems] = useState(null);
 
-  console.log(items);
-
   useEffect(() => {
     SistersConcernService.getAll()
       .then(({ data }) => {

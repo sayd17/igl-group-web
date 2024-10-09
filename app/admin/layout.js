@@ -102,6 +102,18 @@ export default function AdminLayout({ children }) {
             >
               Sisters Concern
             </a>
+            <a
+              href="/admin/teams"
+              className="list-group-item list-group-item-action bg-light"
+            >
+              Teams
+            </a>
+            <a
+              href="/admin/team-members"
+              className="list-group-item list-group-item-action bg-light"
+            >
+              Team Members
+            </a>
           </div>
         </div>
 

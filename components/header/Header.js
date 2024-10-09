@@ -1,18 +1,37 @@
-import Image from "next/image";
-import styles from "./about.module.css"; // Import custom CSS
-import aboutImage from "@/public/assets/img/blog-post-img-4.jpg";
-import teamImage from "@/public/assets/img/about-img-2.jpg";
-import Link from "next/link";
-import Header from "@/components/header/Header";
-import { ContextProvider } from "../context/contextProvider";
+"use client";
 
-export default function About() {
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+// import BootstrapCarousel from "../components/carousels/Bootstrap";
+// import styles from "./page.module.css";
+// import LogoSlider from "@/components/carousels/LogoSlider";
+// import SistersConcern from "@/components/SistersConcern";
+// import { ContextProvider } from "@/app/context/contextProvider";
+import { useStateContext } from "@/app/context/contextProvider";
+import SistersConcernService from "@/app/api/services/SistersConcernService";
+
+export default function Home() {
+  const router = useRouter();
+  const [items, setItems] = useState(null);
+  const { currentSister, setCurrentSister } = useStateContext();
+
+  useEffect(() => {
+    SistersConcernService.getAll()
+      .then(({ data }) => {
+        let obj = data.data;
+        const customArray = Object.keys(obj).map((key) => obj[key]);
+        setItems(customArray);
+      })
+      .catch((err) => {
+        console.log("sisters-concern api error", err);
+      });
+  }, []);
+
   return (
     <>
-      <ContextProvider>
-        <Header />
-      </ContextProvider>
-      {/* <header>
+      {/* <ContextProvider> */}
+      <header>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container-fluid">
             <Link href="/" className="navbar-brand">
@@ -72,14 +91,31 @@ export default function About() {
                         Sisters Concern
                       </a>
                       <ul
-                        class="dropdown-menu dropdown-menu-dark"
+                        className="dropdown-menu dropdown-menu-dark"
                         aria-labelledby="navbarDarkDropdownMenuLink"
                       >
-                        <li>
-                          <a class="dropdown-item" href="#">
-                            IGL WEB
-                          </a>
-                        </li>
+                        {items?.map((item, index) => (
+                          <li>
+                            <Link
+                              className="dropdown-item"
+                              href="/sisters-concern"
+                              onClick={(e) => {
+                                // e.preventDefault(); // prevent default link behavior
+                                setCurrentSister(item); // set the current sister
+                                router.push("/sisters-concern");
+                              }}
+                            >
+                              {item.name}
+                            </Link>
+                            {/* <Link
+                              className="dropdown-item"
+                              href="/sisters-concern"
+                              onClick={() => setCurrentSister(item)}
+                            >
+                              {item.name}
+                            </Link> */}
+                          </li>
+                        ))}
                       </ul>
                     </li>
                   </ul>
@@ -105,12 +141,12 @@ export default function About() {
                         aria-labelledby="navbarDarkDropdownMenuLink"
                       >
                         <li>
-                          <a class="dropdown-item" href="#">
+                          <a class="dropdown-item" href="/team">
                             BOARD OF DIRECTORS
                           </a>
                         </li>
                         <li>
-                          <a class="dropdown-item" href="#">
+                          <a class="dropdown-item" href="/team">
                             BOARD OF OFFICER/STAFF
                           </a>
                         </li>
@@ -119,12 +155,12 @@ export default function About() {
                   </ul>
                 </div>
                 <li className="nav-item">
-                  <Link href="/services" className="nav-link">
+                  <Link href="#" className="nav-link">
                     Photo Gallery
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link href="/contact" className="nav-link">
+                  <Link href="#" className="nav-link">
                     Contact Us
                   </Link>
                 </li>
@@ -132,68 +168,8 @@ export default function About() {
             </div>
           </div>
         </nav>
-      </header> */}
-
-      <div className="container py-5">
-        <div className="row mb-4">
-          <div className="col text-center">
-            <h1 className={`display-4 ${styles.fadeIn}`}>About Us</h1>
-            <p className={`lead ${styles.fadeIn}`}>
-              Learn more about our company, values, and the team behind our
-              success.
-            </p>
-          </div>
-        </div>
-
-        <div className="row">
-          {/* About Section */}
-          <div className="col-md-6">
-            <h2 className={styles.fadeIn}>Our Mission</h2>
-            <p className={styles.fadeIn}>
-              At our company, we aim to provide the best products and services
-              to our customers, ensuring quality, reliability, and innovation in
-              every project we undertake.
-            </p>
-          </div>
-          <div className={`col-md-6 ${styles.zoomIn}`}>
-            <Image
-              src={aboutImage}
-              alt="About Us"
-              className="img-fluid rounded"
-              width={500}
-              height={300}
-            />
-          </div>
-        </div>
-
-        <div className="row mt-5">
-          <div className="col-md-6">
-            <h2 className={styles.fadeIn}>Meet the Team</h2>
-            <p className={styles.fadeIn}>
-              Our dedicated team of professionals is committed to delivering
-              outstanding results.
-            </p>
-          </div>
-          <div className={`col-md-6 ${styles.zoomIn}`}>
-            <Image
-              src={teamImage}
-              alt="Our Team"
-              className="img-fluid rounded"
-              width={500}
-              height={300}
-            />
-          </div>
-        </div>
-
-        <div className="row mt-5 text-center">
-          <div className={`col ${styles.fadeIn}`}>
-            <h3 className="my-4">Want to Know More?</h3>
-            <a href="/contact" className="btn btn-primary btn-lg">
-              Contact Us
-            </a>
-          </div>
-        </div>
-      </div>
+      </header>
+      {/* </ContextProvider> */}
     </>
   );
 }

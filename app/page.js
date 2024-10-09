@@ -2,19 +2,42 @@
 
 import Link from "next/link";
 import axiosApi from "./api/axios-common";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import BootstrapCarousel from "../components/carousels/Bootstrap";
 import styles from "./page.module.css";
 import LogoSlider from "@/components/carousels/LogoSlider";
 import SistersConcern from "@/components/SistersConcern";
+import SistersConcernService from "./api/services/SistersConcernService";
+import { useStateContext } from "./context/contextProvider";
+import { ContextProvider } from "./context/contextProvider";
+import Header from "@/components/header/Header";
 
 export default function Home() {
   const router = useRouter();
+  const [items, setItems] = useState(null);
+  const { currentSister, setCurrentSister } = useStateContext();
+  console.log(currentSister);
+
+  useEffect(() => {
+    SistersConcernService.getAll()
+      .then(({ data }) => {
+        let obj = data.data;
+        const customArray = Object.keys(obj).map((key) => obj[key]);
+        setItems(customArray);
+      })
+      .catch((err) => {
+        console.log("sisters-concern api error", err);
+      });
+  }, []);
 
   return (
     <>
-      <header>
+      <ContextProvider>
+        <Header />
+      </ContextProvider>
+
+      {/* <header>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container-fluid">
             <Link href="/" className="navbar-brand">
@@ -74,14 +97,25 @@ export default function Home() {
                         Sisters Concern
                       </a>
                       <ul
-                        class="dropdown-menu dropdown-menu-dark"
+                        className="dropdown-menu dropdown-menu-dark"
                         aria-labelledby="navbarDarkDropdownMenuLink"
                       >
-                        <li>
-                          <a class="dropdown-item" href="#">
-                            IGL WEB
-                          </a>
-                        </li>
+                        {items?.map((item, index) => (
+                          <li>
+                            <Link
+                              className="dropdown-item"
+                              href="/sisters-concern"
+                              onClick={(e) => {
+                                e.preventDefault(); // prevent default link behavior
+                                setCurrentSister(item); // set the current sister
+                                router.push("/sisters-concern");
+                              }}
+                            >
+                              {item.name}
+                            </Link>
+                            
+                          </li>
+                        ))}
                       </ul>
                     </li>
                   </ul>
@@ -134,7 +168,7 @@ export default function Home() {
             </div>
           </div>
         </nav>
-      </header>
+      </header> */}
 
       <BootstrapCarousel />
 

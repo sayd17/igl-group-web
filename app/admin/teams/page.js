@@ -2,34 +2,31 @@
 import SistersConcernService from "@/app/api/services/SistersConcernService";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import AlertService from "@/app/api/services/AlertService";
 import $ from "jquery";
 import "datatables.net";
 import "datatables.net-dt/css/dataTables.dataTables.css"; // Import DataTables styling
-import DataTable from "@/components/Datatable";
+import TeamService from "@/app/api/services/TeamService";
 
-export default function SistersConcern() {
+export default function team() {
   const [data, setData] = useState([]);
 
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [file, setFile] = useState(null);
 
   const router = useRouter();
   const [error, setError] = useState(null);
 
-  // State to store user details
-  const [user, setUser] = useState({
+  // State to store team details
+  const [team, setTeam] = useState({
     name: "",
-    short_description: "",
-    long_description: "",
-    web_url: "",
+    message: "",
   });
 
   const handleShow = () => setShowModal(true);
-  const handleEditShow = (user) => {
-    setUser(user);
+  const handleEditShow = (team) => {
+    console.log(team);
+    setTeam(team);
     setShowEditModal(true);
   };
 
@@ -38,32 +35,15 @@ export default function SistersConcern() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(team);
 
-    if (!file) {
-      AlertService.error("Please select a file first!");
-      return;
-    }
-    const formData = new FormData();
-
-    console.log(file);
-
-    Object.keys(user).map((key) => {
-      formData.append(key, user[key]);
-    });
-
-    if (file) formData.append("logo", file);
-
-    SistersConcernService.post("/sisters-concern", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
+    TeamService.create(team)
       .then(({ data }) => {
         console.log(data);
+        AlertService.success("team created successfully");
         fetchData();
-        AlertService.success(`Sister ${user.name} has been added!`);
 
-        console.log("add sister successful");
+        console.log("add team successful");
       })
       .catch((err) => {
         const response = err.response;
@@ -74,24 +54,15 @@ export default function SistersConcern() {
 
     setShowModal(false);
 
-    router.push("/admin/sisters-concern");
+    router.push("/admin/teams");
   };
 
   const handleEditSubmit = () => {
-    const formData = new FormData();
-
-    Object.keys(user).map((key) => {
-      formData.append(key, user[key]);
-    });
-
-    if (file) formData.append("logo", file);
-
-    SistersConcernService.update(user["id"], formData)
+    TeamService.update(team["id"], team)
       .then(({ data }) => {
         console.log(data);
+        AlertService.success(`team ${team.name} has been updated!`);
         fetchData();
-        AlertService.success(`Sister ${user.name} has been updated!`);
-
         console.log("sister updated successful");
       })
       .catch((err) => {
@@ -103,21 +74,21 @@ export default function SistersConcern() {
 
     setShowEditModal(false);
 
-    router.push("/admin/sisters-concern");
+    router.push("/admin/teams");
   };
 
   // Handle input changes
   const handleInputChange = (e) => {
     console.log(e.target.name);
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setTeam({ ...team, [name]: value });
   };
 
   // Handle input changes
   const handleEditInputChange = (e) => {
     console.log(e.target.name);
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setTeam({ ...team, [name]: value });
   };
 
   const postData = () => {
@@ -125,7 +96,7 @@ export default function SistersConcern() {
       email: email,
       password: password,
     };
-    SistersConcernService.post("/login", payload)
+    TeamService.post("/login", payload)
       .then(({ data }) => {
         router.push("/admin");
         console.log("login successful");
@@ -139,12 +110,12 @@ export default function SistersConcern() {
   };
 
   const handleDelete = (id) => {
-    SistersConcernService.remove(id)
+    TeamService.remove(id)
       .then(({ res }) => {
         fetchData();
-        AlertService.success(`Sister has been removed!`);
+        AlertService.success("team Deleted successfully");
         console.log("removed sister successful");
-        router.push("/admin/sisters-concern");
+        router.push("/admin/teams");
       })
       .catch((err) => {
         const response = err.response;
@@ -155,19 +126,22 @@ export default function SistersConcern() {
   };
 
   const fetchData = () => {
-    SistersConcernService.getAll()
+    TeamService.getAll()
       .then(({ data }) => {
         let obj = data.data;
         const customArray = Object.keys(obj).map((key) => obj[key]);
         setData(customArray);
       })
       .catch((err) => {
-        console.log("sisters-concern api error", err);
+        console.log("team api error", err);
       });
   };
 
   useEffect(() => {
     fetchData();
+    $(document).ready(function () {
+      $("#myTable").DataTable();
+    });
   }, []);
 
   return (
@@ -202,68 +176,22 @@ export default function SistersConcern() {
                         className="form-control"
                         id="name"
                         name="name"
-                        value={user.name}
+                        value={team.name}
                         onChange={handleInputChange}
                         required
                       />
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="logo" className="form-label">
-                        Logo
+                      <label htmlFor="message" className="form-label">
+                        Message
                       </label>
                       <input
-                        type="file"
-                        className="form-control "
-                        id="logo"
-                        name="logo"
-                        // value={user.logo}
-                        onChange={(event) => setFile(event.target.files[0])}
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label htmlFor="short_description" className="form-label">
-                        Short Description
-                      </label>
-                      <input
-                        type="short_description"
                         className="form-control"
-                        id="short_description"
-                        name="short_description"
-                        value={user.short_description}
+                        id="message"
+                        name="message"
+                        value={team.message}
                         onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label htmlFor="long_description" className="form-label">
-                        Long Description
-                      </label>
-                      <input
-                        type="long_description"
-                        className="form-control"
-                        id="long_description"
-                        name="long_description"
-                        value={user.long_description}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label htmlFor="web_url" className="form-label">
-                        Web Url
-                      </label>
-                      <input
-                        type="web_url"
-                        className="form-control"
-                        id="web_url"
-                        name="web_url"
-                        value={user.web_url}
-                        onChange={handleInputChange}
-                        required
                       />
                     </div>
                   </form>
@@ -320,66 +248,21 @@ export default function SistersConcern() {
                         className="form-control"
                         id="name"
                         name="name"
-                        value={user.name}
+                        value={team.name}
                         onChange={handleEditInputChange}
                         required
                       />
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="logo" className="form-label">
-                        Logo
+                      <label htmlFor="message" className="form-label">
+                        Message
                       </label>
                       <input
-                        type="file"
                         className="form-control"
-                        id="logo"
-                        name="logo"
-                        // value={user.logo}
-                        onChange={(e) => setFile(e.target.files[0])}
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label htmlFor="short_description" className="form-label">
-                        Short Description
-                      </label>
-                      <input
-                        type="short_description"
-                        className="form-control"
-                        id="short_description"
-                        name="short_description"
-                        value={user.short_description}
-                        onChange={handleEditInputChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label htmlFor="long_description" className="form-label">
-                        Long Description
-                      </label>
-                      <input
-                        type="long_description"
-                        className="form-control"
-                        id="long_description"
-                        name="long_description"
-                        value={user.long_description}
-                        onChange={handleEditInputChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label htmlFor="web_url" className="form-label">
-                        Web Url
-                      </label>
-                      <input
-                        type="web_url"
-                        className="form-control"
-                        id="web_url"
-                        name="web_url"
-                        value={user.web_url}
+                        id="message"
+                        name="message"
+                        value={team.message}
                         onChange={handleEditInputChange}
                       />
                     </div>
@@ -410,7 +293,7 @@ export default function SistersConcern() {
       <div className="container">
         <div className="row d-flex flex-row">
           <div className="col-6">
-            <h1 className="mb-4">Manage Sisters Concerns</h1>
+            <h1 className="mb-4">Manage teams</h1>
           </div>
           <div className="col-6 pt-4 text-end">
             <button onClick={handleShow} className="btn-secondary">
@@ -418,42 +301,31 @@ export default function SistersConcern() {
             </button>
           </div>
         </div>
-        <DataTable
-          data={data}
-          handleDelete={handleDelete}
-          handleEditShow={handleEditShow}
-        />
-        {/* <table id="myTable" className="table table-bordered table-striped">
+        <table id="myTable" className="table table-bordered table-striped">
           <thead>
             <tr>
               <th>ID</th>
               <th>Name</th>
-              <th>Logo</th>
-              <th>Short Description</th>
-              <th>Long Description</th>
-              <th>URL</th>
+              <th>Message</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {data?.map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.logo}</td>
-                <td className="w-2">{user.short_description}</td>
-                <td>{user.long_description}</td>
-                <td>{user.web_url}</td>
+            {data?.map((team) => (
+              <tr key={team.id}>
+                <td>{team.id}</td>
+                <td>{team.name}</td>
+                <td>{team.message}</td>
                 <td>
                   <button
-                    onClick={() => handleEditShow(user)}
+                    onClick={() => handleEditShow(team)}
                     className="btn btn-sm btn-primary me-2"
                   >
                     Edit
                   </button>
                   <button
                     className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(user.id)}
+                    onClick={() => handleDelete(team.id)}
                   >
                     Delete
                   </button>
@@ -461,7 +333,7 @@ export default function SistersConcern() {
               </tr>
             ))}
           </tbody>
-        </table> */}
+        </table>
       </div>
     </div>
   );
