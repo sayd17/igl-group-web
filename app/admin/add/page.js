@@ -1,7 +1,7 @@
-// app/admin/users/add.js
+"use client";
 
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import AdminLayout from "../layout";
 import Link from "next/link";
 

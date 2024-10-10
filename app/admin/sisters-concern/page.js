@@ -1,9 +1,12 @@
 "use client";
 import SistersConcernService from "@/app/api/services/SistersConcernService";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function SistersConcern() {
   const [data, setData] = useState([]);
+
+  const router = useRouter();
 
   useEffect(() => {}, []);
 
@@ -37,6 +40,10 @@ export default function SistersConcern() {
       });
   }, []);
 
+  const handleAdd = () => {
+    router.push("add");
+  };
+
   return (
     <div>
       <div className="container">
@@ -45,7 +52,9 @@ export default function SistersConcern() {
             <h1 className="mb-4">Manage Sisters Concerns</h1>
           </div>
           <div className="col-6 pt-3 text-end">
-            <button className="btn-secondary">Add New</button>
+            <button onClick={handleAdd} className="btn-secondary">
+              Add New
+            </button>
           </div>
         </div>
         <table className="table table-bordered table-striped">
