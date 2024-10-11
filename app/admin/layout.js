@@ -11,7 +11,7 @@ export default function AdminLayout({ children }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [notification, setNotification] = useState(null);
-  const { token } = useStateContext();
+  const { token, setToken } = useStateContext();
 
   if (!token) {
     router.push("/login");
@@ -85,12 +85,6 @@ export default function AdminLayout({ children }) {
           {/* <div className="sidebar-heading m-3 bg-blue">Admin Panel</div> */}
           <div className="list-group list-group-flush">
             <a
-              href="/admin/dashboard"
-              className="list-group-item list-group-item-action bg-light"
-            >
-              Dashboard
-            </a>
-            <a
               href="/admin/users"
               className="list-group-item list-group-item-action bg-light"
             >
@@ -114,6 +108,12 @@ export default function AdminLayout({ children }) {
             >
               Team Members
             </a>
+            <button
+              className="btn btn-secondary"
+              onClick={() => setToken(null)}
+            >
+              Logout
+            </button>
           </div>
         </div>
 

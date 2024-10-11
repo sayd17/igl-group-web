@@ -10,12 +10,16 @@ import { useRouter } from "next/navigation";
 export default function Login() {
   const emailRef = createRef();
   const passwordRef = createRef();
-  const { setUser, setToken } = useStateContext();
+  const { setUser, token, setToken } = useStateContext();
   const [message, setMessage] = useState(null);
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
+  if (token) {
+    router.push("/admin");
+  }
 
   const onSubmit = (ev) => {
     ev.preventDefault();
@@ -26,6 +30,7 @@ export default function Login() {
     };
     LoginService.post("/login", payload)
       .then(({ data }) => {
+        setToken("token123");
         router.push("/admin");
         console.log("login successful");
       })
