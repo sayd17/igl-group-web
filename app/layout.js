@@ -13,6 +13,7 @@ import BootstrapClient from "@/components/BootstrapClient.js";
 import toast, { Toaster, useToasterStore } from "react-hot-toast";
 import Script from "next/script";
 import "animate.css";
+import Footer from "@/components/footer/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -78,6 +79,7 @@ export default function RootLayout({ children }) {
             },
           }}
         />
+        <Footer />
         {/* <Script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
           strategy="beforeInteractive"
