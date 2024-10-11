@@ -2,14 +2,13 @@
 import SistersConcernService from "@/app/api/services/SistersConcernService";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import UserService from "@/app/api/services/UserService";
 import AlertService from "@/app/api/services/AlertService";
 import $ from "jquery";
 import "datatables.net";
 import "datatables.net-dt/css/dataTables.dataTables.css"; // Import DataTables styling
+import TeamMemberService from "@/app/api/services/TeamMemberService";
 
-export default function User() {
+export default function teamMember() {
   const [data, setData] = useState([]);
 
   const [showModal, setShowModal] = useState(false);
@@ -18,19 +17,18 @@ export default function User() {
   const router = useRouter();
   const [error, setError] = useState(null);
 
-  // State to store user details
-  const [user, setUser] = useState({
+  // State to store teamMember details
+  const [teamMember, setTeamMember] = useState({
+    team_id: 1,
     name: "",
-    phone: "",
-    email: "",
-    password: "",
-    is_active: "",
+    position: "",
+    description: "",
   });
 
   const handleShow = () => setShowModal(true);
-  const handleEditShow = (user) => {
-    console.log(user);
-    setUser(user);
+  const handleEditShow = (teamMember) => {
+    console.log(teamMember);
+    setTeamMember(teamMember);
     setShowEditModal(true);
   };
 
@@ -39,15 +37,15 @@ export default function User() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
+    console.log(teamMember);
 
-    UserService.create(user)
+    TeamMemberService.create(teamMember)
       .then(({ data }) => {
         console.log(data);
-        AlertService.success("User created successfully");
+        AlertService.success("teamMember created successfully");
         fetchData();
 
-        console.log("add user successful");
+        console.log("add teamMember successful");
       })
       .catch((err) => {
         const response = err.response;
@@ -58,14 +56,14 @@ export default function User() {
 
     setShowModal(false);
 
-    router.push("/admin/users");
+    router.push("/admin/team-members");
   };
 
   const handleEditSubmit = () => {
-    UserService.update(user["id"], user)
+    TeamMemberService.update(teamMember["id"], teamMember)
       .then(({ data }) => {
         console.log(data);
-        AlertService.success(`User ${user.name} has been updated!`);
+        AlertService.success(`teamMember ${teamMember.name} has been updated!`);
         fetchData();
         console.log("sister updated successful");
       })
@@ -78,21 +76,21 @@ export default function User() {
 
     setShowEditModal(false);
 
-    router.push("/admin/users");
+    router.push("/admin/team-members");
   };
 
   // Handle input changes
   const handleInputChange = (e) => {
     console.log(e.target.name);
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setTeamMember({ ...teamMember, [name]: value });
   };
 
   // Handle input changes
   const handleEditInputChange = (e) => {
     console.log(e.target.name);
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setTeamMember({ ...teamMember, [name]: value });
   };
 
   const postData = () => {
@@ -100,7 +98,7 @@ export default function User() {
       email: email,
       password: password,
     };
-    UserService.post("/login", payload)
+    TeamMemberService.post("/login", payload)
       .then(({ data }) => {
         router.push("/admin");
         console.log("login successful");
@@ -114,12 +112,12 @@ export default function User() {
   };
 
   const handleDelete = (id) => {
-    UserService.remove(id)
+    TeamMemberService.remove(id)
       .then(({ res }) => {
         fetchData();
-        AlertService.success("User Deleted successfully");
+        AlertService.success("teamMember Deleted successfully");
         console.log("removed sister successful");
-        router.push("/admin/users");
+        router.push("/admin/team-members");
       })
       .catch((err) => {
         const response = err.response;
@@ -130,14 +128,14 @@ export default function User() {
   };
 
   const fetchData = () => {
-    UserService.getAll()
+    TeamMemberService.getAll()
       .then(({ data }) => {
         let obj = data.data;
         const customArray = Object.keys(obj).map((key) => obj[key]);
         setData(customArray);
       })
       .catch((err) => {
-        console.log("user api error", err);
+        console.log("teamMember api error", err);
       });
   };
 
@@ -172,6 +170,20 @@ export default function User() {
                 <div className="modal-body">
                   <form onSubmit={handleSubmit}>
                     <div className="mb-3">
+                      <label htmlFor="team_id" className="form-label">
+                        Team Id
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="team_id"
+                        name="team_id"
+                        value={teamMember.team_id}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
                       <label htmlFor="name" className="form-label">
                         Name
                       </label>
@@ -180,69 +192,66 @@ export default function User() {
                         className="form-control"
                         id="name"
                         name="name"
-                        value={user.name}
+                        value={teamMember.name}
                         onChange={handleInputChange}
                         required
                       />
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="phone" className="form-label">
-                        Phone
+                      <label htmlFor="position" className="form-label">
+                        Position
                       </label>
                       <input
                         className="form-control"
-                        id="phone"
-                        name="phone"
-                        value={user.phone}
+                        id="position"
+                        name="position"
+                        value={teamMember.position}
                         onChange={handleInputChange}
                       />
                     </div>
-
                     <div className="mb-3">
-                      <label htmlFor=" " className="form-label">
-                        Email
+                      <label htmlFor="description" className="form-label">
+                        Description
                       </label>
                       <input
-                        type="email"
                         className="form-control"
-                        id="email"
-                        name="email"
-                        value={user.email}
+                        id="description"
+                        name="description"
+                        value={teamMember.description}
                         onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label htmlFor="password" className="form-label">
-                        Password
-                      </label>
-                      <input
-                        type="is_active"
-                        className="form-control"
-                        id="password"
-                        name="password"
-                        value={user.password}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label htmlFor="is_active" className="form-label">
-                        IsActive
-                      </label>
-                      <input
-                        type="is_active"
-                        className="form-control"
-                        id="is_active"
-                        name="is_active"
-                        value={user.is_active}
-                        onChange={handleInputChange}
-                        required
                       />
                     </div>
                   </form>
+                  {/* <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                      <label htmlFor="name" className="form-label">
+                        Name
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="name"
+                        name="name"
+                        value={teamMember.name}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+
+                    <div className="mb-3">
+                      <label htmlFor="message" className="form-label">
+                        Message
+                      </label>
+                      <input
+                        className="form-control"
+                        id="message"
+                        name="message"
+                        value={teamMember.message}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  </form> */}
                 </div>
                 <div className="modal-footer">
                   <button
@@ -288,6 +297,20 @@ export default function User() {
                 <div className="modal-body">
                   <form onSubmit={handleSubmit}>
                     <div className="mb-3">
+                      <label htmlFor="team_id" className="form-label">
+                        Team Id
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="team_id"
+                        name="team_id"
+                        value={teamMember.team_id}
+                        onChange={handleEditInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
                       <label htmlFor="name" className="form-label">
                         Name
                       </label>
@@ -296,67 +319,34 @@ export default function User() {
                         className="form-control"
                         id="name"
                         name="name"
-                        value={user.name}
+                        value={teamMember.name}
                         onChange={handleEditInputChange}
                         required
                       />
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="phone" className="form-label">
-                        Phone
+                      <label htmlFor="position" className="form-label">
+                        Position
                       </label>
                       <input
                         className="form-control"
-                        id="phone"
-                        name="phone"
-                        value={user.phone}
+                        id="position"
+                        name="position"
+                        value={teamMember.position}
                         onChange={handleEditInputChange}
                       />
                     </div>
-
                     <div className="mb-3">
-                      <label htmlFor=" " className="form-label">
-                        Email
+                      <label htmlFor="description" className="form-label">
+                        Description
                       </label>
                       <input
-                        type="email"
                         className="form-control"
-                        id="email"
-                        name="email"
-                        value={user.email}
+                        id="description"
+                        name="description"
+                        value={teamMember.description}
                         onChange={handleEditInputChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label htmlFor="password" className="form-label">
-                        Password
-                      </label>
-                      <input
-                        type="is_active"
-                        className="form-control"
-                        id="password"
-                        name="password"
-                        value={user.password}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label htmlFor="is_active" className="form-label">
-                        IsActive
-                      </label>
-                      <input
-                        type="is_active"
-                        className="form-control"
-                        id="is_active"
-                        name="is_active"
-                        value={user.is_active}
-                        onChange={handleEditInputChange}
-                        required
                       />
                     </div>
                   </form>
@@ -386,7 +376,7 @@ export default function User() {
       <div className="container">
         <div className="row d-flex flex-row">
           <div className="col-6">
-            <h1 className="mb-4">Manage Users</h1>
+            <h1 className="mb-4">Manage team-members</h1>
           </div>
           <div className="col-6 pt-4 text-end">
             <button onClick={handleShow} className="btn-secondary">
@@ -398,34 +388,30 @@ export default function User() {
           <thead>
             <tr>
               <th>ID</th>
+              <th>Team Id</th>
               <th>Name</th>
-              <th>Phone</th>
-              <th>Email</th>
-              <th>Password</th>
-              <th>IsActive</th>
-              <th>Action</th>
+              <th>Position</th>
+              <th>Description</th>
             </tr>
           </thead>
           <tbody>
-            {data?.map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.phone}</td>
-                <td>{user.email}</td>
-                <td></td>
-                <td>{user.is_active}</td>
-
+            {data?.map((teamMember) => (
+              <tr key={teamMember.id}>
+                <td>{teamMember.id}</td>
+                <td>{teamMember.team_id}</td>
+                <td>{teamMember.name}</td>
+                <td>{teamMember.position}</td>
+                <td>{teamMember.description}</td>
                 <td>
                   <button
-                    onClick={() => handleEditShow(user)}
+                    onClick={() => handleEditShow(teamMember)}
                     className="btn btn-sm btn-primary me-2"
                   >
                     Edit
                   </button>
                   <button
                     className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(user.id)}
+                    onClick={() => handleDelete(teamMember.id)}
                   >
                     Delete
                   </button>
@@ -438,48 +424,3 @@ export default function User() {
     </div>
   );
 }
-
-// export default function Users() {
-//   return (
-//     <div>
-//       <h1>Users</h1>
-//       <p>Manage users here.</p>
-
-{
-  /* <div className="container">
-        <h1 className="mb-4">Manage Users</h1>
-        <table className="table table-bordered table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users?.map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
-                <td>
-                  <button className="btn btn-sm btn-primary me-2">Edit</button>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(user.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div> */
-}
-//     </div>
-//   );
-// }

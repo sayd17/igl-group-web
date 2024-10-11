@@ -1,23 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import axiosApi from "./api/axios-common";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import BootstrapCarousel from "../components/carousels/Bootstrap";
-import styles from "./page.module.css";
-import LogoSlider from "@/components/carousels/LogoSlider";
-import SistersConcern from "@/components/SistersConcern";
-import SistersConcernService from "./api/services/SistersConcernService";
-import { useStateContext } from "./context/contextProvider";
-import { ContextProvider } from "./context/contextProvider";
-import Header from "@/components/header/Header";
+// import BootstrapCarousel from "../components/carousels/Bootstrap";
+// import styles from "./page.module.css";
+// import LogoSlider from "@/components/carousels/LogoSlider";
+// import SistersConcern from "@/components/SistersConcern";
+// import { ContextProvider } from "@/app/context/contextProvider";
+import { useStateContext } from "@/app/context/contextProvider";
+import SistersConcernService from "@/app/api/services/SistersConcernService";
 
 export default function Home() {
   const router = useRouter();
   const [items, setItems] = useState(null);
   const { currentSister, setCurrentSister } = useStateContext();
-  console.log(currentSister);
 
   useEffect(() => {
     SistersConcernService.getAll()
@@ -33,11 +30,8 @@ export default function Home() {
 
   return (
     <>
-      <ContextProvider>
-        <Header />
-      </ContextProvider>
-
-      {/* <header>
+      {/* <ContextProvider> */}
+      <header>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container-fluid">
             <Link href="/" className="navbar-brand">
@@ -106,14 +100,20 @@ export default function Home() {
                               className="dropdown-item"
                               href="/sisters-concern"
                               onClick={(e) => {
-                                e.preventDefault(); // prevent default link behavior
+                                // e.preventDefault(); // prevent default link behavior
                                 setCurrentSister(item); // set the current sister
                                 router.push("/sisters-concern");
                               }}
                             >
                               {item.name}
                             </Link>
-                            
+                            {/* <Link
+                              className="dropdown-item"
+                              href="/sisters-concern"
+                              onClick={() => setCurrentSister(item)}
+                            >
+                              {item.name}
+                            </Link> */}
                           </li>
                         ))}
                       </ul>
@@ -141,12 +141,12 @@ export default function Home() {
                         aria-labelledby="navbarDarkDropdownMenuLink"
                       >
                         <li>
-                          <a class="dropdown-item" href="#">
+                          <a class="dropdown-item" href="/team">
                             BOARD OF DIRECTORS
                           </a>
                         </li>
                         <li>
-                          <a class="dropdown-item" href="#">
+                          <a class="dropdown-item" href="/team">
                             BOARD OF OFFICER/STAFF
                           </a>
                         </li>
@@ -155,12 +155,12 @@ export default function Home() {
                   </ul>
                 </div>
                 <li className="nav-item">
-                  <Link href="/services" className="nav-link">
+                  <Link href="#" className="nav-link">
                     Photo Gallery
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link href="/contact" className="nav-link">
+                  <Link href="#" className="nav-link">
                     Contact Us
                   </Link>
                 </li>
@@ -168,15 +168,8 @@ export default function Home() {
             </div>
           </div>
         </nav>
-      </header> */}
-
-      <BootstrapCarousel />
-
-      <div className={styles.sistersConcern}>Our Sisters Concern</div>
-
-      <SistersConcern />
-
-      <LogoSlider />
+      </header>
+      {/* </ContextProvider> */}
     </>
   );
 }

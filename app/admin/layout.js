@@ -28,7 +28,7 @@ export default function AdminLayout({ children }) {
 
   useEffect(() => {
     UserService.getAll().then(({ data }) => {
-      setUser(data.data[0]);
+      setUser(data?.data[0]);
     });
   }, []);
 
@@ -101,6 +101,18 @@ export default function AdminLayout({ children }) {
               className="list-group-item list-group-item-action bg-light"
             >
               Sisters Concern
+            </a>
+            <a
+              href="/admin/teams"
+              className="list-group-item list-group-item-action bg-light"
+            >
+              Teams
+            </a>
+            <a
+              href="/admin/team-members"
+              className="list-group-item list-group-item-action bg-light"
+            >
+              Team Members
             </a>
           </div>
         </div>

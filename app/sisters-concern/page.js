@@ -1,23 +1,18 @@
 "use client";
-
+import Image from "next/image";
+import "animate.css";
+import Logo from "@/public/assets/img/logo.png";
+import { useState, useEffect } from "react";
+import { ContextProvider, useStateContext } from "../context/contextProvider";
 import Link from "next/link";
-import axiosApi from "./api/axios-common";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import BootstrapCarousel from "../components/carousels/Bootstrap";
-import styles from "./page.module.css";
-import LogoSlider from "@/components/carousels/LogoSlider";
-import SistersConcern from "@/components/SistersConcern";
-import SistersConcernService from "./api/services/SistersConcernService";
-import { useStateContext } from "./context/contextProvider";
-import { ContextProvider } from "./context/contextProvider";
+import SistersConcernService from "../api/services/SistersConcernService";
 import Header from "@/components/header/Header";
 
-export default function Home() {
-  const router = useRouter();
-  const [items, setItems] = useState(null);
+export default function SistersConcern() {
   const { currentSister, setCurrentSister } = useStateContext();
-  console.log(currentSister);
+  const [items, setItems] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     SistersConcernService.getAll()
@@ -31,13 +26,14 @@ export default function Home() {
       });
   }, []);
 
+  console.log(currentSister);
+
   return (
     <>
-      <ContextProvider>
+      {/* <ContextProvider>
         <Header />
-      </ContextProvider>
-
-      {/* <header>
+      </ContextProvider> */}
+      <header>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container-fluid">
             <Link href="/" className="navbar-brand">
@@ -106,14 +102,13 @@ export default function Home() {
                               className="dropdown-item"
                               href="/sisters-concern"
                               onClick={(e) => {
-                                e.preventDefault(); // prevent default link behavior
-                                setCurrentSister(item); // set the current sister
+                                e.preventDefault();
+                                setCurrentSister(item);
                                 router.push("/sisters-concern");
                               }}
                             >
                               {item.name}
                             </Link>
-                            
                           </li>
                         ))}
                       </ul>
@@ -141,12 +136,12 @@ export default function Home() {
                         aria-labelledby="navbarDarkDropdownMenuLink"
                       >
                         <li>
-                          <a class="dropdown-item" href="#">
+                          <a class="dropdown-item" href="/team">
                             BOARD OF DIRECTORS
                           </a>
                         </li>
                         <li>
-                          <a class="dropdown-item" href="#">
+                          <a class="dropdown-item" href="/team">
                             BOARD OF OFFICER/STAFF
                           </a>
                         </li>
@@ -168,15 +163,60 @@ export default function Home() {
             </div>
           </div>
         </nav>
-      </header> */}
+      </header>
+      {currentSister && (
+        <div className="container py-5">
+          {/* Page Header */}
+          <div className="row mb-4 text-center">
+            <div className="col">
+              <h1 className="display-4 animate__animated animate__fadeInDown">
+                Sisters Concern
+              </h1>
+              <p className="lead animate__animated animate__fadeInUp">
+                Explore the diverse initiatives of our sister concerns,
+                contributing to a common goal of excellence.
+              </p>
+            </div>
+          </div>
 
-      <BootstrapCarousel />
-
-      <div className={styles.sistersConcern}>Our Sisters Concern</div>
-
-      <SistersConcern />
-
-      <LogoSlider />
+          <div
+            className={`row my-5 align-items-center animate__animated `}
+            // key={sister.id}
+          >
+            <div className="col-md-3 text-center">
+              {/* Animated Logo */}
+              <Image
+                src={Logo}
+                alt={currentSister?.name}
+                width={150}
+                height={150}
+                className="img-fluid animate__animated animate__zoomIn"
+              />
+            </div>
+            <div className="col-md-9">
+              {/* Animated Texts */}
+              <h3 className="mt-3 animate__animated animate__fadeInDown">
+                {currentSister?.name}
+              </h3>
+              <p className="font-weight-bold animate__animated animate__fadeInUp">
+                {currentSister?.short_description}
+              </p>
+              <p className="animate__animated animate__fadeInUp">
+                {currentSister?.long_description}
+              </p>
+              <a
+                href="#"
+                // href={currentSister?.web_url}
+                // target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary animate__animated animate__fadeInUp"
+              >
+                Visit Website
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

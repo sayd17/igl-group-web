@@ -28,6 +28,8 @@ const getAll = (query = "") => {
 
 const SistersConcernService = {
   post,
+  update,
+  remove,
   getAll,
 };
 
