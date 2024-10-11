@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import SistersConcernService from "../api/services/SistersConcernService";
 import Header from "@/components/header/Header";
 import { ContextProvider } from "../context/contextProvider";
+import Footer from "@/components/footer/Footer";
 
 export default function OurTeam() {
   //   const { currentSister, setCurrentSister } = useStateContext();
@@ -40,25 +41,7 @@ export default function OurTeam() {
       description: "Mark is responsible for developing cutting-edge solutions.",
       image: "/assets/img/team-member-img-3.jpg",
     },
-    // {
-    //   name: "Lisa Ray",
-    //   position: "Marketing Head",
-    //   description: "Lisa takes care of all our marketing strategies.",
-    //   image: "/assets/img/team-member-img-3.jpg",
-    // },
   ];
-
-  //   useEffect(() => {
-  //     SistersConcernService.getAll()
-  //       .then(({ data }) => {
-  //         let obj = data.data;
-  //         const customArray = Object.keys(obj).map((key) => obj[key]);
-  //         setItems(customArray);
-  //       })
-  //       .catch((err) => {
-  //         console.log("sisters-concern api error", err);
-  //       });
-  //   }, []);
 
   return (
     <>
@@ -104,7 +87,8 @@ export default function OurTeam() {
           ))}
         </div>
       </div>
-      {/* )} */}
+
+      <Footer />
     </>
   );
 }

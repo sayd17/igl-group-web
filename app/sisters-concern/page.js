@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import SistersConcernService from "../api/services/SistersConcernService";
 import Header from "@/components/header/Header";
+import Footer from "@/components/footer/Footer";
 
 export default function SistersConcern() {
   const { currentSister, setCurrentSister } = useStateContext();
@@ -217,6 +218,8 @@ export default function SistersConcern() {
           </div>
         </div>
       )}
+
+      <Footer />
     </>
   );
 }
