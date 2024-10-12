@@ -4,6 +4,12 @@ import "datatables.net";
 import "datatables.net-dt/css/dataTables.dataTables.css"; // Import DataTables styling
 
 const DataTable = ({ data, handleDelete, handleEditShow }) => {
+  const fixedSizeString = (str, length) => {
+    let fixedString =
+      str.length > length ? str.substring(0, length) + "..." : str;
+    return fixedString;
+  };
+
   useEffect(() => {
     $(document).ready(function () {
       $("#myTable").DataTable();
@@ -28,11 +34,13 @@ const DataTable = ({ data, handleDelete, handleEditShow }) => {
           {data?.map((user) => (
             <tr key={user.id}>
               <td>{user.id}</td>
-              <td>{user.name}</td>
-              <td>{user.logo}</td>
-              <td className="w-2">{user.short_description}</td>
-              <td>{user.long_description}</td>
-              <td>{user.web_url}</td>
+              <td>{fixedSizeString(user.name, 10)}</td>
+              <td>{fixedSizeString(user.logo, 10)}</td>
+              <td className="w-2">
+                {fixedSizeString(user.short_description, 10)}
+              </td>
+              <td>{fixedSizeString(user.long_description, 10)}</td>
+              <td>{fixedSizeString(user.web_url, 15)}</td>
               <td>
                 <button
                   onClick={() => handleEditShow(user)}
@@ -51,37 +59,6 @@ const DataTable = ({ data, handleDelete, handleEditShow }) => {
           ))}
         </tbody>
       </table>
-
-      {/* <table id="myTable" className="display">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Age</th>
-            <th>Start date</th>
-            <th>Salary</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Tiger Nixon</td>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>Garrett Winters</td>
-            <td>Accountant</td>
-            <td>Tokyo</td>
-            <td>63</td>
-            <td>2011/07/25</td>
-            <td>$170,750</td>
-          </tr>
-        </tbody>
-      </table> */}
     </div>
   );
 };

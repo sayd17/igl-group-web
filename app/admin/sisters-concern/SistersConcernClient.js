@@ -213,7 +213,7 @@ export default function SistersConcern({ initialData }) {
                       <label htmlFor="short_description" className="form-label">
                         Short Description
                       </label>
-                      <input
+                      <textarea
                         type="short_description"
                         className="form-control"
                         id="short_description"
@@ -228,7 +228,7 @@ export default function SistersConcern({ initialData }) {
                       <label htmlFor="long_description" className="form-label">
                         Long Description
                       </label>
-                      <input
+                      <textarea
                         type="long_description"
                         className="form-control"
                         id="long_description"
@@ -322,7 +322,6 @@ export default function SistersConcern({ initialData }) {
                         className="form-control"
                         id="logo"
                         name="logo"
-                        // value={user.logo}
                         onChange={(e) => setFile(e.target.files[0])}
                       />
                     </div>

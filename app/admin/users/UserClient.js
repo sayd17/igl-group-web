@@ -335,7 +335,7 @@ export default function UserClient({ initialData }) {
                         Password
                       </label>
                       <input
-                        type="is_active"
+                        type="password"
                         className="form-control"
                         id="password"
                         name="password"
