@@ -22,7 +22,7 @@ export default function AdminLayout({ children }) {
 
     axiosApi.post("/logout").then(() => {
       setUser({});
-      setToken(null);
+      setToken();
     });
   };
 

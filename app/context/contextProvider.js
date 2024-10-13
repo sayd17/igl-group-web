@@ -1,7 +1,7 @@
-// "use client";
+"use client";
 
 import { createContext, useContext, useState } from "react";
-import { cookies } from "next/headers";
+import Cookies from "js-cookie";
 
 const StateContext = createContext({
   currentUser: null,
@@ -16,12 +16,11 @@ const StateContext = createContext({
 
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
-  const [token, _setToken] = useState(null);
+  const [token, _setToken] = useState(Cookies.get("token"));
   // const [token, _setToken] = useState(12323);
   const [currentSister, setCurrentSister] = useState(1);
   const [notification, _setNotification] = useState("");
 
-  const cookies = cookies();
   // Set a cookie
   // Cookies.set('user', 'JohnDoe', { expires: 7 });
 
@@ -29,13 +28,12 @@ export const ContextProvider = ({ children }) => {
   // const user = Cookies.get('user');
 
   const setToken = () => {
-    _setToken(cookies.get("token"));
-    if (cookies.has("token")) {
-      // localStorage.setItem("ACCESS_TOKEN", token);
-      cookies.set("token", "token123");
+    if (token) {
+      _setToken(null);
+      Cookies.remove("token");
     } else {
-      // localStorage.removeItem("ACCESS_TOKEN");
-      cookies.delete("token");
+      _setToken(Cookies.get("token"));
+      Cookies.set("token", "token123");
     }
   };
 

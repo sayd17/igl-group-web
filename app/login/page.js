@@ -30,7 +30,7 @@ export default function Login() {
     };
     LoginService.post("/login", payload)
       .then(({ data }) => {
-        setToken("token123");
+        setToken();
         router.push("/admin");
         console.log("login successful");
       })
