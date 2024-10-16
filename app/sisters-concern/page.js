@@ -78,13 +78,13 @@ export default function SistersConcern() {
                 </li>
 
                 <div
-                  class="collapse navbar-collapse"
+                  className="collapse navbar-collapse"
                   id="navbarNavDarkDropdown"
                 >
-                  <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
+                  <ul className="navbar-nav">
+                    <li className="nav-item dropdown">
                       <a
-                        class="nav-link dropdown-toggle"
+                        className="nav-link dropdown-toggle"
                         href="#"
                         id="navbarDarkDropdownMenuLink"
                         role="button"
@@ -117,13 +117,13 @@ export default function SistersConcern() {
                   </ul>
                 </div>
                 <div
-                  class="collapse navbar-collapse"
+                  className="collapse navbar-collapse"
                   id="navbarNavDarkDropdown"
                 >
-                  <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
+                  <ul className="navbar-nav">
+                    <li className="nav-item dropdown">
                       <a
-                        class="nav-link dropdown-toggle"
+                        className="nav-link dropdown-toggle"
                         href="#"
                         id="navbarDarkDropdownMenuLink"
                         role="button"
@@ -133,16 +133,16 @@ export default function SistersConcern() {
                         Our Team
                       </a>
                       <ul
-                        class="dropdown-menu dropdown-menu-dark"
+                        className="dropdown-menu dropdown-menu-dark"
                         aria-labelledby="navbarDarkDropdownMenuLink"
                       >
                         <li>
-                          <a class="dropdown-item" href="/team">
+                          <a className="dropdown-item" href="/team">
                             BOARD OF DIRECTORS
                           </a>
                         </li>
                         <li>
-                          <a class="dropdown-item" href="/team">
+                          <a className="dropdown-item" href="/team">
                             BOARD OF OFFICER/STAFF
                           </a>
                         </li>

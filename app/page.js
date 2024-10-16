@@ -18,7 +18,6 @@ export default function Home() {
   const router = useRouter();
   const [items, setItems] = useState(null);
   const { currentSister, setCurrentSister } = useStateContext();
-  console.log(currentSister);
 
   useEffect(() => {
     SistersConcernService.getAll()

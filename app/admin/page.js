@@ -1,3 +1,18 @@
+"use client";
 export default function Home() {
-  return <div></div>;
+  return (
+    <div>
+      <style jsx>{`
+        #wrapper {
+          display: flex;
+        }
+        #sidebar-wrapper {
+          width: 250px;
+        }
+        #page-content-wrapper {
+          width: 100%;
+        }
+      `}</style>
+    </div>
+  );
 }
