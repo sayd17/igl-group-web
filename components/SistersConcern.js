@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import styles from "./styles/Cart.module.css"; // Import the CSS module
 import SistersConcernService from "@/app/api/services/SistersConcernService";

@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 const DataTable = ({ data, handleDelete, handleEditShow }) => {
   const fixedSizeString = (str, length) => {
     let fixedString =

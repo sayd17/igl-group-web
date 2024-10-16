@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import AlertService from "@/app/api/services/AlertService";
 import DataTable from "@/components/Datatable";
-import axiosApi from "@/app/api/axios-common";
 
 export default function SistersConcern({ initialData }) {
   const [data, setData] = useState(initialData);

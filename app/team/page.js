@@ -12,8 +12,6 @@ import { ContextProvider } from "../context/contextProvider";
 import Footer from "@/components/footer/Footer";
 
 export default function OurTeam() {
-  //   const { currentSister, setCurrentSister } = useStateContext();
-  //   const [items, setItems] = useState(null);
   const router = useRouter();
 
   const teamMembers = [
