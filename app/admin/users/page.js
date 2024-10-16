@@ -10,8 +10,6 @@ const User = async () => {
     console.error("Error fetching data:", error);
   }
 
-  console.log(initialData);
-
   return (
     <div>
       <UserClient initialData={initialData} />

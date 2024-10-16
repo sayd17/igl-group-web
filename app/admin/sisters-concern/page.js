@@ -10,8 +10,6 @@ const SistersConcern = async () => {
     console.error("Error fetching data:", error);
   }
 
-  console.log(initialData);
-
   return (
     <div>
       <SistersConcernClient initialData={initialData} />

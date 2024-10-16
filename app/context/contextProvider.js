@@ -17,15 +17,8 @@ const StateContext = createContext({
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [token, _setToken] = useState(Cookies.get("token"));
-  // const [token, _setToken] = useState(12323);
   const [currentSister, setCurrentSister] = useState(1);
   const [notification, _setNotification] = useState("");
-
-  // Set a cookie
-  // Cookies.set('user', 'JohnDoe', { expires: 7 });
-
-  // // Get a cookie
-  // const user = Cookies.get('user');
 
   const setToken = () => {
     if (token) {

@@ -5,9 +5,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import UserService from "@/app/api/services/UserService";
 import AlertService from "@/app/api/services/AlertService";
-import $ from "jquery";
-import "datatables.net";
-import "datatables.net-dt/css/dataTables.dataTables.css"; // Import DataTables styling
 
 export default function UserClient({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -18,7 +15,6 @@ export default function UserClient({ initialData }) {
   const router = useRouter();
   const [error, setError] = useState(null);
 
-  // State to store user details
   const [user, setUser] = useState({
     name: "",
     phone: "",
@@ -81,14 +77,12 @@ export default function UserClient({ initialData }) {
     router.push("/admin/users");
   };
 
-  // Handle input changes
   const handleInputChange = (e) => {
     console.log(e.target.name);
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
 
-  // Handle input changes
   const handleEditInputChange = (e) => {
     console.log(e.target.name);
     const { name, value } = e.target;
@@ -140,13 +134,6 @@ export default function UserClient({ initialData }) {
         console.log("user api error", err);
       });
   };
-
-  useEffect(() => {
-    fetchData();
-    $(document).ready(function () {
-      $("#myTable").DataTable();
-    });
-  }, []);
 
   return (
     <div>

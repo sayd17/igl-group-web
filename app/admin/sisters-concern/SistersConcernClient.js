@@ -4,9 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import AlertService from "@/app/api/services/AlertService";
-import $ from "jquery";
-import "datatables.net";
-import "datatables.net-dt/css/dataTables.dataTables.css"; // Import DataTables styling
 import DataTable from "@/components/Datatable";
 import axiosApi from "@/app/api/axios-common";
 
@@ -149,13 +146,6 @@ export default function SistersConcern({ initialData }) {
         console.log("sisters-concern api error", err);
       });
   };
-
-  useEffect(() => {
-    fetchData();
-    $(document).ready(function () {
-      $("#myTable").DataTable();
-    });
-  }, []);
 
   return (
     <div>

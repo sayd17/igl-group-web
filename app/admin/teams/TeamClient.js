@@ -3,9 +3,6 @@ import SistersConcernService from "@/app/api/services/SistersConcernService";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AlertService from "@/app/api/services/AlertService";
-import $ from "jquery";
-import "datatables.net";
-import "datatables.net-dt/css/dataTables.dataTables.css"; // Import DataTables styling
 import TeamService from "@/app/api/services/TeamService";
 
 export default function team({ initialData }) {
@@ -77,14 +74,12 @@ export default function team({ initialData }) {
     router.push("/admin/teams");
   };
 
-  // Handle input changes
   const handleInputChange = (e) => {
     console.log(e.target.name);
     const { name, value } = e.target;
     setTeam({ ...team, [name]: value });
   };
 
-  // Handle input changes
   const handleEditInputChange = (e) => {
     console.log(e.target.name);
     const { name, value } = e.target;
@@ -118,13 +113,6 @@ export default function team({ initialData }) {
         console.log("team api error", err);
       });
   };
-
-  useEffect(() => {
-    fetchData();
-    $(document).ready(function () {
-      $("#myTable").DataTable();
-    });
-  }, []);
 
   return (
     <div>

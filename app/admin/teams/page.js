@@ -10,8 +10,6 @@ const Team = async () => {
     console.error("Error fetching data:", error);
   }
 
-  console.log(initialData);
-
   return (
     <div>
       <TeamClient initialData={initialData} />

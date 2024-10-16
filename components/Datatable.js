@@ -1,7 +1,4 @@
 import { useEffect } from "react";
-import $ from "jquery";
-import "datatables.net";
-import "datatables.net-dt/css/dataTables.dataTables.css"; // Import DataTables styling
 
 const DataTable = ({ data, handleDelete, handleEditShow }) => {
   const fixedSizeString = (str, length) => {
@@ -9,12 +6,6 @@ const DataTable = ({ data, handleDelete, handleEditShow }) => {
       str.length > length ? str.substring(0, length) + "..." : str;
     return fixedString;
   };
-
-  useEffect(() => {
-    $(document).ready(function () {
-      $("#myTable").DataTable();
-    });
-  }, []);
 
   return (
     <div>

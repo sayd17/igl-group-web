@@ -3,9 +3,6 @@ import SistersConcernService from "@/app/api/services/SistersConcernService";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AlertService from "@/app/api/services/AlertService";
-import $ from "jquery";
-import "datatables.net";
-import "datatables.net-dt/css/dataTables.dataTables.css"; // Import DataTables styling
 import TeamMemberService from "@/app/api/services/TeamMemberService";
 
 export default function TeamMemberClient({ initialData }) {
@@ -27,7 +24,6 @@ export default function TeamMemberClient({ initialData }) {
 
   const handleShow = () => setShowModal(true);
   const handleEditShow = (teamMember) => {
-    console.log(teamMember);
     setTeamMember(teamMember);
     setShowEditModal(true);
   };
@@ -37,7 +33,6 @@ export default function TeamMemberClient({ initialData }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(teamMember);
 
     TeamMemberService.create(teamMember)
       .then(({ data }) => {
@@ -79,14 +74,12 @@ export default function TeamMemberClient({ initialData }) {
     router.push("/admin/team-members");
   };
 
-  // Handle input changes
   const handleInputChange = (e) => {
     console.log(e.target.name);
     const { name, value } = e.target;
     setTeamMember({ ...teamMember, [name]: value });
   };
 
-  // Handle input changes
   const handleEditInputChange = (e) => {
     console.log(e.target.name);
     const { name, value } = e.target;
@@ -120,13 +113,6 @@ export default function TeamMemberClient({ initialData }) {
         console.log("teamMember api error", err);
       });
   };
-
-  useEffect(() => {
-    fetchData();
-    $(document).ready(function () {
-      $("#myTable").DataTable();
-    });
-  }, []);
 
   return (
     <div>
