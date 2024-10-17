@@ -1,10 +1,6 @@
-const DataTable = ({ data, handleDelete, handleEditShow }) => {
-  const fixedSizeString = (str, length) => {
-    let fixedString =
-      str.length > length ? str.substring(0, length) + "..." : str;
-    return fixedString;
-  };
+import { fixedSizeString } from "@/helpers/helpers";
 
+const DataTable = ({ data, handleDelete, handleEditShow }) => {
   return (
     <div>
       <table id="myTable" className="table table-bordered table-striped">

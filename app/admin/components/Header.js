@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import UserActivity from "./UserActivity";
 
-function Header() {
+function Header({ currentUser }) {
   return (
     <div>
       <header>
@@ -40,7 +40,7 @@ function Header() {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
-                  <UserActivity />
+                  <UserActivity currentUser={currentUser} />
                   {/* <Link href="/profile" className="nav-link">
                     <span className="m-3">{user?.name}</span>
                     Profile

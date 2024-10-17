@@ -1,11 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
-import styles from "./styles/Cart.module.css"; // Import the CSS module
 import SistersConcernService from "@/app/api/services/SistersConcernService";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { fixedSizeString } from "@/helpers/helpers";
 
 export default function SistersConcern() {
   const [items, setItems] = useState(null);
+  const router = useRouter();
+
+  const handle = (e) => {
+    e.preventDefault();
+    router.push("/sisters-concern");
+  };
+
+  console.log(items);
 
   useEffect(() => {
     SistersConcernService.getAll()
@@ -20,20 +28,23 @@ export default function SistersConcern() {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div className="container mt-5">
       <h2></h2>
-      <div className={styles.cart}>
+      <div className="row">
         {items?.map((item) => (
-          <div className={styles["cart-item"]} key={item.id}>
-            {/* <img src={item.img} alt={item.name} /> */}
-            <div className={styles["item-details"]}>
-              <h3>{item.name}</h3>
-              <p className={styles.short_description}>
-                {item.short_description}
-              </p>
-              <a href="#" className={styles["read-more"]}>
-                {">"}Read More
-              </a>
+          <div className="col-md-3" key={item.id}>
+            <div className="card mb-4">
+              <img src={item.logo} alt={item.name} height="150px" />
+              <div className="card-body">
+                <h3 className="card-title">{fixedSizeString(item.name, 12)}</h3>
+                <p className="card-text">{item.short_description}</p>
+                <button
+                  onClick={handle}
+                  className={`styles["read-more"] border-0`}
+                >
+                  Read More
+                </button>
+              </div>
             </div>
           </div>
         ))}

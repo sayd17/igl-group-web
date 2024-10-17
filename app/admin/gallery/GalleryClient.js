@@ -1,12 +1,10 @@
 "use client";
-import SistersConcernService from "@/app/api/services/SistersConcernService";
-import { useState, useEffect } from "react";
+import GalleryService from "@/app/api/services/GalleryService";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import AlertService from "@/app/api/services/AlertService";
-import DataTable from "@/components/Datatable";
 
-export default function SistersConcern({ initialData }) {
+export default function Gallery({ initialData }) {
   const [data, setData] = useState(initialData);
 
   const [showModal, setShowModal] = useState(false);
@@ -18,10 +16,10 @@ export default function SistersConcern({ initialData }) {
 
   // State to store user details
   const [user, setUser] = useState({
-    name: "",
-    short_description: "",
-    long_description: "",
-    web_url: "",
+    year: "",
+    program: "",
+    caption: "",
+    status: "",
   });
 
   const handleShow = () => setShowModal(true);
@@ -46,19 +44,21 @@ export default function SistersConcern({ initialData }) {
       formData.append(key, user[key]);
     });
 
-    if (file) formData.append("logo", file);
+    console.log(formData);
 
-    SistersConcernService.post("/sisters-concern", formData, {
+    if (file) formData.append("image", file);
+    console.log(formData);
+
+    GalleryService.create("/gallery", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     })
       .then(({ data }) => {
-        console.log(data);
         fetchData();
-        AlertService.success(`Sister ${user.name} has been added!`);
+        AlertService.success(`Image has been added!`);
 
-        console.log("add sister successful");
+        console.log("add Image successful");
       })
       .catch((err) => {
         const response = err.response;
@@ -69,7 +69,7 @@ export default function SistersConcern({ initialData }) {
 
     setShowModal(false);
 
-    router.push("/admin/sisters-concern");
+    router.push("/admin/gallery");
   };
 
   const handleEditSubmit = (e) => {
@@ -80,15 +80,15 @@ export default function SistersConcern({ initialData }) {
       formData.append(key, user[key]);
     });
 
-    if (file) formData.append("logo", file);
+    if (file) formData.append("image", file);
 
-    SistersConcernService.update(user["id"], formData)
+    GalleryService.update(user["id"], formData)
       .then(({ data }) => {
         console.log(data);
         fetchData();
-        AlertService.success(`Sister ${user.name} has been updated!`);
+        AlertService.success(`Image has been updated!`);
 
-        console.log("sister updated successful");
+        console.log("Image updated successful");
       })
       .catch((err) => {
         const response = err.response;
@@ -99,12 +99,11 @@ export default function SistersConcern({ initialData }) {
 
     setShowEditModal(false);
 
-    router.push("/admin/sisters-concern");
+    router.push("/admin/gallery");
   };
 
   // Handle input changes
   const handleInputChange = (e) => {
-    console.log(e.target.name);
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
@@ -117,12 +116,12 @@ export default function SistersConcern({ initialData }) {
   };
 
   const handleDelete = (id) => {
-    SistersConcernService.remove(id)
+    GalleryService.remove(id)
       .then(({ res }) => {
         fetchData();
-        AlertService.success(`Sister has been removed!`);
-        console.log("removed sister successful");
-        router.push("/admin/sisters-concern");
+        AlertService.success(`Image has been removed!`);
+        console.log("removed Image successful");
+        router.push("/admin/gallery");
       })
       .catch((err) => {
         const response = err.response;
@@ -133,14 +132,14 @@ export default function SistersConcern({ initialData }) {
   };
 
   const fetchData = () => {
-    SistersConcernService.getAll()
+    GalleryService.getAll()
       .then(({ data }) => {
         let obj = data.data;
         const customArray = Object.keys(obj).map((key) => obj[key]);
         setData(customArray);
       })
       .catch((err) => {
-        console.log("sisters-concern api error", err);
+        console.log("gallery api error", err);
       });
   };
 
@@ -157,7 +156,7 @@ export default function SistersConcern({ initialData }) {
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title">Add New Sister</h5>
+                  <h5 className="modal-title">Add New Image</h5>
                   <button
                     type="button"
                     className="btn-close"
@@ -168,74 +167,72 @@ export default function SistersConcern({ initialData }) {
                 <div className="modal-body">
                   <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                      <label htmlFor="name" className="form-label">
-                        Name
+                      <label htmlFor="year" className="form-label">
+                        Year
                       </label>
                       <input
                         type="text"
                         className="form-control"
-                        id="name"
-                        name="name"
-                        value={user.name}
+                        id="year"
+                        name="year"
+                        value={user.year}
                         onChange={handleInputChange}
                         required
                       />
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="logo" className="form-label">
-                        Logo
+                      <label htmlFor="program" className="form-label">
+                        Program
+                      </label>
+                      <textarea
+                        type="text"
+                        className="form-control"
+                        id="program"
+                        name="program"
+                        value={user.program}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="image" className="form-label">
+                        image
                       </label>
                       <input
                         type="file"
                         className="form-control "
-                        id="logo"
-                        name="logo"
-                        // value={user.logo}
+                        id="image"
+                        name="image"
+                        // value={user.image}
                         onChange={(event) => setFile(event.target.files[0])}
                       />
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="short_description" className="form-label">
-                        Short Description
-                      </label>
-                      <textarea
-                        type="short_description"
-                        className="form-control"
-                        id="short_description"
-                        name="short_description"
-                        value={user.short_description}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label htmlFor="long_description" className="form-label">
-                        Long Description
-                      </label>
-                      <textarea
-                        type="long_description"
-                        className="form-control"
-                        id="long_description"
-                        name="long_description"
-                        value={user.long_description}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label htmlFor="web_url" className="form-label">
-                        Web Url
+                      <label htmlFor="text" className="form-label">
+                        Caption
                       </label>
                       <input
-                        type="url"
+                        type="text"
                         className="form-control"
-                        id="web_url"
-                        name="web_url"
-                        value={user.web_url}
+                        id="caption"
+                        name="caption"
+                        value={user.caption}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+
+                    <div className="mb-3">
+                      <label htmlFor="status" className="form-label">
+                        Status
+                      </label>
+                      <input
+                        className="form-control"
+                        id="status"
+                        name="status"
+                        value={user.status}
                         onChange={handleInputChange}
                         required
                       />
@@ -275,7 +272,7 @@ export default function SistersConcern({ initialData }) {
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title">Add New Sister</h5>
+                  <h5 className="modal-title">Add New Image</h5>
                   <button
                     type="button"
                     className="btn-close"
@@ -286,74 +283,74 @@ export default function SistersConcern({ initialData }) {
                 <div className="modal-body">
                   <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                      <label htmlFor="name" className="form-label">
-                        Name
+                      <label htmlFor="year" className="form-label">
+                        Year
                       </label>
                       <input
                         type="text"
                         className="form-control"
-                        id="name"
-                        name="name"
-                        value={user.name}
+                        id="year"
+                        name="year"
+                        value={user.year}
                         onChange={handleEditInputChange}
                         required
                       />
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="logo" className="form-label">
-                        Logo
+                      <label htmlFor="program" className="form-label">
+                        Program
+                      </label>
+                      <textarea
+                        type="text"
+                        className="form-control"
+                        id="program"
+                        name="program"
+                        value={user.program}
+                        onChange={handleEditInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="image" className="form-label">
+                        image
                       </label>
                       <input
                         type="file"
-                        className="form-control"
-                        id="logo"
-                        name="logo"
-                        onChange={(e) => setFile(e.target.files[0])}
+                        className="form-control "
+                        id="image"
+                        name="image"
+                        // value={user.image}
+                        onChange={(event) => setFile(event.target.files[0])}
                       />
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="short_description" className="form-label">
-                        Short Description
+                      <label htmlFor="text" className="form-label">
+                        Caption
                       </label>
                       <input
-                        type="short_description"
+                        type="text"
                         className="form-control"
-                        id="short_description"
-                        name="short_description"
-                        value={user.short_description}
+                        id="caption"
+                        name="caption"
+                        value={user.caption}
                         onChange={handleEditInputChange}
                         required
                       />
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="long_description" className="form-label">
-                        Long Description
+                      <label htmlFor="status" className="form-label">
+                        Status
                       </label>
                       <input
-                        type="long_description"
                         className="form-control"
-                        id="long_description"
-                        name="long_description"
-                        value={user.long_description}
+                        id="status"
+                        name="status"
+                        value={user.status}
                         onChange={handleEditInputChange}
                         required
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label htmlFor="web_url" className="form-label">
-                        Web Url
-                      </label>
-                      <input
-                        type="url"
-                        className="form-control"
-                        id="web_url"
-                        name="web_url"
-                        value={user.web_url}
-                        onChange={handleEditInputChange}
                       />
                     </div>
                   </form>
@@ -383,7 +380,7 @@ export default function SistersConcern({ initialData }) {
       <div className="container">
         <div className="row d-flex flex-row">
           <div className="col-6">
-            <h1 className="mb-4">Manage Sisters Concerns</h1>
+            <h1 className="mb-4">Manage Gallery</h1>
           </div>
           <div className="col-6 pt-4 text-end">
             <button onClick={handleShow} className="btn-secondary">
@@ -391,11 +388,42 @@ export default function SistersConcern({ initialData }) {
             </button>
           </div>
         </div>
-        <DataTable
-          data={data}
-          handleDelete={handleDelete}
-          handleEditShow={handleEditShow}
-        />
+        <table id="myTable" className="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Year</th>
+              <th>Program</th>
+              <th>Image</th>
+              <th>Caption</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data?.map((user) => (
+              <tr key={user.year}>
+                <td>{user.program}</td>
+                <td>{user.image}</td>
+                <td>{user.caption}</td>
+                <td>{user.status}</td>
+                <td>
+                  <button
+                    onClick={() => handleEditShow(user)}
+                    className="btn btn-sm btn-primary me-2"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-sm btn-danger"
+                    onClick={() => handleDelete(user.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

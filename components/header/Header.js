@@ -3,15 +3,10 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-// import BootstrapCarousel from "../components/carousels/Bootstrap";
-// import styles from "./page.module.css";
-// import LogoSlider from "@/components/carousels/LogoSlider";
-// import SistersConcern from "@/components/SistersConcern";
-// import { ContextProvider } from "@/app/context/contextProvider";
 import { useStateContext } from "@/app/context/contextProvider";
 import SistersConcernService from "@/app/api/services/SistersConcernService";
 
-export default function Home() {
+export default function Header() {
   const router = useRouter();
   const [items, setItems] = useState(null);
   const { currentSister, setCurrentSister } = useStateContext();
@@ -32,16 +27,19 @@ export default function Home() {
     <>
       {/* <ContextProvider> */}
       <header>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav
+          className="navbar navbar-expand-lg navbar-dark bg-dark"
+          // style={{ backgroundColor: "#03141b" }}
+        >
           <div className="container-fluid">
-            <Link href="/" className="navbar-brand">
-              <img
-                src="/assets/img/logo.png"
-                alt="Logo"
-                width="30"
-                height="30"
-                className="d-inline-block align-top"
-              />
+            <img
+              src="/assets/img/logo.png"
+              alt="Logo"
+              width="60"
+              height="60"
+              className="d-inline-block align-top"
+            />
+            <Link href="/" className="ms-3 navbar-brand">
               IGL Group
             </Link>
 

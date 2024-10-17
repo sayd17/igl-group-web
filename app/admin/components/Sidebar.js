@@ -33,6 +33,12 @@ function Sidebar() {
         >
           Team Members
         </a>
+        <a
+          href="/admin/gallery"
+          className="list-group-item list-group-item-action bg-light"
+        >
+          Image Gallery
+        </a>
         <button className="btn btn-secondary" onClick={() => setToken()}>
           Logout
         </button>

@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import "animate.css";
-import Logo from "@/public/assets/img/logo.png";
 import { useState, useEffect } from "react";
 import { ContextProvider, useStateContext } from "../context/contextProvider";
 import Link from "next/link";
@@ -27,14 +26,12 @@ export default function SistersConcern() {
       });
   }, []);
 
-  console.log(currentSister);
-
   return (
     <>
       {/* <ContextProvider>
         <Header />
       </ContextProvider> */}
-      <header>
+      {/* <header>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container-fluid">
             <Link href="/" className="navbar-brand">
@@ -164,7 +161,8 @@ export default function SistersConcern() {
             </div>
           </div>
         </nav>
-      </header>
+      </header> */}
+      <Header />
       {currentSister && (
         <div className="container py-5">
           {/* Page Header */}
@@ -174,27 +172,24 @@ export default function SistersConcern() {
                 Sisters Concern
               </h1>
               <p className="lead animate__animated animate__fadeInUp">
-                Explore the diverse initiatives of our sister concerns,
-                contributing to a common goal of excellence.
+                {currentSister.short_description}
               </p>
             </div>
           </div>
 
           <div
-            className={`row my-5 align-items-center animate__animated `}
-            // key={sister.id}
+            className={`row d-flex my-3 justify-content-center animate__animated `}
           >
             <div className="col-md-3 text-center">
               {/* Animated Logo */}
-              <Image
-                src={Logo}
+              <img
+                src={currentSister.logo}
                 alt={currentSister?.name}
-                width={150}
-                height={150}
+                width={300}
                 className="img-fluid animate__animated animate__zoomIn"
               />
             </div>
-            <div className="col-md-9">
+            <div className="col-md-3">
               {/* Animated Texts */}
               <h3 className="mt-3 animate__animated animate__fadeInDown">
                 {currentSister?.name}
@@ -206,8 +201,8 @@ export default function SistersConcern() {
                 {currentSister?.long_description}
               </p>
               <a
-                href="#"
-                // href={currentSister?.web_url}
+                // href="#"
+                href={currentSister?.web_url}
                 // target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-primary animate__animated animate__fadeInUp"

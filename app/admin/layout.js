@@ -1,10 +1,21 @@
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
+import UserService from "../api/services/UserService";
 
 export default function AdminLayout({ children }) {
+  let currentUser;
+
+  UserService.getAll()
+    .then(({ data }) => {
+      currentUser = data?.data[0];
+    })
+    .catch((err) => {
+      console.error("Error fetching data:", err);
+    });
+
   return (
     <>
-      <Header />
+      <Header currentUser={currentUser} />
 
       <div className="d-flex mt-3" id="wrapper">
         <Sidebar />

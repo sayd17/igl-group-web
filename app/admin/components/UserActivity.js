@@ -6,25 +6,22 @@ import UserService from "../../api/services/UserService";
 import { useStateContext } from "@/app/context/contextProvider";
 import { useRouter } from "next/navigation";
 
-function UserActivity() {
-  const [user, setUser] = useState(null);
-
+function UserActivity({ currentUser }) {
   const { token, setToken } = useStateContext();
   const router = useRouter();
+  const [user, setUser] = useState(null);
 
   if (!token) {
     router.push("/login");
   }
 
   useEffect(() => {
-    UserService.getAll().then(({ data }) => {
-      setUser(data?.data[0]);
-    });
+    setUser(currentUser);
   }, []);
 
   return (
     <div>
-      <Link href="/profile" className="nav-link">
+      <Link href="#" className="nav-link">
         <span className="m-3">{user?.name}</span>
         Profile
       </Link>
