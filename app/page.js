@@ -8,7 +8,7 @@ import Footer from "@/components/footer/Footer";
 
 export default function Home() {
   return (
-    <>
+    <div>
       <ContextProvider>
         <Header />
       </ContextProvider>
@@ -22,6 +22,6 @@ export default function Home() {
       <LogoSlider />
 
       <Footer />
-    </>
+    </div>
   );
 }

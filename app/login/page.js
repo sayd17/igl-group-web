@@ -5,9 +5,9 @@ const SistersConcern = async () => {
   let initialData = [];
   try {
     const response = await SistersConcernService.getAll();
-    initialData = response.data.data; // Adjust according to your API response structure
+    initialData = response.data.data;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.log("Error fetching data:", error);
   }
 
   return (

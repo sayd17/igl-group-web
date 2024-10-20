@@ -2,14 +2,20 @@
 import React from "react";
 import Link from "next/link";
 import UserActivity from "./UserActivity";
+import { Dropdown } from "react-bootstrap";
 
-function Header({ currentUser }) {
+function Navbar({ currentUser }) {
+  const toggleOffcanvas = () => {
+    document.querySelector(".sidebar-offcanvas").classList.toggle("active");
+  };
+  const toggleRightSidebar = () => {
+    document.querySelector(".right-sidebar").classList.toggle("open");
+  };
   return (
     <div>
       <header>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container-fluid">
-            {/* Brand/Logo */}
             <Link href="/" className="navbar-brand">
               <img
                 src="/assets/img/logo.png"
@@ -23,7 +29,6 @@ function Header({ currentUser }) {
 
             <span>Admin Panel</span>
 
-            {/* Toggle button for mobile view */}
             <button
               className="navbar-toggler"
               type="button"
@@ -36,15 +41,10 @@ function Header({ currentUser }) {
               <span className="navbar-toggler-icon"></span>
             </button>
 
-            {/* Navbar links */}
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
                   <UserActivity currentUser={currentUser} />
-                  {/* <Link href="/profile" className="nav-link">
-                    <span className="m-3">{user?.name}</span>
-                    Profile
-                  </Link> */}
                 </li>
               </ul>
             </div>
@@ -55,4 +55,4 @@ function Header({ currentUser }) {
   );
 }
 
-export default Header;
+export default Navbar;

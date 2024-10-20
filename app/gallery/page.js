@@ -1,12 +1,14 @@
 import React from "react";
-import SistersConcernClient from "./SistersConcernClient";
+import Gallery from "./GalleryClient";
 import Header from "@/components/header/Header";
+import Footer from "@/components/footer/Footer";
 
 function page() {
   return (
     <div>
       <Header />
-      <SistersConcernClient />
+      <Gallery />
+      <Footer />
     </div>
   );
 }

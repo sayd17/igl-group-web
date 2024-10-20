@@ -34,7 +34,7 @@ const responsive = {
 
 export default function LogoSlider() {
   return (
-    <div className={styles.logoSliderContainer}>
+    <div className={`${styles.logoSliderContainer} my-3`}>
       <Carousel
         responsive={responsive}
         infinite={true} // Makes the carousel loop infinitely

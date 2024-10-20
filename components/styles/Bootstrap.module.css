@@ -1,7 +1,12 @@
 /* Styling for images inside the carousel */
 .itemP img {
-  height: 500px;
   width: 100%;
+  max-width: 1280px;
+  /* margin: 0 auto; */
+  height: 500px;
+  align-content: center;
+  text-align: center;
+  /* width: 100%; */
   object-fit: cover;
   margin: 0 auto;
 }

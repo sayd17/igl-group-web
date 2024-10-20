@@ -2,7 +2,6 @@
 import Link from "next/link";
 import React from "react";
 import { useEffect, useState } from "react";
-import UserService from "../../api/services/UserService";
 import { useStateContext } from "@/app/context/contextProvider";
 import { useRouter } from "next/navigation";
 

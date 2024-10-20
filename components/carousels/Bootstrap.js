@@ -9,8 +9,6 @@ export default function BootstrapCarousel() {
   const [index, setIndex] = useState(0);
   const [items, setItems] = useState([]);
 
-  console.log(items);
-
   const fetchData = () => {
     GalleryService.getAll()
       .then(({ data }) => {
@@ -32,17 +30,19 @@ export default function BootstrapCarousel() {
   }, []);
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect}>
-      {items?.map((item) => (
-        <Carousel.Item key={item.id} className={styles.itemP} interval={4000}>
-          <img src={item.image} alt="slides" />
-          <Carousel.Caption className={styles.caption}>
-            <h3>{item.program ? item.program : "IGL Group"}</h3>
-            {/* <p>{item.body}</p> */}
-            {/* <button className="btn btn-danger">Visit Docs</button> */}
-          </Carousel.Caption>
-        </Carousel.Item>
-      ))}
-    </Carousel>
+    <div className="content-wrapper">
+      <Carousel activeIndex={index} onSelect={handleSelect}>
+        {items?.map((item) => (
+          <Carousel.Item key={item.id} className={styles.itemP} interval={4000}>
+            <img src={item.image} alt="slides" />
+            <Carousel.Caption className={styles.caption}>
+              <h3>{item.program ? item.program : "IGL Group"}</h3>
+              {/* <p>{item.body}</p> */}
+              {/* <button className="btn btn-danger">Visit Docs</button> */}
+            </Carousel.Caption>
+          </Carousel.Item>
+        ))}
+      </Carousel>
+    </div>
   );
 }

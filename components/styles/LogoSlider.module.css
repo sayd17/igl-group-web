@@ -1,8 +1,11 @@
 /* styles/LogoSlider.module.css */
 .logoSliderContainer {
-  padding: 20px;
+  width: 90%;
+  max-width: 1280px;
+  /* margin: 0 auto; */
+  /* padding: 20px; */
   background-color: #f8f9fa;
-  max-width: 100%;
+  /* max-width: 100%; */
   margin: auto;
 }
 

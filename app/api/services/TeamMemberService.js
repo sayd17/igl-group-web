@@ -6,6 +6,10 @@ const getAll = (query = "") => {
   return axiosApi.get(`/${route}${query}`);
 };
 
+const getTeamMembersByTeamId = (data) => {
+  return axiosApi.post(`/team-members-by-team-id`, data);
+};
+
 const get = (id, query) => {
   return axiosApi.get(`/${route}/${id}${query}`);
 };
@@ -26,11 +30,6 @@ const removeAll = () => {
   return axiosApi.delete(`/${route}`);
 };
 
-const auhtenticate = (userId) => {
-  const url = userId ? `/${route}/${userId}` : "/${route}";
-  return axiosApi.get(url);
-};
-
 const TeamMemberService = {
   getAll,
   get,
@@ -38,6 +37,7 @@ const TeamMemberService = {
   update,
   remove,
   removeAll,
+  getTeamMembersByTeamId,
 };
 
 export default TeamMemberService;

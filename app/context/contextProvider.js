@@ -6,10 +6,12 @@ import Cookies from "js-cookie";
 const StateContext = createContext({
   currentUser: null,
   token: null,
-  currentSister: {},
   notification: null,
   setUser: () => {},
+  currentSister: {},
   setCurrentSister: () => {},
+  currentTeam: {},
+  setCurrentTeam: () => {},
   setToken: () => {},
   setNotification: () => {},
 });
@@ -17,7 +19,8 @@ const StateContext = createContext({
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [token, _setToken] = useState(Cookies.get("token"));
-  const [currentSister, setCurrentSister] = useState(1);
+  const [currentSister, setCurrentSister] = useState(null);
+  const [currentTeam, setCurrentTeam] = useState(null);
   const [notification, _setNotification] = useState("");
 
   const setToken = () => {
@@ -45,6 +48,8 @@ export const ContextProvider = ({ children }) => {
         setUser,
         token,
         currentSister,
+        currentTeam,
+        setCurrentTeam,
         setCurrentSister,
         setToken,
         notification,

@@ -1,6 +1,8 @@
 import Sidebar from "./components/Sidebar";
-import Header from "./components/Header";
+import Header from "./components/Navbar";
 import UserService from "../api/services/UserService";
+import Footer from "./components/Footer";
+import BasicTable from "./components/BasicTable";
 
 export default function AdminLayout({ children }) {
   let currentUser;
@@ -17,14 +19,16 @@ export default function AdminLayout({ children }) {
     <>
       <Header currentUser={currentUser} />
 
-      <div className="d-flex mt-3" id="wrapper">
+      <div className="row mt-3 fixHeight" id="wrapper">
         <Sidebar />
+        <BasicTable />
 
         {/* Page Content */}
         <div id="page-content-wrapper" className="p-4">
           {children} {/* This is where each nested page will be rendered */}
         </div>
       </div>
+      <Footer />
     </>
   );
 }

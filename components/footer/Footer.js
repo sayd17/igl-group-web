@@ -6,10 +6,10 @@ const Footer = () => {
   return (
     <footer
       style={{ backgroundColor: "#03141b" }}
-      className={` text-light pt-5`}
+      className={`text-light pt-5`}
     >
-      <div className="container">
-        <div className="row d-flex flex-row justify-content-around">
+      <div className="container content-wrapper">
+        <div className="row d-flex flex-row justify-content-between">
           <div className="col-md-2 mb-0">
             <h5>About IGL Group</h5>
             <ul className="list-unstyled">

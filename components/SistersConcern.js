@@ -13,8 +13,6 @@ export default function SistersConcern() {
     router.push("/sisters-concern");
   };
 
-  console.log(items);
-
   useEffect(() => {
     SistersConcernService.getAll()
       .then(({ data }) => {
