@@ -10,7 +10,7 @@ export default function HeaderClient({ items, teams }) {
       {/* <ContextProvider> */}
       <header>
         <nav
-          className="navbar navbar-expand-lg navbar-dark bg-dark"
+          className="navbar navbar-expand navbar-dark bg-dark fixed-top"
           // style={{ backgroundColor: "#03141b" }}
         >
           <div className="container-fluid content-wrapper">

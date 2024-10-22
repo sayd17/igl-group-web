@@ -32,7 +32,12 @@ export default function SistersConcern() {
         {items?.map((item) => (
           <div className="col-md-3" key={item.id}>
             <div className="card mb-4">
-              <img src={item.logo} alt={item.name} height="150px" />
+              <img
+                src={item.logo}
+                alt={item.name}
+                className="card-img-top"
+                height="150px"
+              />
               <div className="card-body">
                 <h3 className="card-title">{fixedSizeString(item.name, 12)}</h3>
                 <p className="card-text">{item.short_description}</p>

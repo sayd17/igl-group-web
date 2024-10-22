@@ -3,8 +3,6 @@ import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import UserService from "../api/services/UserService";
 import Footer from "./components/Footer";
-import BasicTable from "./components/BasicTable";
-import NavBar from "./src/layouts/AdminLayout/NavBar";
 
 export default function AdminLayout({ children }) {
   let currentUser;

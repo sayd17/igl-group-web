@@ -9,10 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@heroicons/react": "^2.1.5",
+    "@heroicons/react": "^1.0.6",
+    "@mdi/font": "^7.4.47",
+    "@popperjs/core": "^2.11.8",
     "animate.css": "^4.1.1",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.7.1",
     "js-cookie": "^3.0.5",
     "next": "14.2.13",
@@ -23,6 +26,7 @@
     "react-hot-toast": "^2.4.1",
     "react-i18next": "^15.0.3",
     "react-multi-carousel": "^2.8.5",
+    "react-perfect-scrollbar": "^1.5.8",
     "react-router-dom": "^6.27.0",
     "sharp": "^0.33.5"
   },
