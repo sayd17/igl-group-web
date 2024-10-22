@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import UserService from "@/app/api/services/UserService";
 import AlertService from "@/app/api/services/AlertService";
+import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
 
 export default function UserClient({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -370,18 +371,18 @@ export default function UserClient({ initialData }) {
         </div>
       )}
 
-      <div className="container">
+      <div className="container table-rounded">
         <div className="row d-flex flex-row">
           <div className="col-6">
             <h1 className="mb-4">Manage Users</h1>
           </div>
           <div className="col-6 pt-4 text-end">
-            <button onClick={handleShow} className="btn-secondary">
-              Add New
+            <button onClick={handleShow} className="btn btn-secondary">
+              <UserAddIcon width="30px" height="30px" />
             </button>
           </div>
         </div>
-        <table id="myTable" className="table table-bordered table-striped">
+        <table id="myTable" className="table-bordered table table-hover">
           <thead>
             <tr>
               <th>ID</th>
@@ -394,8 +395,11 @@ export default function UserClient({ initialData }) {
             </tr>
           </thead>
           <tbody>
-            {data?.map((user) => (
-              <tr key={user.id}>
+            {data?.map((user, index) => (
+              <tr
+                key={user.id}
+                className={index % 2 === 0 ? "table-primary" : "table-success"}
+              >
                 <td>{user.id}</td>
                 <td>{user.name}</td>
                 <td>{user.phone}</td>
@@ -408,13 +412,13 @@ export default function UserClient({ initialData }) {
                     onClick={() => handleEditShow(user)}
                     className="btn btn-sm btn-primary me-2"
                   >
-                    Edit
+                    <PencilIcon width="15px" height="15px" />
                   </button>
                   <button
                     className="btn btn-sm btn-danger"
                     onClick={() => handleDelete(user.id)}
                   >
-                    Delete
+                    <TrashIcon width="15px" height="15px" />
                   </button>
                 </td>
               </tr>

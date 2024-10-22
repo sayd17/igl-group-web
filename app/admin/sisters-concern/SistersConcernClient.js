@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import AlertService from "@/app/api/services/AlertService";
-import DataTable from "@/components/Datatable";
+import { UserAddIcon, PencilIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon } from "@heroicons/react/solid";
+import DataTable from "@/app/admin/components/Datatable";
 
 export default function SistersConcern({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -380,14 +382,14 @@ export default function SistersConcern({ initialData }) {
         </div>
       )}
 
-      <div className="container">
+      <div className="container table-rounded">
         <div className="row d-flex flex-row">
           <div className="col-6">
             <h1 className="mb-4">Manage Sisters Concerns</h1>
           </div>
-          <div className="col-6 pt-4 text-end">
-            <button onClick={handleShow} className="btn-secondary">
-              Add New
+          <div className="col-6 pt-2 text-end">
+            <button onClick={handleShow} className="btn btn-secondary">
+              <UserAddIcon width="30px" height="30px" />
             </button>
           </div>
         </div>

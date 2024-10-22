@@ -47,12 +47,10 @@ a {
   margin-top: 0; /* Adjusts the position */
 }
 
-/* Optional: Change background or text on hover */
 .navbar-nav .dropdown:hover .nav-link {
   color: #007bff; /* Change color on hover */
 }
 
-/* Add transition for smooth effect */
 .navbar-nav .dropdown-menu {
   display: none;
   opacity: 0;
@@ -63,7 +61,6 @@ a {
   display: block;
   opacity: 1;
 }
-
 .content-wrapper {
   width: 90%;
   max-width: 1280px;
@@ -83,4 +80,76 @@ body {
 
 .fixHeight {
   min-height: 650px;
+}
+
+.table-rounded {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.menu-icon {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.custom-navbar {
+  background-color: #4a90e2;
+}
+.sidebar {
+  width: 60px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #343a40;
+  transition: width 0.3s ease;
+}
+
+.sidebar:hover {
+  width: 250px;
+}
+
+.sidebar ul {
+  padding-left: 0;
+}
+
+.sidebar li {
+  list-style: none;
+}
+
+.sidebar .nav-link {
+  color: white;
+  padding: 10px 15px;
+  display: block;
+  text-decoration: none;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #495057;
+}
+
+.sidebar .nav-link .icon {
+  margin-right: 10px;
+}
+
+.sidebar:hover .nav-link .link-text {
+  display: inline;
+}
+
+.link-text {
+  display: none;
+}
+
+/* Page content */
+.content {
+  margin-left: 60px;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar:hover + .content {
+  margin-left: 250px;
 }

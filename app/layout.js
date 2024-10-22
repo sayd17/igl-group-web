@@ -1,5 +1,6 @@
 "use client";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "@mdi/font/css/materialdesignicons.min.css";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ContextProvider } from "./context/contextProvider";
@@ -7,6 +8,9 @@ import { useEffect } from "react";
 import BootstrapClient from "@/components/BootstrapClient.js";
 import toast, { Toaster, useToasterStore } from "react-hot-toast";
 import "animate.css";
+import Head from "next/head";
+import "font-awesome/css/font-awesome.min.css";
+import { GalleryContextProvider } from "./context/galleryContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -44,8 +48,11 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} geistMono.variable}`}>
-        <ContextProvider>{children}</ContextProvider>
+      <Head></Head>
+      <body className={`${geistSans.variable} geistMono.variable} mt-5 pt-4`}>
+        <GalleryContextProvider>
+          <ContextProvider>{children}</ContextProvider>
+        </GalleryContextProvider>
 
         <BootstrapClient />
 
@@ -64,6 +71,7 @@ export default function RootLayout({ children }) {
             },
           }}
         />
+        <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
       </body>
     </html>
   );

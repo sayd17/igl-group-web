@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import UserActivity from "./UserActivity";
 import { Dropdown } from "react-bootstrap";
+import { MenuIcon } from "@heroicons/react/solid";
 
 function Navbar({ currentUser }) {
   const toggleOffcanvas = () => {
@@ -28,6 +29,15 @@ function Navbar({ currentUser }) {
             </Link>
 
             <span>Admin Panel</span>
+            <button
+              class="btn btn-primary ms-3"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasWithBothOptions"
+              aria-controls="offcanvasWithBothOptions"
+            >
+              <MenuIcon width="15px" height="15px" />
+            </button>
 
             <button
               className="navbar-toggler"

@@ -1,13 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
 import GalleryService from "../api/services/GalleryService";
+import { useRouter } from "next/navigation";
+import { useGalleryContext } from "../context/galleryContext";
+import Cookies from "js-cookie";
 
 export default function GalleryClient() {
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [items, setItems] = useState([]);
+  const { setCurrentAlbum, currentAlbum } = useGalleryContext();
+  const router = useRouter();
 
   const toggleAlbum = (albumName) => {
-    console.log(albumName);
     if (selectedAlbum === albumName) {
       setSelectedAlbum(null);
     } else {
@@ -15,12 +19,18 @@ export default function GalleryClient() {
     }
   };
 
-  console.log(items);
-
   const uniqueArray = items.filter(
     (value, index, self) =>
       index === self.findIndex((obj) => obj.program === value.program)
   );
+
+  const handle = (e) => {
+    e.preventDefault();
+    const serializedArray = JSON.stringify(items);
+    setCurrentAlbum(items);
+    Cookies.set("gallery", serializedArray);
+    router.push("/gallery-image");
+  };
 
   useEffect(() => {
     const fetchData = () => {
@@ -65,18 +75,27 @@ export default function GalleryClient() {
       )}
       <div className="row justify-content-center">
         {uniqueArray.map((album, index) => (
-          <div className="col-md-4 mb-4" key={index}>
+          <div className="col-md-3 mb-4" key={index}>
             <div className="card shadow-sm">
               <div className="card-body text-center">
                 <h5 className="card-title">{album.program}</h5>
-                <button
-                  className="btn btn-primary"
+                <img
+                  src={album.image}
+                  alt={album.program}
+                  className="card-img-top"
+                  height="150px"
+                />
+                <button onClick={handle} className={`btn btn-primary mt-1`}>
+                  View Images
+                </button>
+                {/* <button
+                  className="btn btn-secondary"
                   onClick={() => toggleAlbum(album.program)}
                 >
                   {selectedAlbum === album.program
                     ? "Hide Images"
                     : "View Images"}
-                </button>
+                </button> */}
               </div>
             </div>
           </div>

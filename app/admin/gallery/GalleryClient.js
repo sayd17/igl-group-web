@@ -3,6 +3,7 @@ import GalleryService from "@/app/api/services/GalleryService";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import AlertService from "@/app/api/services/AlertService";
+import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
 
 export default function Gallery({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -377,18 +378,18 @@ export default function Gallery({ initialData }) {
         </div>
       )}
 
-      <div className="container">
+      <div className="container table-rounded">
         <div className="row d-flex flex-row">
           <div className="col-6">
             <h1 className="mb-4">Manage Gallery</h1>
           </div>
           <div className="col-6 pt-4 text-end">
-            <button onClick={handleShow} className="btn-secondary">
-              Add New
+            <button onClick={handleShow} className="btn btn-secondary">
+              <UserAddIcon width="30px" height="30px" />
             </button>
           </div>
         </div>
-        <table id="myTable" className="table table-bordered table-striped">
+        <table id="myTable" className="table-bordered table table-hover">
           <thead>
             <tr>
               <th>ID</th>
@@ -400,8 +401,11 @@ export default function Gallery({ initialData }) {
             </tr>
           </thead>
           <tbody>
-            {data?.map((user) => (
-              <tr key={user.year}>
+            {data?.map((user, index) => (
+              <tr
+                key={user.year}
+                className={index % 2 === 0 ? "table-primary" : "table-success"}
+              >
                 <td>{user.program}</td>
                 <td>{user.image}</td>
                 <td>{user.caption}</td>
@@ -411,13 +415,13 @@ export default function Gallery({ initialData }) {
                     onClick={() => handleEditShow(user)}
                     className="btn btn-sm btn-primary me-2"
                   >
-                    Edit
+                    <PencilIcon width="15px" height="15px" />
                   </button>
                   <button
                     className="btn btn-sm btn-danger"
                     onClick={() => handleDelete(user.id)}
                   >
-                    Delete
+                    <TrashIcon width="15px" height="15px" />
                   </button>
                 </td>
               </tr>

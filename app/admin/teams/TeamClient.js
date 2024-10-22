@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AlertService from "@/app/api/services/AlertService";
 import TeamService from "@/app/api/services/TeamService";
+import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
 
 export default function team({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -261,18 +262,18 @@ export default function team({ initialData }) {
         </div>
       )}
 
-      <div className="container">
+      <div className="container table-rounded">
         <div className="row d-flex flex-row">
           <div className="col-6">
             <h1 className="mb-4">Manage teams</h1>
           </div>
           <div className="col-6 pt-4 text-end">
-            <button onClick={handleShow} className="btn-secondary">
-              Add New
+            <button onClick={handleShow} className="btn btn-secondary">
+              <UserAddIcon width="30px" height="30px" />
             </button>
           </div>
         </div>
-        <table id="myTable" className="table table-bordered table-striped">
+        <table id="myTable" className="table-bordered table table-hover">
           <thead>
             <tr>
               <th>ID</th>
@@ -282,8 +283,11 @@ export default function team({ initialData }) {
             </tr>
           </thead>
           <tbody>
-            {data?.map((team) => (
-              <tr key={team.id}>
+            {data?.map((team, index) => (
+              <tr
+                key={team.id}
+                className={index % 2 === 0 ? "table-primary" : "table-success"}
+              >
                 <td>{team.id}</td>
                 <td>{team.name}</td>
                 <td>{team.message}</td>
@@ -292,13 +296,13 @@ export default function team({ initialData }) {
                     onClick={() => handleEditShow(team)}
                     className="btn btn-sm btn-primary me-2"
                   >
-                    Edit
+                    <PencilIcon width="15px" height="15px" />
                   </button>
                   <button
                     className="btn btn-sm btn-danger"
                     onClick={() => handleDelete(team.id)}
                   >
-                    Delete
+                    <TrashIcon width="15px" height="15px" />
                   </button>
                 </td>
               </tr>
