@@ -1,17 +1,12 @@
 "use client";
-import React from "react";
-import GalleryService from "@/app/api/services/GalleryService";
-import { useEffect, useState } from "react";
+import AlbumService from "@/app/api/services/AlbumService";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import AlertService from "@/app/api/services/AlertService";
 import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
-import AlbumService from "@/app/api/services/AlbumService";
-import Select from "react-select";
 
-export default function Gallery({ initialData }) {
+export default function AlbumClient({ initialData }) {
   const [data, setData] = useState(initialData);
-  const [options, setOptions] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -20,16 +15,15 @@ export default function Gallery({ initialData }) {
   const router = useRouter();
   const [error, setError] = useState(null);
 
-  // State to store user details
-  const [user, setUser] = useState({
+  // State to store album details
+  const [album, setAlbum] = useState({
+    name: "",
     year: "",
-    caption: "",
   });
 
   const handleShow = () => setShowModal(true);
-
-  const handleEditShow = (user) => {
-    setUser(user);
+  const handleEditShow = (album) => {
+    setAlbum(album);
     setShowEditModal(true);
   };
 
@@ -45,15 +39,16 @@ export default function Gallery({ initialData }) {
     }
     const formData = new FormData();
 
-    Object.keys(user).map((key) => {
-      formData.append(key, user[key]);
+    Object.keys(album).map((key) => {
+      formData.append(key, album[key]);
     });
 
-    if (file) formData.append("image", file);
-    if (selectedOption) formData.append("album", selectedOption.label);
     console.log(formData);
 
-    GalleryService.post("/gallery", formData, {
+    if (file) formData.append("image", file);
+    console.log(formData);
+
+    AlbumService.post("/album", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -73,20 +68,20 @@ export default function Gallery({ initialData }) {
 
     setShowModal(false);
 
-    router.push("/admin/gallery");
+    router.push("/admin/album");
   };
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
 
-    Object.keys(user).map((key) => {
-      formData.append(key, user[key]);
+    Object.keys(album).map((key) => {
+      formData.append(key, album[key]);
     });
 
     if (file) formData.append("image", file);
 
-    GalleryService.update(user["id"], formData)
+    AlbumService.update(album["id"], formData)
       .then(({ data }) => {
         console.log(data);
         fetchData();
@@ -103,29 +98,29 @@ export default function Gallery({ initialData }) {
 
     setShowEditModal(false);
 
-    router.push("/admin/gallery");
+    router.push("/admin/album");
   };
 
   // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setAlbum({ ...album, [name]: value });
   };
 
   // Handle input changes
   const handleEditInputChange = (e) => {
     console.log(e.target.name);
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setAlbum({ ...album, [name]: value });
   };
 
   const handleDelete = (id) => {
-    GalleryService.remove(id)
+    AlbumService.remove(id)
       .then(({ res }) => {
         fetchData();
         AlertService.success(`Image has been removed!`);
         console.log("removed Image successful");
-        router.push("/admin/gallery");
+        router.push("/admin/album");
       })
       .catch((err) => {
         const response = err.response;
@@ -136,38 +131,16 @@ export default function Gallery({ initialData }) {
   };
 
   const fetchData = () => {
-    GalleryService.getAll()
+    AlbumService.getAll()
       .then(({ data }) => {
         let obj = data.data;
         const customArray = Object.keys(obj).map((key) => obj[key]);
         setData(customArray);
       })
       .catch((err) => {
-        console.log("gallery api error", err);
+        console.log("album api error", err);
       });
   };
-
-  useEffect(() => {
-    AlbumService.getAll()
-      .then(({ data }) => {
-        let obj = data.data;
-        const customArray = Object.keys(obj).map((key) => obj[key]);
-        let array = [];
-        customArray.map((album) => {
-          let newOption = {
-            value: album.name,
-            label: album.name,
-          };
-          array.push(newOption);
-        });
-        // console.log("custom array", array);
-
-        setOptions(array);
-      })
-      .catch((err) => {
-        console.log("gallery api error", err);
-      });
-  }, []);
 
   return (
     <div>
@@ -193,40 +166,19 @@ export default function Gallery({ initialData }) {
                 <div className="modal-body">
                   <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                      <label htmlFor="text" className="form-label">
-                        Caption
+                      <label htmlFor="name" className="form-label">
+                        Name
                       </label>
                       <input
                         type="text"
                         className="form-control"
-                        id="caption"
-                        name="caption"
-                        value={user.caption}
+                        name="name"
+                        value={album.name}
                         onChange={handleInputChange}
                         required
                       />
                     </div>
-                    <div className="mb-3">
-                      <label htmlFor="text" className="form-label">
-                        Album
-                      </label>
-                      <Select
-                        defaultValue={selectedOption}
-                        onChange={setSelectedOption}
-                        options={options}
-                      />
-                      {/* <label htmlFor="album" className="form-label">
-                        Album
-                      </label>
-                      <input
-                        className="form-control"
-                        id="album"
-                        name="album"
-                        value={user.album}
-                        onChange={handleInputChange}
-                        required
-                      /> */}
-                    </div>
+
                     <div className="mb-3">
                       <label htmlFor="image" className="form-label">
                         image
@@ -236,8 +188,23 @@ export default function Gallery({ initialData }) {
                         className="form-control "
                         id="image"
                         name="image"
-                        // value={user.image}
+                        // value={album.image}
                         onChange={(event) => setFile(event.target.files[0])}
+                      />
+                    </div>
+
+                    <div className="mb-3">
+                      <label htmlFor="text" className="form-label">
+                        Year
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="year"
+                        name="year"
+                        value={album.year}
+                        onChange={handleInputChange}
+                        required
                       />
                     </div>
                   </form>
@@ -286,34 +253,20 @@ export default function Gallery({ initialData }) {
                 <div className="modal-body">
                   <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                      <label htmlFor="year" className="form-label">
-                        Year
+                      <label htmlFor="name" className="form-label">
+                        Name
                       </label>
                       <input
                         type="text"
                         className="form-control"
-                        id="year"
-                        name="year"
-                        value={user.year}
+                        id="name"
+                        name="name"
+                        value={album.name}
                         onChange={handleEditInputChange}
                         required
                       />
                     </div>
 
-                    <div className="mb-3">
-                      <label htmlFor="program" className="form-label">
-                        Program
-                      </label>
-                      <textarea
-                        type="text"
-                        className="form-control"
-                        id="program"
-                        name="program"
-                        value={user.program}
-                        onChange={handleEditInputChange}
-                        required
-                      />
-                    </div>
                     <div className="mb-3">
                       <label htmlFor="image" className="form-label">
                         image
@@ -323,35 +276,21 @@ export default function Gallery({ initialData }) {
                         className="form-control "
                         id="image"
                         name="image"
-                        // value={user.image}
+                        // value={album.image}
                         onChange={(event) => setFile(event.target.files[0])}
                       />
                     </div>
 
                     <div className="mb-3">
                       <label htmlFor="text" className="form-label">
-                        Caption
+                        Year
                       </label>
                       <input
                         type="text"
                         className="form-control"
-                        id="caption"
-                        name="caption"
-                        value={user.caption}
-                        onChange={handleEditInputChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label htmlFor="status" className="form-label">
-                        Status
-                      </label>
-                      <input
-                        className="form-control"
-                        id="status"
-                        name="status"
-                        value={user.status}
+                        id="year"
+                        name="year"
+                        value={album.year}
                         onChange={handleEditInputChange}
                         required
                       />
@@ -383,7 +322,7 @@ export default function Gallery({ initialData }) {
       <div className="container table-rounded">
         <div className="row d-flex flex-row">
           <div className="col-6">
-            <h1 className="mb-4">Manage Gallery</h1>
+            <h1 className="mb-4">Manage Album</h1>
           </div>
           <div className="col-6 pt-4 text-end">
             <button onClick={handleShow} className="btn btn-secondary">
@@ -395,31 +334,32 @@ export default function Gallery({ initialData }) {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Caption</th>
-              <th>Album</th>
+              <th>Name</th>
               <th>Image</th>
+              <th>Year</th>
             </tr>
           </thead>
           <tbody>
-            {data?.map((user, index) => (
+            {data?.map((album, index) => (
               <tr
-                key={user.year}
+                key={album.year}
                 className={index % 2 === 0 ? "table-primary" : "table-success"}
               >
-                <td>{user.id}</td>
-                <td>{user.caption}</td>
-                <td>{user.album}</td>
-                <td>{user.image}</td>
+                <td>{album.id}</td>
+                <td>{album.name}</td>
+                <td>{album.image}</td>
+                <td>{album.year}</td>
+
                 <td>
                   <button
-                    onClick={() => handleEditShow(user)}
+                    onClick={() => handleEditShow(album)}
                     className="btn btn-sm btn-primary me-2"
                   >
                     <PencilIcon width="15px" height="15px" />
                   </button>
                   <button
                     className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(user.id)}
+                    onClick={() => handleDelete(album.id)}
                   >
                     <TrashIcon width="15px" height="15px" />
                   </button>

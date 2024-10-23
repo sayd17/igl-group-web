@@ -6,6 +6,9 @@ import Link from "next/link";
 import UserService from "@/app/api/services/UserService";
 import AlertService from "@/app/api/services/AlertService";
 import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
+import userSchema from "@/validations/UserValidation";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function UserClient({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -24,7 +27,21 @@ export default function UserClient({ initialData }) {
     is_active: "",
   });
 
-  const handleShow = () => setShowModal(true);
+  const _form = useForm({
+    resolver: yupResolver(userSchema),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = _form;
+
+  const handleShow = () => {
+    setUser(null);
+    setError(null);
+    setShowModal(true);
+  };
   const handleEditShow = (user) => {
     console.log(user);
     setUser(user);
@@ -34,26 +51,26 @@ export default function UserClient({ initialData }) {
   const handleClose = () => setShowModal(false);
   const handleEditClose = () => setShowEditModal(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(user);
+  const onSubmit = (e) => {
+    let flag = null;
 
     UserService.create(user)
       .then(({ data }) => {
         console.log(data);
         AlertService.success("User created successfully");
         fetchData();
-
-        console.log("add user successful");
       })
       .catch((err) => {
+        flag = true;
         const response = err.response;
         if (response && response.status === 422) {
           setError(response.data.message);
+          flag = true;
         }
       });
 
     setShowModal(false);
+    setUser(null);
 
     router.push("/admin/users");
   };
@@ -70,10 +87,12 @@ export default function UserClient({ initialData }) {
         const response = err.response;
         if (response && response.status === 422) {
           setError(response.data.message);
+          return;
         }
       });
 
     setShowEditModal(false);
+    setUser(null);
 
     router.push("/admin/users");
   };
@@ -88,24 +107,6 @@ export default function UserClient({ initialData }) {
     console.log(e.target.name);
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
-  };
-
-  const postData = () => {
-    const payload = {
-      email: email,
-      password: password,
-    };
-    UserService.post("/login", payload)
-      .then(({ data }) => {
-        router.push("/admin");
-        console.log("login successful");
-      })
-      .catch((err) => {
-        const response = err.response;
-        if (response && response.status === 422) {
-          setError(response.data.message);
-        }
-      });
   };
 
   const handleDelete = (id) => {
@@ -149,7 +150,7 @@ export default function UserClient({ initialData }) {
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title">Add New Sister</h5>
+                  <h5 className="modal-title">Add New User</h5>
                   <button
                     type="button"
                     className="btn-close"
@@ -158,7 +159,8 @@ export default function UserClient({ initialData }) {
                   ></button>
                 </div>
                 <div className="modal-body">
-                  <form onSubmit={handleSubmit}>
+                  <form>
+                    <div>{error}</div>
                     <div className="mb-3">
                       <label htmlFor="name" className="form-label">
                         Name
@@ -168,7 +170,7 @@ export default function UserClient({ initialData }) {
                         className="form-control"
                         id="name"
                         name="name"
-                        value={user.name}
+                        value={user?.name}
                         onChange={handleInputChange}
                         required
                       />
@@ -179,13 +181,17 @@ export default function UserClient({ initialData }) {
                         Phone
                       </label>
                       <input
+                        {...register("phone")}
                         className="form-control"
                         id="phone"
                         name="phone"
-                        value={user.phone}
+                        value={user?.phone}
                         onChange={handleInputChange}
                       />
                     </div>
+                    {errors?.phone && (
+                      <div className="text-danger">{errors.phone.message} </div>
+                    )}
 
                     <div className="mb-3">
                       <label htmlFor=" " className="form-label">
@@ -193,14 +199,18 @@ export default function UserClient({ initialData }) {
                       </label>
                       <input
                         type="email"
+                        {...register("email")}
                         className="form-control"
                         id="email"
                         name="email"
-                        value={user.email}
+                        value={user?.email}
                         onChange={handleInputChange}
                         required
                       />
                     </div>
+                    {errors?.email && (
+                      <div className="text-danger">{errors.email.message} </div>
+                    )}
 
                     <div className="mb-3">
                       <label htmlFor="password" className="form-label">
@@ -211,7 +221,7 @@ export default function UserClient({ initialData }) {
                         className="form-control"
                         id="password"
                         name="password"
-                        value={user.password}
+                        value={user?.password}
                         onChange={handleInputChange}
                         required
                       />
@@ -225,7 +235,7 @@ export default function UserClient({ initialData }) {
                         className="form-control"
                         id="is_active"
                         name="is_active"
-                        value={user.is_active}
+                        value={user?.is_active}
                         onChange={handleInputChange}
                         required
                       />
@@ -241,7 +251,7 @@ export default function UserClient({ initialData }) {
                     Close
                   </button>
                   <button
-                    onClick={handleSubmit}
+                    onClick={handleSubmit(onSubmit)}
                     type="button"
                     className="btn btn-primary"
                   >
@@ -265,7 +275,7 @@ export default function UserClient({ initialData }) {
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title">Add New Sister</h5>
+                  <h5 className="modal-title">Edit New User</h5>
                   <button
                     type="button"
                     className="btn-close"
@@ -274,7 +284,7 @@ export default function UserClient({ initialData }) {
                   ></button>
                 </div>
                 <div className="modal-body">
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={onSubmit}>
                     <div className="mb-3">
                       <label htmlFor="name" className="form-label">
                         Name

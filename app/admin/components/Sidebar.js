@@ -85,7 +85,7 @@ function Sidebar() {
           </a>
         </li>
         <li className="nav-item">
-          <a href="#" className="nav-link">
+          <a href="/admin/teams" className="nav-link">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width={16}
@@ -96,7 +96,52 @@ function Sidebar() {
             >
               <path d="M14 4.5V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h7.5L14 4.5zm-3.5-.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H3.5a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5H7v3.5a.5.5 0 0 0 .5.5h3zM6 12V9H5v3h1zm2-4V5H7v3h1zm2 2v-2h-1v2h1z" />
             </svg>
-            <span className="link-text">Reports</span>
+            <span className="link-text">Team</span>
+          </a>
+        </li>
+        <li className="nav-item">
+          <a href="/admin/team-members" className="nav-link">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={16}
+              height={16}
+              fill="currentColor"
+              className="icon bi bi-file-earmark-bar-graph"
+              viewBox="0 0 16 16"
+            >
+              <path d="M14 4.5V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h7.5L14 4.5zm-3.5-.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H3.5a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5H7v3.5a.5.5 0 0 0 .5.5h3zM6 12V9H5v3h1zm2-4V5H7v3h1zm2 2v-2h-1v2h1z" />
+            </svg>
+            <span className="link-text">Team Member</span>
+          </a>
+        </li>
+        <li className="nav-item">
+          <a href="/admin/album" className="nav-link">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={16}
+              height={16}
+              fill="currentColor"
+              className="icon bi bi-file-earmark-bar-graph"
+              viewBox="0 0 16 16"
+            >
+              <path d="M14 4.5V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h7.5L14 4.5zm-3.5-.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H3.5a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5H7v3.5a.5.5 0 0 0 .5.5h3zM6 12V9H5v3h1zm2-4V5H7v3h1zm2 2v-2h-1v2h1z" />
+            </svg>
+            <span className="link-text">Album</span>
+          </a>
+        </li>
+        <li className="nav-item">
+          <a href="/admin/gallery" className="nav-link">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width={16}
+              height={16}
+              fill="currentColor"
+              className="icon bi bi-file-earmark-bar-graph"
+              viewBox="0 0 16 16"
+            >
+              <path d="M14 4.5V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h7.5L14 4.5zm-3.5-.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H3.5a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5H7v3.5a.5.5 0 0 0 .5.5h3zM6 12V9H5v3h1zm2-4V5H7v3h1zm2 2v-2h-1v2h1z" />
+            </svg>
+            <span className="link-text">Gallery</span>
           </a>
         </li>
         <li className="nav-item">

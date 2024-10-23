@@ -4,6 +4,7 @@ import GalleryService from "../api/services/GalleryService";
 import { useRouter } from "next/navigation";
 import { useGalleryContext } from "../context/galleryContext";
 import Cookies from "js-cookie";
+import AlbumService from "../api/services/AlbumService";
 
 export default function GalleryClient() {
   const [selectedAlbum, setSelectedAlbum] = useState(null);
@@ -19,22 +20,19 @@ export default function GalleryClient() {
     }
   };
 
-  const uniqueArray = items.filter(
-    (value, index, self) =>
-      index === self.findIndex((obj) => obj.program === value.program)
-  );
-
-  const handle = (e) => {
-    e.preventDefault();
-    const serializedArray = JSON.stringify(items);
-    setCurrentAlbum(items);
-    Cookies.set("gallery", serializedArray);
+  const handle = (album) => {
+    // e.preventDefault();
+    const serializedArray = JSON.stringify(album);
+    // setCurrentAlbum(items);
+    // let item = items;
+    console.log(serializedArray);
+    Cookies.set("album", serializedArray);
     router.push("/gallery-image");
   };
 
   useEffect(() => {
     const fetchData = () => {
-      GalleryService.getAll()
+      AlbumService.getAll()
         .then(({ data }) => {
           let obj = data.data;
           const customArray = Object.keys(obj).map((key) => obj[key]);
@@ -51,7 +49,7 @@ export default function GalleryClient() {
     <div className="container mt-5 fixedHeight">
       <h1 className="text-center mb-4">Photo Gallery</h1>
       {/* Show images when album is selected */}
-      {selectedAlbum && (
+      {/* {selectedAlbum && (
         <div className="row justify-content-center mt-4 px-4">
           {items.map(
             (image, imgIndex) =>
@@ -72,20 +70,23 @@ export default function GalleryClient() {
               )
           )}
         </div>
-      )}
+      )} */}
       <div className="row justify-content-center">
-        {uniqueArray.map((album, index) => (
+        {items.map((album, index) => (
           <div className="col-md-3 mb-4" key={index}>
             <div className="card shadow-sm">
               <div className="card-body text-center">
-                <h5 className="card-title">{album.program}</h5>
+                <h5 className="card-title">{album.name}</h5>
                 <img
                   src={album.image}
-                  alt={album.program}
+                  alt={album.name}
                   className="card-img-top"
                   height="150px"
                 />
-                <button onClick={handle} className={`btn btn-primary mt-1`}>
+                <button
+                  onClick={() => handle(album)}
+                  className={`btn btn-primary mt-1`}
+                >
                   View Images
                 </button>
                 {/* <button

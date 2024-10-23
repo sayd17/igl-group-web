@@ -10,12 +10,20 @@ const get = (id, query) => {
   return axiosApi.get(`/${route}/${id}${query}`);
 };
 
+const post = (url, data) => {
+  return axiosApi.post(url, data);
+};
+
 const create = (data) => {
   return axiosApi.post(`/${route}`, data);
 };
 
 const update = (id, data) => {
   return axiosApi.put(`/${route}/${id}`, data);
+};
+
+const getAlbumWiseData = (url, data) => {
+  return axiosApi.post(`/${url}`, data);
 };
 
 const remove = (id) => {
@@ -25,6 +33,8 @@ const remove = (id) => {
 const GalleryService = {
   getAll,
   get,
+  getAlbumWiseData,
+  post,
   create,
   update,
   remove,
