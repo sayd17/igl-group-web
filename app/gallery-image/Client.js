@@ -1,14 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import { useGalleryContext } from "../context/galleryContext";
+// import { useGalleryContext } from "../context/galleryContext";
 import Cookies from "js-cookie";
 import { XCircleIcon } from "@heroicons/react/solid";
 import styles from "./image.module.css";
 
 function GalleryImageClient() {
-  const { currentAlbum } = useGalleryContext();
+  // const { currentAlbum } = useGalleryContext();
   const [image, setImage] = useState(null);
-  const gallery = JSON.parse(Cookies.get("gallery"));
+  const galleryCookie = Cookies.get("gallery");
+  const gallery = galleryCookie ? JSON.parse(galleryCookie) : [];
 
   return (
     <div className={`${styles.backImage}`}>
