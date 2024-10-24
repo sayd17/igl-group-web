@@ -36,7 +36,7 @@ export default function SistersConcern() {
                 src={item.logo}
                 alt={item.name}
                 className="card-img-top"
-                height="150px"
+                height="300px"
               />
               <div className="card-body">
                 <h3 className="card-title">{fixedSizeString(item.name, 12)}</h3>

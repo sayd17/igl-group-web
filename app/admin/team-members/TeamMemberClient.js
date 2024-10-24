@@ -8,7 +8,7 @@ import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
 
 export default function TeamMemberClient({ initialData }) {
   const [data, setData] = useState(initialData);
-
+  const [file, setFile] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
@@ -17,10 +17,10 @@ export default function TeamMemberClient({ initialData }) {
 
   // State to store teamMember details
   const [teamMember, setTeamMember] = useState({
-    team_id: 1,
+    team: "",
     name: "",
-    position: "",
-    description: "",
+    image: "",
+    designation: "",
   });
 
   const handleShow = () => setShowModal(true);
@@ -35,12 +35,19 @@ export default function TeamMemberClient({ initialData }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    TeamMemberService.create(teamMember)
+    const formData = new FormData();
+
+    Object.keys(teamMember).map((key) => {
+      formData.append(key, teamMember[key]);
+    });
+
+    if (file) formData.append("image", file);
+
+    TeamMemberService.create(formData)
       .then(({ data }) => {
         console.log(data);
         AlertService.success("teamMember created successfully");
         fetchData();
-
         console.log("add teamMember successful");
       })
       .catch((err) => {
@@ -128,7 +135,7 @@ export default function TeamMemberClient({ initialData }) {
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title">Add New Sister</h5>
+                  <h5 className="modal-title">Add New Member</h5>
                   <button
                     type="button"
                     className="btn-close"
@@ -138,20 +145,6 @@ export default function TeamMemberClient({ initialData }) {
                 </div>
                 <div className="modal-body">
                   <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                      <label htmlFor="team_id" className="form-label">
-                        Team Id
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="team_id"
-                        name="team_id"
-                        value={teamMember.team_id}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
                     <div className="mb-3">
                       <label htmlFor="name" className="form-label">
                         Name
@@ -168,27 +161,43 @@ export default function TeamMemberClient({ initialData }) {
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="position" className="form-label">
-                        Position
+                      <label htmlFor="team" className="form-label">
+                        Team
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="team"
+                        name="team"
+                        value={teamMember.team}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+
+                    <div className="mb-3">
+                      <label htmlFor="designation" className="form-label">
+                        Designation
                       </label>
                       <input
                         className="form-control"
-                        id="position"
-                        name="position"
-                        value={teamMember.position}
+                        id="designation"
+                        name="designation"
+                        value={teamMember.designation}
                         onChange={handleInputChange}
                       />
                     </div>
                     <div className="mb-3">
-                      <label htmlFor="description" className="form-label">
-                        Description
+                      <label htmlFor="image" className="form-label">
+                        Photo
                       </label>
                       <input
                         className="form-control"
-                        id="description"
-                        name="description"
-                        value={teamMember.description}
-                        onChange={handleInputChange}
+                        type="file"
+                        id="image"
+                        name="image"
+                        value={teamMember.image}
+                        onChange={(event) => setFile(event.target.files[0])}
                       />
                     </div>
                   </form>
@@ -357,10 +366,10 @@ export default function TeamMemberClient({ initialData }) {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Team Id</th>
               <th>Name</th>
-              <th>Position</th>
-              <th>Description</th>
+              <th>Designation</th>
+              <th>Team </th>
+              <th>Image</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -371,10 +380,10 @@ export default function TeamMemberClient({ initialData }) {
                 className={index % 2 === 0 ? "table-primary" : "table-success"}
               >
                 <td>{teamMember.id}</td>
-                <td>{teamMember.team_id}</td>
                 <td>{teamMember.name}</td>
-                <td>{teamMember.position}</td>
-                <td>{teamMember.description}</td>
+                <td>{teamMember.designation}</td>
+                <td>{teamMember.team}</td>
+                <td>{teamMember.image}</td>
                 <td>
                   <button
                     onClick={() => handleEditShow(teamMember)}

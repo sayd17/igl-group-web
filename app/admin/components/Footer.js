@@ -12,17 +12,16 @@ function Footer() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              iglweb.com{" "}
+              iglweb.com
             </a>
             2024
           </span>
           <span className="float-none col float-sm-right d-block mt-1 mt-sm-0 text-center">
-            Free{" "}
+            Free
             <a href="/admin/" target="_blank" rel="noopener noreferrer">
-              {" "}
-              iglweb admin{" "}
-            </a>{" "}
-            templates from BootstrapDash.com.{" "}
+              iglweb admin
+            </a>
+            templates from iglweb.com.
           </span>
         </div>
       </footer>

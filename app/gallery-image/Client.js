@@ -80,7 +80,7 @@ function GalleryImageClient() {
       </div>
       <div>
         <div
-          className={`row justify-content-between  pt-5 content-wrapper `}
+          className={`row justify-content-center  pt-5 content-wrapper `}
           style={{ minHeight: "400px" }}
         >
           {items?.map((image, imgIndex) => (
@@ -92,7 +92,7 @@ function GalleryImageClient() {
                 <img
                   src={image?.image}
                   alt={`${image.program} image ${imgIndex + 1}`}
-                  className="card-img-top"
+                  className="card-img-top cursor"
                   width={300}
                   onClick={() => setImage(image)}
                   height={200}

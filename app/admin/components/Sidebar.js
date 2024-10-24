@@ -32,6 +32,10 @@ const menu = [
 function Sidebar() {
   const { token, setToken } = useStateContext();
 
+  const onLogout = () => {
+    setToken();
+  };
+
   return (
     <div className="sidebar col-3 mt-5 pt-5">
       <ul className="nav flex-column">
@@ -145,7 +149,7 @@ function Sidebar() {
           </a>
         </li>
         <li className="nav-item">
-          <a href="#" className="nav-link">
+          <a href="#" onClick={onLogout} className="nav-link">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width={16}

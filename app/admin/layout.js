@@ -18,12 +18,15 @@ export default function AdminLayout({ children }) {
   const toggleContent = () => {};
 
   return (
-    <div className="">
+    <div className="row d-flex justify-content-around">
       <Header toggleContent={toggleContent} />
       {/* <Header currentUser={currentUser} /> */}
       {/* <NavBar /> */}
-      <div className="" style={{ width: "400px", height: "60px" }}></div>
-      <div className="row mt-3 fixHeight  justify-content-center" id="wrapper">
+      {/* <div className="" style={{ width: "400px", height: "60px" }}></div> */}
+      <div
+        className="col-9 mt-3 fixHeight  justify-content-center"
+        id="wrapper"
+      >
         <Sidebar />
         {/* <BasicTable /> */}
         {/* Page Content */}

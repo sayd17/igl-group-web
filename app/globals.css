@@ -153,3 +153,15 @@ body {
 .sidebar:hover + .content {
   margin-left: 250px;
 }
+
+.white {
+  color: white;
+}
+
+.bgColor {
+  background-color: #155264;
+}
+
+.cursor {
+  cursor: pointer;
+}

@@ -5,11 +5,8 @@ import Link from "next/link";
 const Header = ({ toggleContent }) => {
   return (
     <>
-      <div>
-        <nav
-          className="navbar navbar-expand-lg custom-navbar fixed-top"
-          // style={{ backgroundolor: "#fffff" }}
-        >
+      <div className="col-2">
+        <nav className="navbar navbar-expand-lg bgColor  fixed-top">
           <div className="container-fluid">
             <a href="/" className="navbar-brand">
               <img
@@ -20,12 +17,12 @@ const Header = ({ toggleContent }) => {
                 className="d-inline-block align-top"
               />
             </a>
-            <Link href="/" className="ms-3 navbar-brand">
+            <Link href="/" className="ms-3 white navbar-brand">
               IGL Group
             </Link>
-            <span className="ms-3">Admin Panel</span>
+            <span className="ms-3 white">Admin Panel</span>
             {/* Offcanvas trigger button for sidebar */}
-            <button
+            {/* <button
               onClick={toggleContent}
               className="btn btn-secondary ms-3"
               type="button"
@@ -43,7 +40,7 @@ const Header = ({ toggleContent }) => {
                   d="M2.5 12a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0-5a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0-5a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11z"
                 />
               </svg>
-            </button>
+            </button> */}
             {/* Navbar toggler for mobile view */}
             <button
               className="navbar-toggler"
@@ -60,7 +57,7 @@ const Header = ({ toggleContent }) => {
             <div className="collapse navbar-collapse" id="navbarNav">
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
-                  <a href="#" className="nav-link">
+                  <a href="#" className="white nav-link">
                     Profile
                   </a>
                 </li>

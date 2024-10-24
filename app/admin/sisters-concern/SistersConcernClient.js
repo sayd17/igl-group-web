@@ -7,6 +7,8 @@ import AlertService from "@/app/api/services/AlertService";
 import { UserAddIcon, PencilIcon } from "@heroicons/react/solid";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import DataTable from "@/app/admin/components/Datatable";
+import { useForm } from "react-hook-form";
+import styles from "./sister.module.css";
 
 export default function SistersConcern({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -26,6 +28,15 @@ export default function SistersConcern({ initialData }) {
     web_url: "",
   });
 
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    mode: "onChange",
+  });
+
   const handleShow = () => setShowModal(true);
   const handleEditShow = (user) => {
     setUser(user);
@@ -35,8 +46,8 @@ export default function SistersConcern({ initialData }) {
   const handleClose = () => setShowModal(false);
   const handleEditClose = () => setShowEditModal(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const submitData = (e) => {
+    // e.preventDefault();
 
     if (!file) {
       AlertService.error("Please select a file first!");
@@ -168,7 +179,7 @@ export default function SistersConcern({ initialData }) {
                   ></button>
                 </div>
                 <div className="modal-body">
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit(submitData)} noValidate>
                     <div className="mb-3">
                       <label htmlFor="name" className="form-label">
                         Name
@@ -176,12 +187,27 @@ export default function SistersConcern({ initialData }) {
                       <input
                         type="text"
                         className="form-control"
+                        {...register("name", {
+                          required: {
+                            value: true,
+                            message: "Please enter your name",
+                          },
+                          maxLength: {
+                            value: 30,
+                            message: "Please use 30 characters or less",
+                          },
+                        })}
                         id="name"
                         name="name"
                         value={user.name}
                         onChange={handleInputChange}
                         required
                       />
+                      {errors.name && (
+                        <span className={`${styles.errorMessage}`}>
+                          {errors.name.message}
+                        </span>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -204,6 +230,16 @@ export default function SistersConcern({ initialData }) {
                       </label>
                       <textarea
                         type="short_description"
+                        {...register("short_description", {
+                          required: {
+                            value: true,
+                            message: "Please enter your name",
+                          },
+                          maxLength: {
+                            value: 30,
+                            message: "Please use 30 characters or less",
+                          },
+                        })}
                         className="form-control"
                         id="short_description"
                         name="short_description"
@@ -212,6 +248,11 @@ export default function SistersConcern({ initialData }) {
                         required
                       />
                     </div>
+                    {errors.short_description && (
+                      <span className={`${styles.errorMessage}`}>
+                        {errors.short_description.message}
+                      </span>
+                    )}
 
                     <div className="mb-3">
                       <label htmlFor="long_description" className="form-label">
@@ -220,6 +261,16 @@ export default function SistersConcern({ initialData }) {
                       <textarea
                         type="long_description"
                         className="form-control"
+                        {...register("long_description", {
+                          required: {
+                            value: true,
+                            message: "Please enter your description",
+                          },
+                          maxLength: {
+                            value: 1000,
+                            message: "Please use 1000 characters or less",
+                          },
+                        })}
                         id="long_description"
                         name="long_description"
                         value={user.long_description}
@@ -227,6 +278,11 @@ export default function SistersConcern({ initialData }) {
                         required
                       />
                     </div>
+                    {errors.long_description && (
+                      <span className={`${styles.errorMessage}`}>
+                        {errors.long_description.message}
+                      </span>
+                    )}
 
                     <div className="mb-3">
                       <label htmlFor="web_url" className="form-label">
@@ -234,6 +290,17 @@ export default function SistersConcern({ initialData }) {
                       </label>
                       <input
                         type="url"
+                        {...register("web_url", {
+                          required: {
+                            value: true,
+                            message: "Please enter a URL",
+                          },
+                          pattern: {
+                            value:
+                              /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w-]*)*(\?.*)?$/,
+                            message: "Please enter a valid URL",
+                          },
+                        })}
                         className="form-control"
                         id="web_url"
                         name="web_url"
@@ -242,6 +309,11 @@ export default function SistersConcern({ initialData }) {
                         required
                       />
                     </div>
+                    {errors.web_url && (
+                      <span className={`${styles.errorMessage}`}>
+                        {errors.web_url.message}
+                      </span>
+                    )}
                   </form>
                 </div>
                 <div className="modal-footer">
@@ -253,8 +325,8 @@ export default function SistersConcern({ initialData }) {
                     Close
                   </button>
                   <button
-                    onClick={handleSubmit}
-                    type="button"
+                    onClick={handleSubmit(submitData)}
+                    type="submit"
                     className="btn btn-primary"
                   >
                     Add New
@@ -286,7 +358,7 @@ export default function SistersConcern({ initialData }) {
                   ></button>
                 </div>
                 <div className="modal-body">
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={submitData}>
                     <div className="mb-3">
                       <label htmlFor="name" className="form-label">
                         Name

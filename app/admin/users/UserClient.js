@@ -9,9 +9,11 @@ import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
 import userSchema from "@/validations/UserValidation";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Select from "react-select";
 
 export default function UserClient({ initialData }) {
   const [data, setData] = useState(initialData);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -19,12 +21,17 @@ export default function UserClient({ initialData }) {
   const router = useRouter();
   const [error, setError] = useState(null);
 
+  const options = [
+    { value: true, label: "Active" },
+    { value: false, label: "Passive" },
+  ];
+
   const [user, setUser] = useState({
     name: "",
     phone: "",
     email: "",
     password: "",
-    is_active: "",
+    is_active: selectedOption,
   });
 
   const _form = useForm({
@@ -213,6 +220,16 @@ export default function UserClient({ initialData }) {
                     )}
 
                     <div className="mb-3">
+                      <label htmlFor="is_active" className="form-label">
+                        Status
+                      </label>
+                      <Select
+                        defaultValue={selectedOption}
+                        onChange={setSelectedOption}
+                        options={options}
+                      />
+                    </div>
+                    <div className="mb-3">
                       <label htmlFor="password" className="form-label">
                         Password
                       </label>
@@ -222,20 +239,6 @@ export default function UserClient({ initialData }) {
                         id="password"
                         name="password"
                         value={user?.password}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label htmlFor="is_active" className="form-label">
-                        IsActive
-                      </label>
-                      <input
-                        type="is_active"
-                        className="form-control"
-                        id="is_active"
-                        name="is_active"
-                        value={user?.is_active}
                         onChange={handleInputChange}
                         required
                       />
@@ -329,6 +332,17 @@ export default function UserClient({ initialData }) {
                     </div>
 
                     <div className="mb-3">
+                      <label htmlFor="is_active" className="form-label">
+                        Status
+                      </label>
+                      <Select
+                        defaultValue={selectedOption}
+                        onChange={setSelectedOption}
+                        options={options}
+                      />
+                    </div>
+
+                    <div className="mb-3">
                       <label htmlFor="password" className="form-label">
                         Password
                       </label>
@@ -339,21 +353,6 @@ export default function UserClient({ initialData }) {
                         name="password"
                         value={user.password}
                         onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-
-                    <div className="mb-3">
-                      <label htmlFor="is_active" className="form-label">
-                        IsActive
-                      </label>
-                      <input
-                        type="is_active"
-                        className="form-control"
-                        id="is_active"
-                        name="is_active"
-                        value={user.is_active}
-                        onChange={handleEditInputChange}
                         required
                       />
                     </div>
@@ -400,7 +399,7 @@ export default function UserClient({ initialData }) {
               <th>Phone</th>
               <th>Email</th>
               <th>Password</th>
-              <th>IsActive</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>

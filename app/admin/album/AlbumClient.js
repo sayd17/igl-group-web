@@ -178,21 +178,6 @@ export default function AlbumClient({ initialData }) {
                         required
                       />
                     </div>
-
-                    <div className="mb-3">
-                      <label htmlFor="image" className="form-label">
-                        image
-                      </label>
-                      <input
-                        type="file"
-                        className="form-control "
-                        id="image"
-                        name="image"
-                        // value={album.image}
-                        onChange={(event) => setFile(event.target.files[0])}
-                      />
-                    </div>
-
                     <div className="mb-3">
                       <label htmlFor="text" className="form-label">
                         Year
@@ -205,6 +190,20 @@ export default function AlbumClient({ initialData }) {
                         value={album.year}
                         onChange={handleInputChange}
                         required
+                      />
+                    </div>
+
+                    <div className="mb-3">
+                      <label htmlFor="image" className="form-label">
+                        image
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control "
+                        id="image"
+                        name="image"
+                        // value={album.image}
+                        onChange={(event) => setFile(event.target.files[0])}
                       />
                     </div>
                   </form>
@@ -268,20 +267,6 @@ export default function AlbumClient({ initialData }) {
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="image" className="form-label">
-                        image
-                      </label>
-                      <input
-                        type="file"
-                        className="form-control "
-                        id="image"
-                        name="image"
-                        // value={album.image}
-                        onChange={(event) => setFile(event.target.files[0])}
-                      />
-                    </div>
-
-                    <div className="mb-3">
                       <label htmlFor="text" className="form-label">
                         Year
                       </label>
@@ -293,6 +278,19 @@ export default function AlbumClient({ initialData }) {
                         value={album.year}
                         onChange={handleEditInputChange}
                         required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="image" className="form-label">
+                        image
+                      </label>
+                      <input
+                        type="file"
+                        className="form-control "
+                        id="image"
+                        name="image"
+                        // value={album.image}
+                        onChange={(event) => setFile(event.target.files[0])}
                       />
                     </div>
                   </form>
@@ -335,8 +333,8 @@ export default function AlbumClient({ initialData }) {
             <tr>
               <th>ID</th>
               <th>Name</th>
-              <th>Image</th>
               <th>Year</th>
+              <th>Image</th>
             </tr>
           </thead>
           <tbody>
@@ -347,8 +345,16 @@ export default function AlbumClient({ initialData }) {
               >
                 <td>{album.id}</td>
                 <td>{album.name}</td>
-                <td>{album.image}</td>
                 <td>{album.year}</td>
+                <td>
+                  <img
+                    src={album.image}
+                    alt={album.caption}
+                    width={40}
+                    style={{ borderRadius: "10%" }}
+                    height={40}
+                  />
+                </td>
 
                 <td>
                   <button

@@ -409,7 +409,15 @@ export default function Gallery({ initialData }) {
                 <td>{user.id}</td>
                 <td>{user.caption}</td>
                 <td>{user.album}</td>
-                <td>{user.image}</td>
+                <td>
+                  <img
+                    src={user.image}
+                    alt={user.caption}
+                    width={40}
+                    style={{ borderRadius: "10%" }}
+                    height={40}
+                  />
+                </td>
                 <td>
                   <button
                     onClick={() => handleEditShow(user)}

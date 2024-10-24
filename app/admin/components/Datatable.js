@@ -28,7 +28,15 @@ const DataTable = ({ data, handleDelete, handleEditShow }) => {
             >
               <td>{user.id}</td>
               <td>{fixedSizeString(user.name, 10)}</td>
-              <td>{fixedSizeString(user.logo, 10)}</td>
+              <td>
+                <img
+                  src={user.logo}
+                  alt={user.name}
+                  width={40}
+                  style={{ borderRadius: "10%" }}
+                  height={40}
+                />
+              </td>
               <td className="w-2">
                 {fixedSizeString(user.short_description, 10)}
               </td>
