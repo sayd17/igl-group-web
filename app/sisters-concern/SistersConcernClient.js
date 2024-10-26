@@ -24,29 +24,32 @@ export default function SistersConcernClient() {
             </div>
           </div>
 
-          <div
-            className={`row d-flex my-3 justify-content-center animate__animated `}
-          >
-            <div className="col-md-3 text-center">
-              {/* Animated Logo */}
-              <img
-                src={currentSister.logo}
-                alt={currentSister?.name}
-                width={300}
-                className="img-fluid animate__animated animate__zoomIn"
-              />
-            </div>
-            <div className="col-md-3">
-              {/* Animated Texts */}
+          <div className={`m-5 animate__animated `}>
+            <img
+              src={currentSister.logo}
+              alt={currentSister?.name}
+              width={300}
+              style={{
+                float: "left",
+                marginRight: "15px",
+                marginBottom: "15px",
+              }}
+              className="img-fluid animate__animated animate__zoomIn"
+            />
+
+            <span>
               <h3 className="mt-3 animate__animated animate__fadeInDown">
                 {currentSister?.name}
               </h3>
-              <p className="font-weight-bold animate__animated animate__fadeInUp">
-                {currentSister?.short_description}
-              </p>
-              <p className="animate__animated animate__fadeInUp">
-                {currentSister?.long_description}
-              </p>
+            </span>
+
+            <span
+              className="animate__animated animate__fadeInUp word-wrap"
+              style={{ "text-align": "justify" }}
+            >
+              {currentSister?.long_description}
+            </span>
+            <div>
               <a
                 // href="#"
                 href={currentSister?.web_url}
@@ -57,6 +60,7 @@ export default function SistersConcernClient() {
                 Visit Website
               </a>
             </div>
+            {/* </span> */}
           </div>
         </div>
       )}

@@ -13,6 +13,7 @@ const Header = async () => {
     teams = response.data.data;
     items = response2.data.data;
     console.log(teams);
+    console.log(items);
   } catch (error) {
     console.error("Error fetching data:", error);
   }

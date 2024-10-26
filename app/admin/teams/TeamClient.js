@@ -15,7 +15,6 @@ export default function team({ initialData }) {
   const router = useRouter();
   const [error, setError] = useState(null);
 
-  // State to store team details
   const [team, setTeam] = useState({
     name: "",
     message: "",

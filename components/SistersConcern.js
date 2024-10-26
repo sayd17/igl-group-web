@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import SistersConcernService from "@/app/api/services/SistersConcernService";
 import { useRouter } from "next/navigation";
 import { fixedSizeString } from "@/helpers/helpers";
+import styles from "./styles/Sisters.module.css";
 
 export default function SistersConcern() {
   const [items, setItems] = useState(null);
@@ -43,7 +44,7 @@ export default function SistersConcern() {
                 <p className="card-text">{item.short_description}</p>
                 <button
                   onClick={handle}
-                  className={`styles["read-more"] border-0`}
+                  className={`styles["read-more"] border-0 btn btn-danger ${styles.buttonAnimated} my-2`}
                 >
                   Read More
                 </button>

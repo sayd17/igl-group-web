@@ -165,3 +165,30 @@ body {
 .cursor {
   cursor: pointer;
 }
+
+.input {
+  height: 12rem;
+  background-color: #f7fafc;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+}
+input.invoice-input {
+  border: 1px solid #767676;
+  padding: 8px;
+  background: #f8f9fa;
+  border-radius: 5px;
+}
+input.invoice-input:focus-visible {
+  outline: 1px solid blue;
+  border: 1px solid blue;
+}
+textarea.invoice-input {
+  border: 1px solid #767676;
+  padding: 8px;
+  background: #f8f9fa;
+  border-radius: 5px;
+}
+textarea.invoice-input:focus-visible {
+  outline: 1px solid blue;
+  border: 1px solid blue;
+}

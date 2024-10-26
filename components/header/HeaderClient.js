@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useStateContext } from "@/app/context/contextProvider";
+import Cookies from "js-cookie";
 
 export default function HeaderClient({ items, teams }) {
   const { setCurrentSister, currentTeam, setCurrentTeam } = useStateContext();
@@ -118,6 +119,8 @@ export default function HeaderClient({ items, teams }) {
                               href="/team"
                               onClick={(e) => {
                                 setCurrentTeam(team);
+                                let currentTeam = JSON.stringify(team);
+                                Cookies.set("currentTeam", currentTeam);
                               }}
                             >
                               {team?.name}

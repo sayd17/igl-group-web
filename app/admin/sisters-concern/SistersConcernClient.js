@@ -4,8 +4,12 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import AlertService from "@/app/api/services/AlertService";
-import { UserAddIcon, PencilIcon } from "@heroicons/react/solid";
-import { ChevronDownIcon } from "@heroicons/react/solid";
+import {
+  UserAddIcon,
+  PencilIcon,
+  PlusCircleIcon,
+  XCircleIcon,
+} from "@heroicons/react/solid";
 import DataTable from "@/app/admin/components/Datatable";
 import { useForm } from "react-hook-form";
 import styles from "./sister.module.css";
@@ -33,9 +37,7 @@ export default function SistersConcern({ initialData }) {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
-    mode: "onChange",
-  });
+  } = useForm();
 
   const handleShow = () => setShowModal(true);
   const handleEditShow = (user) => {
@@ -46,7 +48,7 @@ export default function SistersConcern({ initialData }) {
   const handleClose = () => setShowModal(false);
   const handleEditClose = () => setShowEditModal(false);
 
-  const submitData = (e) => {
+  const submitData = () => {
     // e.preventDefault();
 
     if (!file) {
@@ -179,7 +181,82 @@ export default function SistersConcern({ initialData }) {
                   ></button>
                 </div>
                 <div className="modal-body">
-                  <form onSubmit={handleSubmit(submitData)} noValidate>
+                  <form onSubmit={handleSubmit(submitData)}>
+                    <div className="mb-3">
+                      {/* <label htmlFor="logo" className="form-label">
+                        Logo
+                      </label> */}
+
+                      {file ? (
+                        <div className="position-relative d-inline-block">
+                          <button
+                            onClick={() => setFile(null)}
+                            className="opacity-1 position-absolute end-0.75 rounded bg-gray-100 border-0 w-8 h-8 col-2"
+                          >
+                            <XCircleIcon
+                              className="text-red-600 cursor-pointer"
+                              aria-hidden="true"
+                            />
+                          </button>
+
+                          <img
+                            className="img-responsive img-thumbnail object-fit h-48 bg-white border border-gray-200 rounded-lg shadow-md"
+                            style={{ width: 300, height: 200 }}
+                            src={(() => {
+                              return file?.name && URL.createObjectURL(file);
+                            })()}
+                            alt={file?.name}
+                          />
+                        </div>
+                      ) : (
+                        <div className="input position-relative d-flex align-items-center justify-content-center">
+                          <div className="position-absolute">
+                            <div className="d-flex flex-column align-items-center">
+                              <PlusCircleIcon
+                                className="text-primary"
+                                style={{
+                                  height: "50px",
+                                  width: "50px",
+                                  color: "#007bff",
+                                }}
+                              />
+                              <span className="d-block font-weight-normal text-secondary">
+                                <big>+</big> Add Your Logo
+                              </span>
+                              <span className="d-block font-weight-normal text-secondary">
+                                Max File size: 1MB
+                              </span>
+                              {/* <span className="d-block font-weight-normal text-secondary">
+                                Allowed File: .jpeg, jpg, .png
+                              </span> */}
+                            </div>
+                          </div>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            {...register("logo", {
+                              required: "Please upload an image",
+                              validate: {
+                                // Checks file size limit (e.g., 1MB)
+                                lessThan1MB: (files) =>
+                                  files[0]?.size < 1048576 ||
+                                  "Image size should be less than 1MB",
+                                // Checks file type (e.g., JPEG or PNG only)
+                                acceptedFormats: (files) =>
+                                  [
+                                    "image/jpeg",
+                                    "image/jpg",
+                                    "image/png",
+                                  ].includes(files[0]?.type) ||
+                                  "Only JPEG or PNG or JPG files are allowed",
+                              },
+                            })}
+                            onChange={(event) => setFile(event.target.files[0])}
+                            className="w-100 h-100 opacity-0 cursor-pointer"
+                          />
+                        </div>
+                      )}
+                    </div>
                     <div className="mb-3">
                       <label htmlFor="name" className="form-label">
                         Name
@@ -209,20 +286,39 @@ export default function SistersConcern({ initialData }) {
                         </span>
                       )}
                     </div>
-
-                    <div className="mb-3">
+                    {/* <div className="mb-3">
                       <label htmlFor="logo" className="form-label">
                         Logo
                       </label>
                       <input
                         type="file"
+                        accept="image/*"
+                        {...register("logo", {
+                          required: "Please upload an image",
+                          validate: {
+                            // Checks file size limit (e.g., 1MB)
+                            lessThan1MB: (files) =>
+                              files[0]?.size < 1048576 ||
+                              "Image size should be less than 1MB",
+                            // Checks file type (e.g., JPEG or PNG only)
+                            acceptedFormats: (files) =>
+                              ["image/jpeg", "image/png"].includes(
+                                files[0]?.type
+                              ) || "Only JPEG or PNG files are allowed",
+                          },
+                        })}
                         className="form-control "
                         id="logo"
                         name="logo"
                         // value={user.logo}
                         onChange={(event) => setFile(event.target.files[0])}
                       />
-                    </div>
+                      </div> */}
+                    {errors.logo && (
+                      <span className={`${styles.errorMessage}`}>
+                        {errors.logo.message}
+                      </span>
+                    )}
 
                     <div className="mb-3">
                       <label htmlFor="short_description" className="form-label">
@@ -233,7 +329,7 @@ export default function SistersConcern({ initialData }) {
                         {...register("short_description", {
                           required: {
                             value: true,
-                            message: "Please enter your name",
+                            message: "Please enter your description",
                           },
                           maxLength: {
                             value: 30,
@@ -267,8 +363,8 @@ export default function SistersConcern({ initialData }) {
                             message: "Please enter your description",
                           },
                           maxLength: {
-                            value: 1000,
-                            message: "Please use 1000 characters or less",
+                            value: 32535,
+                            message: "Please use 32535 characters or less",
                           },
                         })}
                         id="long_description"
