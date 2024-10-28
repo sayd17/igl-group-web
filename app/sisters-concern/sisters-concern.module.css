@@ -15,10 +15,10 @@
 }
 
 .backImage {
-  width: 90%;
+  /* width: 90%; */
   max-width: 1280px;
   margin: 0 auto;
-  border-radius: 1%;
+  /* border-radius: 1%; */
   background-image: url("./community-nature-Teams-background-123.jpg");
   background-repeat: no-repeat; /* Avoids repeating the image */
   background-size: cover; /* Scales the image to cover the whole area */

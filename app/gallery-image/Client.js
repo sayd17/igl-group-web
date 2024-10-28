@@ -68,10 +68,10 @@ function GalleryImageClient() {
               <img
                 src={image?.image}
                 alt={`${image?.program} image`}
-                className="card-img-top"
+                className={`card-img-top ${styles.responsiveImage}`}
                 width={300}
+                height={300}
                 onClick={() => {}}
-                height={200}
                 layout="responsive"
               />
             </div>
@@ -86,7 +86,6 @@ function GalleryImageClient() {
           {items?.map((image, imgIndex) => (
             <div className="col-md-3 mb-4" key={imgIndex}>
               <div className="card shadow-sm">
-                {/* <h4 className="image-title text-center">{image?.caption}</h4> */}
                 {/* <h4 className="image-title text-center">{image?.album}</h4> */}
 
                 <img
@@ -100,6 +99,7 @@ function GalleryImageClient() {
                   data-bs-toggle="modal"
                   data-bs-target="#staticBackdrop"
                 />
+                <h4 className="image-title text-center">{image?.caption}</h4>
               </div>
             </div>
           ))}

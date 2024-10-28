@@ -27,9 +27,9 @@ export default function SistersConcern() {
   }, []);
 
   return (
-    <div className="container mt-5">
+    <div className="mt-5 content-wrapper">
       <h2></h2>
-      <div className="row">
+      <div className="row justify-content-between">
         {items?.map((item) => (
           <div className="col-md-3" key={item.id}>
             <div className="card mb-4">
@@ -44,9 +44,9 @@ export default function SistersConcern() {
                 <p className="card-text">{item.short_description}</p>
                 <button
                   onClick={handle}
-                  className={`styles["read-more"] border-0 btn btn-danger ${styles.buttonAnimated} my-2`}
+                  className={`border-0 btn btn-danger ${styles.buttonAnimated} my-2`}
                 >
-                  Read More
+                  Details
                 </button>
               </div>
             </div>

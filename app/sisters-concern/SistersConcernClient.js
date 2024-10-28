@@ -11,7 +11,9 @@ export default function SistersConcernClient() {
   return (
     <>
       {currentSister && (
-        <div className={`container py-5 fixHeight ${styles.backImage}`}>
+        <div
+          className={`container py-5 fixHeight ${styles.backImage} content-wrapper`}
+        >
           {/* Page Header */}
           <div className="row mb-4 text-center">
             <div className="col">

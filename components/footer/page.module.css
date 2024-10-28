@@ -6,3 +6,10 @@
 .footer hover {
   color: #ff0000;
 }
+
+.customHeading::before {
+  content: "🔑 "; /* Icon or text to appear before the element */
+  font-size: 1.5rem; /* Customize the size if needed */
+  margin-right: 8px; /* Space between the icon and the heading text */
+  color: #007bff; /* Color for the icon */
+}

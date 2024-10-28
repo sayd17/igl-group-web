@@ -13,6 +13,10 @@ export default function LoginClient() {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
+  if (token) {
+    router.push("/admin");
+  }
+
   const onSubmit = (ev) => {
     ev.preventDefault();
 
@@ -24,7 +28,8 @@ export default function LoginClient() {
       .then(({ data }) => {
         router.push("/admin");
         setToken();
-        console.log("login successful");
+        setUser(payload);
+        console.log(data?.data);
       })
       .catch((err) => {
         const response = err.response;
@@ -33,12 +38,6 @@ export default function LoginClient() {
         }
       });
   };
-
-  useEffect(() => {
-    if (token) {
-      router.push("/admin");
-    }
-  }, []);
 
   return (
     <div className="container mt-5">

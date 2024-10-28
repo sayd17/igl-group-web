@@ -73,9 +73,12 @@ export default function GalleryClient() {
       )} */}
       <div className="row justify-content-center">
         {items.map((album, index) => (
-          <div className="col-md-3 mb-4" key={index}>
+          <div className="col-md-3 mb-5 pb-5" key={index}>
             <div className="card shadow-sm">
-              <div className="card-body text-center">
+              <div
+                className="card-body text-center"
+                style={{ minHeight: "300px" }}
+              >
                 <h5 className="card-title">{album.name}</h5>
                 <img
                   src={album.image}

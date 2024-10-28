@@ -1,26 +1,92 @@
-export const items = [
+const abouIgl = [
   {
-    id: 2,
-    title: "City Views",
-    body: "Bootstrap Carousel Example",
-    imageUrl:
-      "https://images.unsplash.com/photo-1547481887-a26e2cacb5b2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    docs: "https://getbootstrap.com/docs/4.0/components/carousel/",
+    title: "About IGL Web Ltd",
   },
   {
-    id: 3,
-    title: "Wild Life",
-    body: "Bootstrap Carousel Example",
-    imageUrl:
-      "https://images.unsplash.com/photo-1547481887-a26e2cacb5b2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    docs: "https://getbootstrap.com/docs/4.0/components/carousel/",
+    title: "Mission, Vision & Goal",
   },
   {
-    id: 4,
-    title: "Foods and Culture",
-    body: "Bootstrap Carousel Example",
-    imageUrl:
-      "https://images.unsplash.com/photo-1646385890665-09e99c472d3d?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    docs: "https://getbootstrap.com/docs/4.0/components/carousel/",
+    title: "Board of Director",
+  },
+  {
+    title: "Board of Adviser",
+  },
+  {
+    title: "Board of Officer/Staff",
+  },
+  {
+    title: "Career With IGL Group",
   },
 ];
+
+const sisters = [
+  {
+    title: "IGL Group",
+  },
+  {
+    title: "IGL Network™ Ltd.",
+  },
+  {
+    title: "IGL Host™ LLC.",
+  },
+  {
+    title: "Unicode Converter",
+  },
+  {
+    title: "RamBD Ltd.",
+  },
+  {
+    title: "Student Visa BD",
+  },
+  {
+    title: "Felna DMA",
+  },
+  {
+    title: "Felna Tech",
+  },
+];
+
+const services = [
+  {
+    title: "Domain Registration",
+  },
+  {
+    title: "ERP Software Solution",
+  },
+  {
+    title: "Corporate Web Hosting",
+  },
+  {
+    title: "Web Design & Development",
+  },
+  {
+    title: "Brand SMS Solution",
+  },
+  {
+    title: "SMS cPanel",
+  },
+];
+const products = [
+  {
+    title: "Outlook Setup",
+  },
+  {
+    title: "Android Device POP3 Setup",
+  },
+  {
+    title: "iPhone / iPad POP3 Setup",
+  },
+  {
+    title: "Domain Search",
+  },
+  {
+    title: "Help and Support",
+  },
+  {
+    title: "Authorization Letter",
+  },
+  {
+    title: "Billing Support",
+  },
+];
+export { abouIgl, sisters, services, products };

@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
 import styles from "./page.module.css";
+import { ChevronDoubleRightIcon } from "@heroicons/react/solid";
+import { abouIgl, products, services, sisters } from "@/constants";
 
 const Footer = () => {
   return (
@@ -8,195 +10,77 @@ const Footer = () => {
       style={{ backgroundColor: "#03141b" }}
       className={`text-light pt-5`}
     >
-      <div className="container content-wrapper">
+      <div className="content-wrapper">
         <div className="row d-flex flex-row justify-content-between">
-          <div className="col-md-2 mb-0">
+          <div className="col-md-3 mb-0">
             <h5>About IGL Group</h5>
             <ul className="list-unstyled">
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  About IGL Web Ltd
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Mission, Vision & Goal
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Board of Director
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Board of Adviser
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Board of Officer/Staff
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Career With IGL Group
-                </a>
-              </li>
+              {abouIgl.map((title, index) => (
+                <li key={index}>
+                  <a
+                    href="#"
+                    className={`${styles.footer} text-light text-decoration-none`}
+                  >
+                    <ChevronDoubleRightIcon height={15} width={15} />
+                    {title.title}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div className="col-md-2 mb-0">
-            <h5>Our Partners</h5>
+          <div className="col-md-3 mb-0">
+            <h5>Our Sisters Concern</h5>
             <ul className="list-unstyled">
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  IGL Group
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  IGL Network™ Ltd.
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  IGL Host™ LLC.
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Unicode Converter
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  RamBD Ltd.
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Student Visa BD
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Felna DMA
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Felna Tech
-                </a>
-              </li>
+              {sisters.map((title, index) => (
+                <li key={index}>
+                  <a
+                    href="#"
+                    className={`${styles.footer} text-light text-decoration-none`}
+                  >
+                    <ChevronDoubleRightIcon height={15} width={15} />
+                    {title.title}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div className="col-md-2 mb-0">
+          <div className="col-md-3 mb-0">
             <h5>Our Services</h5>
             <ul className="list-unstyled">
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Domain Registration
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  ERP Software Solution
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Corporate Web Hosting
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Web Design & Development
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Affiliates
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Brand SMS Solution
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  SMS cPanel
-                </a>
-              </li>
+              {services.map((title, index) => (
+                <li key={index}>
+                  <a
+                    href="#"
+                    className={`${styles.footer} text-light text-decoration-none`}
+                  >
+                    <ChevronDoubleRightIcon height={15} width={15} />
+                    {title.title}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div className="col-md-2 mb-0">
+          <div className="col-md-3 mb-0">
+            <h5>Our Products</h5>
+            <ul className="list-unstyled">
+              {products.map((title, index) => (
+                <li key={index}>
+                  <a
+                    href="#"
+                    className={`${styles.footer} text-light text-decoration-none`}
+                  >
+                    <ChevronDoubleRightIcon height={15} width={15} />
+                    {title.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* <div className="col-md-2 mb-0">
             <h5>About</h5>
             <ul className="list-unstyled">
               <li>
@@ -264,68 +148,7 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
-          </div>
-          <div className="col-md-2 mb-0">
-            <h5>Our Support</h5>
-            <ul className="list-unstyled">
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Outlook Setup
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Android Device POP3 Setup
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  iPhone / iPad POP3 Setup
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Domain Search
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Help and Support
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Authorization Letter
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className={`${styles.footer}text-light text-decoration-none`}
-                >
-                  Billing Support
-                </a>
-              </li>
-            </ul>
-          </div>
+          </div> */}
         </div>
 
         <div className="row">

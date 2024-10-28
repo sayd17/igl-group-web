@@ -15,7 +15,9 @@ export default function Home() {
 
       <BootstrapCarousel />
 
-      <div className={styles.sistersConcern}>Our Sisters Concern</div>
+      <div className={`${styles.sistersConcern} content-wrapper`}>
+        Our Sisters Concern
+      </div>
 
       <SistersConcern />
 

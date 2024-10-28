@@ -1,8 +1,10 @@
 "use client";
 import React, { Component } from "react";
 import Link from "next/link";
+import { useStateContext } from "@/app/context/contextProvider";
 
 const Header = ({ toggleContent }) => {
+  const { user } = useStateContext();
   return (
     <>
       <div className="col-2">
@@ -58,7 +60,7 @@ const Header = ({ toggleContent }) => {
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
                   <a href="#" className="white nav-link">
-                    Profile
+                    {user?.email}
                   </a>
                 </li>
               </ul>

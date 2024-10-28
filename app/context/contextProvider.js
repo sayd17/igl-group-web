@@ -28,8 +28,8 @@ export const ContextProvider = ({ children }) => {
       _setToken(null);
       Cookies.remove("token");
     } else {
-      _setToken(Cookies.get("token"));
       Cookies.set("token", "token123");
+      _setToken(Cookies.get("token"));
     }
   };
 

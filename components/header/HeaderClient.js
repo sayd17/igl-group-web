@@ -3,9 +3,13 @@
 import Link from "next/link";
 import { useStateContext } from "@/app/context/contextProvider";
 import Cookies from "js-cookie";
+import { usePathname } from "next/navigation";
+import { HomeIcon } from "@heroicons/react/solid";
 
 export default function HeaderClient({ items, teams }) {
   const { setCurrentSister, currentTeam, setCurrentTeam } = useStateContext();
+  const pathname = usePathname();
+
   return (
     <>
       {/* <ContextProvider> */}
@@ -43,14 +47,21 @@ export default function HeaderClient({ items, teams }) {
                 <li className="nav-item">
                   <Link
                     href="/"
-                    className="nav-link active"
+                    className={`mt-2 ${
+                      pathname === "/" ? "active" : ""
+                    } nav-link`}
                     aria-current="page"
                   >
-                    Home
+                    <HomeIcon width={20} height={20} />
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link href="/about" className="nav-link">
+                  <Link
+                    href="/about"
+                    className={`mt-2 ${
+                      pathname === "/about" ? "active" : ""
+                    } nav-link`}
+                  >
                     About Us
                   </Link>
                 </li>
@@ -141,13 +152,22 @@ export default function HeaderClient({ items, teams }) {
                     </li>
                   </ul>
                 </div>
-                <li className="nav-item">
+                <li
+                  className={` ${
+                    pathname === "/gallery" ? "active" : ""
+                  } nav-link`}
+                >
                   <Link href="/gallery" className="nav-link">
                     Photo Gallery
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link href="#" className="nav-link">
+                  <Link
+                    href="#"
+                    className={`mt-2 ${
+                      pathname === "/contact" ? "active" : ""
+                    } nav-link`}
+                  >
                     Contact Us
                   </Link>
                 </li>
