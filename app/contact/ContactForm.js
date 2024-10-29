@@ -45,24 +45,13 @@ const ContactForm = () => {
         message,
       };
 
-      // Use emailjs to email contact form data
-      //   await emailjs.send(
-      //     import.meta.env.VITE_SERVICE_ID,
-      //     import.meta.env.VITE_TEMPLATE_ID,
-      //     templateParams,
-      //     import.meta.env.VITE_PUBLIC_KEY
-      //   );
-
       // Display success alert
       toggleAlert("Form submission was successful!", "success");
     } catch (e) {
       console.error(e);
-      // Display error alert
       toggleAlert("Uh oh. Something went wrong.", "danger");
     } finally {
-      // Re-enable form submission
       setDisabled(false);
-      // Reset contact form fields after submission
       reset();
     }
   };

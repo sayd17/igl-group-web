@@ -11,7 +11,7 @@ export default function SistersConcernClient() {
   return (
     <>
       {currentSister && (
-        <div className={`container py-5 fixHeight ${styles.backImage}`}>
+        <div className={`container p-5 fixHeight ${styles.backImage}`}>
           {/* Page Header */}
           <div className="row mb-4 text-center">
             <div className="col">
@@ -32,11 +32,11 @@ export default function SistersConcernClient() {
               <img
                 src={currentSister.logo}
                 alt={currentSister?.name}
-                width={300}
+                // width={300}
                 className="img-fluid animate__animated animate__zoomIn"
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-9 text-wrap">
               {/* Animated Texts */}
               <h3 className="mt-3 animate__animated animate__fadeInDown">
                 {currentSister?.name}
@@ -44,7 +44,7 @@ export default function SistersConcernClient() {
               <p className="font-weight-bold animate__animated animate__fadeInUp">
                 {currentSister?.short_description}
               </p>
-              <p className="animate__animated animate__fadeInUp">
+              <p className="animate__animated animate__fadeInUp text-wrap">
                 {currentSister?.long_description}
               </p>
               <a

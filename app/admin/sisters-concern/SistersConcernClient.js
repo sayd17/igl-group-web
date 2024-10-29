@@ -259,7 +259,6 @@ export default function SistersConcern({ initialData }) {
                         Long Description
                       </label>
                       <textarea
-                        type="long_description"
                         className="form-control"
                         {...register("long_description", {
                           required: {
@@ -267,7 +266,7 @@ export default function SistersConcern({ initialData }) {
                             message: "Please enter your description",
                           },
                           maxLength: {
-                            value: 1000,
+                            value: 32536,
                             message: "Please use 1000 characters or less",
                           },
                         })}

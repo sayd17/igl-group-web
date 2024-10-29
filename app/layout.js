@@ -1,6 +1,6 @@
 "use client";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "@mdi/font/css/materialdesignicons.min.css";
+// import "@mdi/font/css/materialdesignicons.min.css";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ContextProvider } from "./context/contextProvider";
