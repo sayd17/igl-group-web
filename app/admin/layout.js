@@ -3,17 +3,26 @@ import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
 import UserService from "../api/services/UserService";
 import Footer from "./components/Footer";
+import { useRouter } from "next/navigation";
+import { useStateContext } from "../context/contextProvider";
 
 export default function AdminLayout({ children }) {
+  const { setUser, token, setToken } = useStateContext();
+  const router = useRouter();
+
   let currentUser;
 
-  UserService.getAll()
-    .then(({ data }) => {
-      currentUser = data?.data[0];
-    })
-    .catch((err) => {
-      console.error("Error fetching data:", err);
-    });
+  if (!token) {
+    router.push("/login");
+  }
+
+  // UserService.getAll()
+  //   .then(({ data }) => {
+  //     currentUser = data?.data[0];
+  //   })
+  //   .catch((err) => {
+  //     console.error("Error fetching data:", err);
+  //   });
 
   const toggleContent = () => {};
 

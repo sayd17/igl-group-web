@@ -1,9 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { useStateContext } from "@/app/context/contextProvider";
-import Link from "next/link";
-import { Collapse } from "react-bootstrap";
-import { Trans } from "react-i18next";
 import { MenuIcon } from "@heroicons/react/solid";
 
 const menu = [
@@ -39,20 +36,35 @@ function Sidebar() {
   return (
     <div className="sidebar col-3 mt-5 pt-5">
       <ul className="nav flex-column">
-        <li className="nav-item">
-          <a href="#" className="nav-link">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width={16}
-              height={16}
-              fill="currentColor"
-              className="icon bi bi-house"
-              viewBox="0 0 16 16"
-            >
-              <path d="M8 .5l-6 6V15a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5l-6-6zm5 6V15H3V6.5L8 1.5l5 5z" />
-            </svg>
-            <span className="link-text">Dashboard</span>
-          </a>
+        <li className="nav-item row">
+          <div className="">
+            <a href="#" className="nav-link">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={16}
+                height={16}
+                fill="currentColor"
+                className="icon bi bi-house"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8 .5l-6 6V15a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V6.5l-6-6zm5 6V15H3V6.5L8 1.5l5 5z" />
+              </svg>
+              <span className="link-text">Dashboard</span>
+            </a>
+          </div>
+          <div className="">
+            {/* <MenuIcon
+              className="float-end text-light mb-1"
+              // style={{
+              //   position: "fixed",
+              //   top: "20px",
+              //   right: "20px",
+              //   zIndex: 100000,
+              // }}
+              width={30}
+              height={30}
+            /> */}
+          </div>
         </li>
         <li className="nav-item">
           <a href="/admin/users" className="nav-link">
@@ -92,13 +104,14 @@ function Sidebar() {
           <a href="/admin/teams" className="nav-link">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width={16}
-              height={16}
+              width="16"
+              height="16"
               fill="currentColor"
-              className="icon bi bi-file-earmark-bar-graph"
+              class="icon bi bi-microsoft-teams"
               viewBox="0 0 16 16"
             >
-              <path d="M14 4.5V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h7.5L14 4.5zm-3.5-.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H3.5a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5H7v3.5a.5.5 0 0 0 .5.5h3zM6 12V9H5v3h1zm2-4V5H7v3h1zm2 2v-2h-1v2h1z" />
+              <path d="M9.186 4.797a2.42 2.42 0 1 0-2.86-2.448h1.178c.929 0 1.682.753 1.682 1.682zm-4.295 7.738h2.613c.929 0 1.682-.753 1.682-1.682V5.58h2.783a.7.7 0 0 1 .682.716v4.294a4.197 4.197 0 0 1-4.093 4.293c-1.618-.04-3-.99-3.667-2.35Zm10.737-9.372a1.674 1.674 0 1 1-3.349 0 1.674 1.674 0 0 1 3.349 0m-2.238 9.488-.12-.002a5.2 5.2 0 0 0 .381-2.07V6.306a1.7 1.7 0 0 0-.15-.725h1.792c.39 0 .707.317.707.707v3.765a2.6 2.6 0 0 1-2.598 2.598z" />
+              <path d="M.682 3.349h6.822c.377 0 .682.305.682.682v6.822a.68.68 0 0 1-.682.682H.682A.68.68 0 0 1 0 10.853V4.03c0-.377.305-.682.682-.682Zm5.206 2.596v-.72h-3.59v.72h1.357V9.66h.87V5.945z" />
             </svg>
             <span className="link-text">Team</span>
           </a>
@@ -107,13 +120,13 @@ function Sidebar() {
           <a href="/admin/team-members" className="nav-link">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width={16}
-              height={16}
+              width="16"
+              height="16"
               fill="currentColor"
-              className="icon bi bi-file-earmark-bar-graph"
+              className="icon bi bi-people"
               viewBox="0 0 16 16"
             >
-              <path d="M14 4.5V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h7.5L14 4.5zm-3.5-.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H3.5a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5H7v3.5a.5.5 0 0 0 .5.5h3zM6 12V9H5v3h1zm2-4V5H7v3h1zm2 2v-2h-1v2h1z" />
+              <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4" />
             </svg>
             <span className="link-text">Team Member</span>
           </a>
@@ -122,13 +135,15 @@ function Sidebar() {
           <a href="/admin/album" className="nav-link">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width={16}
-              height={16}
+              width="16"
+              height="16"
               fill="currentColor"
-              className="icon bi bi-file-earmark-bar-graph"
+              className="icon bi bi-journal-album"
               viewBox="0 0 16 16"
             >
-              <path d="M14 4.5V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h7.5L14 4.5zm-3.5-.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H3.5a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5H7v3.5a.5.5 0 0 0 .5.5h3zM6 12V9H5v3h1zm2-4V5H7v3h1zm2 2v-2h-1v2h1z" />
+              <path d="M5.5 4a.5.5 0 0 0-.5.5v5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 .5-.5v-5a.5.5 0 0 0-.5-.5zm1 7a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1z" />
+              <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+              <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
             </svg>
             <span className="link-text">Album</span>
           </a>
@@ -137,13 +152,14 @@ function Sidebar() {
           <a href="/admin/gallery" className="nav-link">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width={16}
-              height={16}
+              width="16"
+              height="16"
               fill="currentColor"
-              className="icon bi bi-file-earmark-bar-graph"
+              className="icon bi bi-images"
               viewBox="0 0 16 16"
             >
-              <path d="M14 4.5V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h7.5L14 4.5zm-3.5-.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H3.5a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5H7v3.5a.5.5 0 0 0 .5.5h3zM6 12V9H5v3h1zm2-4V5H7v3h1zm2 2v-2h-1v2h1z" />
+              <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
+              <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1z" />
             </svg>
             <span className="link-text">Gallery</span>
           </a>
@@ -152,19 +168,19 @@ function Sidebar() {
           <a href="#" onClick={onLogout} className="nav-link">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width={16}
-              height={16}
+              width="16"
+              height="16"
               fill="currentColor"
-              className="icon bi bi-box-arrow-right"
+              className="icon bi bi-box-arrow-left"
               viewBox="0 0 16 16"
             >
               <path
-                fillRule="evenodd"
-                d="M8.146 11.354a.5.5 0 0 1-.708 0L4.793 8.707a.5.5 0 1 1 .708-.708L7.5 9.793V3.5a.5.5 0 0 1 1 0v6.293l2-2a.5.5 0 1 1 .708.708l-2.646 2.647z"
+                fill-rule="evenodd"
+                d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"
               />
               <path
-                fillRule="evenodd"
-                d="M13.5 14a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 1.5 14V2A1.5 1.5 0 0 1 3 0.5h9A1.5 1.5 0 0 1 13.5 2v12zM12 2v12H3V2h9z"
+                fill-rule="evenodd"
+                d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"
               />
             </svg>
             <span className="link-text">Logout</span>

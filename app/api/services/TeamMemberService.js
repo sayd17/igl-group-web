@@ -6,8 +6,8 @@ const getAll = (query = "") => {
   return axiosApi.get(`/${route}${query}`);
 };
 
-const getTeamMembersByTeamId = (data) => {
-  return axiosApi.post(`/team-members-by-team-id`, data);
+const getTeamWiseData = (url, data) => {
+  return axiosApi.post(url, data);
 };
 
 const get = (id, query) => {
@@ -37,7 +37,7 @@ const TeamMemberService = {
   update,
   remove,
   removeAll,
-  getTeamMembersByTeamId,
+  getTeamWiseData,
 };
 
 export default TeamMemberService;

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import SistersConcernService from "@/app/api/services/SistersConcernService";
 import { useRouter } from "next/navigation";
 import { fixedSizeString } from "@/helpers/helpers";
+import styles from "./styles/Sisters.module.css";
 
 export default function SistersConcern() {
   const [items, setItems] = useState(null);
@@ -26,9 +27,9 @@ export default function SistersConcern() {
   }, []);
 
   return (
-    <div className="container mt-5">
+    <div className="mt-5 content-wrapper">
       <h2></h2>
-      <div className="row">
+      <div className="row justify-content-between">
         {items?.map((item) => (
           <div className="col-md-3" key={item.id}>
             <div className="card mb-4">
@@ -43,9 +44,9 @@ export default function SistersConcern() {
                 <p className="card-text">{item.short_description}</p>
                 <button
                   onClick={handle}
-                  className={`styles["read-more"] border-0`}
+                  className={`border-0 btn btn-danger ${styles.buttonAnimated} my-2`}
                 >
-                  Read More
+                  Details
                 </button>
               </div>
             </div>

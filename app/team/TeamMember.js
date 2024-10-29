@@ -3,29 +3,30 @@ import React, { useEffect, useState } from "react";
 import { useStateContext } from "../context/contextProvider";
 import "animate.css";
 import TeamMemberService from "../api/services/TeamMemberService";
+import Cookies from "js-cookie";
 
 function TeamMember() {
-  const { currentTeam } = useStateContext();
+  // const { currentTeam } = useStateContext();
   const [members, setMembers] = useState([]);
+  let currentTeam = Cookies.get("currentTeam");
+  currentTeam = JSON.parse(currentTeam);
+  console.log(currentTeam);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const payload = {
-          id: currentTeam["id"],
-        };
-        const { data } = await TeamMemberService.getTeamMembersByTeamId(
-          payload
-        );
-
-        const customArray = Object.keys(data).map((key) => data[key]);
-        setMembers(customArray);
-      } catch (err) {
-        console.log("team member service error", err);
-      }
+    const fetchData = () => {
+      const formData = new FormData();
+      formData.append("team", currentTeam?.name);
+      TeamMemberService.getTeamWiseData("get-team-wise-data", formData)
+        .then(({ data }) => {
+          let obj = data.data;
+          const customArray = Object.keys(obj).map((key) => obj[key]);
+          setMembers(customArray);
+        })
+        .catch((err) => {
+          console.log("sisters-concern api error", err);
+        });
     };
-
-    fetchData();
+    if (currentTeam) fetchData();
   }, []);
 
   return (
@@ -34,22 +35,22 @@ function TeamMember() {
         {members.map((member, index) => (
           <div
             key={index}
-            className="col-md-4 animate__animated animate__fadeInUp"
+            className="col-md-4 p-2 animate__animated animate__fadeInUp"
             style={{ animationDelay: `${index * 0.2}s` }}
           >
             <div className="card shadow-sm h-100">
-              {/* <Image
+              <img
                 src={member.image}
                 alt={member.name}
                 className="card-img-top img-fluid"
                 width={300}
                 height={300}
-                objectFit="cover"
-              /> */}
+              />
               <div className="card-body">
                 <h5 className="card-title">{member.name}</h5>
-                <p className="card-text">{member.position}</p>
-                <p className="text-muted">{member.description}</p>
+                <p className="card-text">{member.designation}</p>
+                {/* <p className="text-muted">{member.department}</p> */}
+                {/* <p className="text-muted">{member.image}</p> */}
               </div>
             </div>
           </div>

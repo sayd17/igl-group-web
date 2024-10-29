@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { XCircleIcon } from "@heroicons/react/solid";
 import styles from "./image.module.css";
+import allStyles from "../all.module.css";
 import GalleryService from "../api/services/GalleryService";
 
 function GalleryImageClient() {
@@ -34,7 +35,27 @@ function GalleryImageClient() {
   }, []);
 
   return (
-    <div className={`${styles.backImage}`}>
+    <div className={`${allStyles.backImage}`}>
+      <div className={`content-wrapper ${allStyles.imageContainer}`}>
+        <img
+          src="/assets/img/backImage.jpg"
+          alt="background image"
+          width="1280"
+          height="400"
+        />
+        <div className={`content-wrapper ${allStyles.imageText}`}>
+          <div className="row text-center mb-5">
+            <div className="col">
+              <h1 className="display-4 animate__animated animate__fadeInDown">
+                {gallery?.name}
+              </h1>
+              <p className="lead animate__animated animate__fadeInUp">
+                {gallery?.year}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div
         className="modal fade"
         id="staticBackdrop"
@@ -53,7 +74,7 @@ function GalleryImageClient() {
                   className="image-title fs-5 text-center"
                   id="staticBackdropLabel"
                 >
-                  {image?.caption} {`(${image?.album})`}
+                  {image?.caption}
                 </h1>
                 <button
                   type="button"
@@ -68,10 +89,10 @@ function GalleryImageClient() {
               <img
                 src={image?.image}
                 alt={`${image?.program} image`}
-                className="card-img-top"
+                className={`card-img-top ${styles.responsiveImage}`}
                 width={300}
+                height={300}
                 onClick={() => {}}
-                height={200}
                 layout="responsive"
               />
             </div>
@@ -86,7 +107,6 @@ function GalleryImageClient() {
           {items?.map((image, imgIndex) => (
             <div className="col-md-3 mb-4" key={imgIndex}>
               <div className="card shadow-sm">
-                {/* <h4 className="image-title text-center">{image?.caption}</h4> */}
                 {/* <h4 className="image-title text-center">{image?.album}</h4> */}
 
                 <img
@@ -100,6 +120,7 @@ function GalleryImageClient() {
                   data-bs-toggle="modal"
                   data-bs-target="#staticBackdrop"
                 />
+                <h4 className="image-title text-center">{image?.caption}</h4>
               </div>
             </div>
           ))}

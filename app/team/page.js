@@ -5,12 +5,12 @@ import Header from "@/components/header/Header";
 
 function page() {
   return (
-    <div>
+    <>
       <ContextProvider>
         <Header />
       </ContextProvider>
       <TeamClient />
-    </div>
+    </>
   );
 }
 

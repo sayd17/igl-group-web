@@ -1,0 +1,14 @@
+.buttonAnimated {
+  text-transform: uppercase;
+  font-size: 0.9em;
+  box-shadow: 0 0 1px #0060ad;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+  letter-spacing: 1px;
+  text-align: center;
+  transition: all 0.3s ease-out;
+  box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.3);
+}
+
+.buttonAnimated:hover {
+  transform: scale(1.2);
+}

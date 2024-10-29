@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useGalleryContext } from "../context/galleryContext";
 import Cookies from "js-cookie";
 import AlbumService from "../api/services/AlbumService";
+import allStyles from "../all.module.css";
 
 export default function GalleryClient() {
   const [selectedAlbum, setSelectedAlbum] = useState(null);
@@ -46,8 +47,25 @@ export default function GalleryClient() {
   }, []);
 
   return (
-    <div className="container mt-5 fixedHeight">
-      <h1 className="text-center mb-4">Photo Gallery</h1>
+    <div className="fixedHeight content-wrapper">
+      <div className={` ${allStyles.imageContainer}`}>
+        <img
+          src="/assets/img/backImage.jpg"
+          alt="background image"
+          width="1280"
+          height="400"
+        />
+        <div className={`${allStyles.imageText}`}>
+          <div className="row text-center mb-5">
+            <div className="col">
+              <h1 className="display-4 animate__animated animate__fadeInDown">
+                Photo Gallery
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Show images when album is selected */}
       {/* {selectedAlbum && (
         <div className="row justify-content-center mt-4 px-4">
@@ -71,11 +89,14 @@ export default function GalleryClient() {
           )}
         </div>
       )} */}
-      <div className="row justify-content-center">
+      <div className="row mt-5 justify-content-center">
         {items.map((album, index) => (
-          <div className="col-md-3 mb-4" key={index}>
+          <div className="col-md-3 mb-5 pb-5" key={index}>
             <div className="card shadow-sm">
-              <div className="card-body text-center">
+              <div
+                className="card-body text-center"
+                style={{ minHeight: "300px" }}
+              >
                 <h5 className="card-title">{album.name}</h5>
                 <img
                   src={album.image}
