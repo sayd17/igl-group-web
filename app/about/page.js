@@ -68,7 +68,7 @@ export default function About() {
         <div className="row mt-5 text-center">
           <div className={`col ${styles.fadeIn}`}>
             <h3 className="my-4">Want to Know More?</h3>
-            <a href="/contact" className="btn btn-primary btn-lg">
+            <a href="#" className="btn btn-primary btn-lg">
               Contact Us
             </a>
           </div>

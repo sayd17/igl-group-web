@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { XCircleIcon } from "@heroicons/react/solid";
 import styles from "./image.module.css";
+import allStyles from "../all.module.css";
 import GalleryService from "../api/services/GalleryService";
 
 function GalleryImageClient() {
@@ -34,7 +35,27 @@ function GalleryImageClient() {
   }, []);
 
   return (
-    <div className={`${styles.backImage}`}>
+    <div className={`${allStyles.backImage}`}>
+      <div className={`content-wrapper ${allStyles.imageContainer}`}>
+        <img
+          src="/assets/img/backImage.jpg"
+          alt="background image"
+          width="1280"
+          height="400"
+        />
+        <div className={`content-wrapper ${allStyles.imageText}`}>
+          <div className="row text-center mb-5">
+            <div className="col">
+              <h1 className="display-4 animate__animated animate__fadeInDown">
+                {gallery?.name}
+              </h1>
+              <p className="lead animate__animated animate__fadeInUp">
+                {gallery?.year}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div
         className="modal fade"
         id="staticBackdrop"
@@ -53,7 +74,7 @@ function GalleryImageClient() {
                   className="image-title fs-5 text-center"
                   id="staticBackdropLabel"
                 >
-                  {image?.caption} {`(${image?.album})`}
+                  {image?.caption}
                 </h1>
                 <button
                   type="button"

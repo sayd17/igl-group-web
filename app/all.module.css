@@ -1,13 +1,3 @@
-.backImage {
-  /* width: 90%; */
-  max-width: 1280px;
-  margin: 0 auto;
-  /* background-image: url("/assets/img/backImage.jpg"); */
-  background-repeat: no-repeat; /* Avoids repeating the image */
-  background-size: cover; /* Scales the image to cover the whole area */
-  background-position: center; /* Centers the image */
-}
-
 .imageContainer {
   position: relative;
   /* width: 500px; */

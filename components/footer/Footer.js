@@ -153,6 +153,7 @@ const Footer = () => {
 
         <div className="row">
           <div className="col-md-12 text-center">
+            <Link href="/admin">Admin</Link>
             <p className="mb-2">© 2024 IGL Group. All Rights Reserved.</p>
           </div>
         </div>

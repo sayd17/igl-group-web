@@ -6,6 +6,8 @@ import TeamMember from "./TeamMember";
 import styles from "./team.module.css";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+// import contentImage from "./backImage.jpg";
 
 export default function TeamClient() {
   // const { currentTeam } = useStateContext();
@@ -23,10 +25,30 @@ export default function TeamClient() {
 
   return (
     <>
+      <div className={`content-wrapper ${styles.imageContainer}`}>
+        <img
+          src="/assets/img/backImage.jpg"
+          alt="background image"
+          width="1280"
+          height="400"
+        />
+        <div className={`content-wrapper ${styles.imageText}`}>
+          <div className="row text-center mb-5">
+            <div className="col">
+              <h1 className="display-4 animate__animated animate__fadeInDown">
+                {currentTeam?.name}
+              </h1>
+              <p className="lead animate__animated animate__fadeInUp">
+                {currentTeam?.message}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div>
         {currentTeam && (
           <div className={`container fixHeight ${styles.backImage} py-5`}>
-            <div className="row text-center mb-5">
+            {/* <div className="row text-center mb-5">
               <div className="col">
                 <h1 className="display-4 animate__animated animate__fadeInDown">
                   {currentTeam?.name}
@@ -35,7 +57,7 @@ export default function TeamClient() {
                   {currentTeam?.message}
                 </p>
               </div>
-            </div>
+            </div> */}
 
             <TeamMember />
           </div>

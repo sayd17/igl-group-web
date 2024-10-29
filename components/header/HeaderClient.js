@@ -73,7 +73,9 @@ export default function HeaderClient({ items, teams }) {
                   <ul className="navbar-nav">
                     <li className="nav-item dropdown">
                       <a
-                        className="nav-link dropdown-toggle"
+                        className={`${
+                          pathname === "/sisters-concern" ? "active" : ""
+                        } nav-link dropdown-toggle`}
                         href="#"
                         id="navbarDarkDropdownMenuLink"
                         role="button"
@@ -110,7 +112,9 @@ export default function HeaderClient({ items, teams }) {
                   <ul className="navbar-nav">
                     <li className="nav-item dropdown">
                       <a
-                        className="nav-link dropdown-toggle"
+                        className={`${
+                          pathname === "/team" ? "active" : ""
+                        } nav-link dropdown-toggle`}
                         href="#"
                         id="navbarDarkDropdownMenuLink"
                         role="button"

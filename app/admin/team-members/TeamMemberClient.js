@@ -383,7 +383,15 @@ export default function TeamMemberClient({ initialData }) {
                 <td>{teamMember.name}</td>
                 <td>{teamMember.designation}</td>
                 <td>{teamMember.team}</td>
-                <td>{teamMember.image}</td>
+                <td>
+                  <img
+                    src={teamMember.image}
+                    alt={teamMember.name}
+                    width={100}
+                    style={{ borderRadius: "10%" }}
+                    height={100}
+                  />
+                </td>
                 <td>
                   <button
                     onClick={() => handleEditShow(teamMember)}

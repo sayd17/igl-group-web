@@ -32,9 +32,9 @@ const DataTable = ({ data, handleDelete, handleEditShow }) => {
                 <img
                   src={user.logo}
                   alt={user.name}
-                  width={40}
+                  width={100}
                   style={{ borderRadius: "10%" }}
-                  height={40}
+                  height={100}
                 />
               </td>
               <td className="w-2">

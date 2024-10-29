@@ -350,9 +350,9 @@ export default function AlbumClient({ initialData }) {
                   <img
                     src={album.image}
                     alt={album.caption}
-                    width={40}
+                    width={100}
                     style={{ borderRadius: "10%" }}
-                    height={40}
+                    height={100}
                   />
                 </td>
 
