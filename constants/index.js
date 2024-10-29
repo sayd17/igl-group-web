@@ -89,4 +89,27 @@ const products = [
     title: "Billing Support",
   },
 ];
-export { abouIgl, sisters, services, products };
+
+const socialMedia = [
+  {
+    icon: "facebook",
+    link: "https://www.facebook.com/iglgroupbd",
+  },
+  {
+    icon: "linkedin",
+    link: "https://www.linkedin.com/company/igl-web-ltd/",
+  },
+  {
+    icon: "whatsapp",
+    link: "https://wa.me/01958666999",
+  },
+  {
+    icon: "twitter",
+    link: "#",
+  },
+  {
+    icon: "instagram",
+    link: "#",
+  },
+];
+export { abouIgl, sisters, services, products, socialMedia };

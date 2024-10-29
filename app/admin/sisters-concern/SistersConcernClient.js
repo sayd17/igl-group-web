@@ -362,13 +362,8 @@ export default function SistersConcern({ initialData }) {
                             message: "Please enter your description",
                           },
                           maxLength: {
-<<<<<<< HEAD
-                            value: 32536,
-                            message: "Please use 1000 characters or less",
-=======
                             value: 32535,
                             message: "Please use 32535 characters or less",
->>>>>>> 6782027c81316946965a7962cd020d50dbfa7052
                           },
                         })}
                         id="long_description"

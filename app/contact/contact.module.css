@@ -40,3 +40,32 @@
     margin-left: 200px;
   }
 }
+
+.infoBranchBlock {
+  position: relative;
+  margin-bottom: 30px;
+}
+.infoBranchBlock .innerBox {
+  position: relative;
+  border-radius: 5px;
+  padding: 30px 35px;
+  background-color: rgba(23, 182, 230, 0.7);
+}
+.infoBranchBlock .innerBox .text {
+  position: relative;
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.9em;
+}
+.infoBranchBlock .innerBox .direction {
+  position: relative;
+  color: #ffffff;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 700;
+  margin-top: 10px;
+  display: inline-block;
+  text-transform: uppercase;
+  font-family: "Montserrat", sans-serif;
+}
