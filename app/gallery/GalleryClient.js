@@ -24,9 +24,7 @@ export default function GalleryClient() {
   const handle = (album) => {
     // e.preventDefault();
     const serializedArray = JSON.stringify(album);
-    // setCurrentAlbum(items);
-    // let item = items;
-    console.log(serializedArray);
+
     Cookies.set("album", serializedArray);
     router.push("/gallery-image");
   };

@@ -16,19 +16,17 @@ export default function AdminLayout({ children }) {
     router.push("/login");
   }
 
-  // UserService.getAll()
-  //   .then(({ data }) => {
-  //     currentUser = data?.data[0];
-  //   })
-  //   .catch((err) => {
-  //     console.error("Error fetching data:", err);
-  //   });
-
-  const toggleContent = () => {};
+  UserService.getAll()
+    .then(({ data }) => {
+      currentUser = data?.data[0];
+    })
+    .catch((err) => {
+      console.error("Error fetching data:", err);
+    });
 
   return (
     <div className="row d-flex justify-content-around">
-      <Header toggleContent={toggleContent} />
+      <Header />
       {/* <Header currentUser={currentUser} /> */}
       {/* <NavBar /> */}
       {/* <div className="" style={{ width: "400px", height: "60px" }}></div> */}

@@ -1,44 +1,54 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import HeaderClient from "./HeaderClient";
 import SistersConcernService from "@/app/api/services/SistersConcernService";
 import TeamService from "@/app/api/services/TeamService";
+import team from "@/app/admin/teams/TeamClient";
 
-const Header = async () => {
-  let teams = [];
-  let items = [];
+const Header = () => {
+  const [teams, setTeams] = useState([]);
+  const [items, setItems] = useState([]);
 
-  try {
-    const response = await TeamService.getAll();
-    const response2 = await SistersConcernService.getAll();
-    teams = response.data.data;
-    items = response2.data.data;
-    console.log(teams);
-    console.log(items);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-
-  // await TeamService.getAll()
-  //   .then((res) => {
-  //     const customArray = Object.keys(data?.data).map(
-  //       (key) => data.data[key]
+  // useEffect(() => {
+  //   try {
+  //     const response = TeamService.getAll();
+  //     const response2 = SistersConcernService.getAll();
+  //     console.log(response.data);
+  //     const customArray = Object.keys(response?.data).map(
+  //       (key) => response.data[key]
   //     );
-  //     teams = customArray;
-  //   })
-  //   .catch((err) => {
-  //     console.log("team error", err);
-  //   });
-
-  // await SistersConcernService.getAll()
-  //   .then((res) => {
-  //     const customArray = Object.keys(data?.data).map(
-  //       (key) => data.data[key]
+  //     const customArray2 = Object.keys(response2?.data).map(
+  //       (key) => response2.data[key]
   //     );
-  //     items = customArray;
-  //   })
-  //   .catch((err) => {
-  //     console.log("team error", err);
-  //   });
+  //     console.log(customArray);
+  //     console.log(customArray2);
+  //     setItems(customArray2);
+  //     setTeams(customArray);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // }, []);
+  useEffect(() => {
+    TeamService.getAll()
+      .then((res) => {
+        const data = res?.data;
+        const customArray = Object.keys(data).map((key) => data[key]);
+        setTeams(customArray[0]);
+      })
+      .catch((err) => {
+        console.log("team error", err);
+      });
+
+    SistersConcernService.getAll()
+      .then((res) => {
+        const data = res?.data;
+        const customArray = Object.keys(data).map((key) => data[key]);
+        setItems(customArray[0]);
+      })
+      .catch((err) => {
+        console.log("team error", err);
+      });
+  }, []);
 
   return (
     <div>

@@ -10,7 +10,6 @@ function TeamMember() {
   const [members, setMembers] = useState([]);
   let currentTeam = Cookies.get("currentTeam");
   currentTeam = JSON.parse(currentTeam);
-  console.log(currentTeam);
 
   useEffect(() => {
     const fetchData = () => {

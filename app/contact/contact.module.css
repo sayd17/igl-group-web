@@ -32,6 +32,8 @@
   padding: 15px 50px;
   border-radius: 10px;
   margin-bottom: 25px;
+  background-color: #f45532;
+  border: none;
 }
 
 @media (max-width: 768px) {
@@ -68,4 +70,17 @@
   display: inline-block;
   text-transform: uppercase;
   font-family: "Montserrat", sans-serif;
+}
+
+.form {
+  background: #e6e7e8;
+  padding: 25px;
+}
+
+.red {
+  color: red;
+}
+
+.bgRed {
+  background-color: #f45532;
 }

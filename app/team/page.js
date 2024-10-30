@@ -1,6 +1,6 @@
 import React from "react";
 import TeamClient from "./TeamClient";
-import { useStateContext, ContextProvider } from "../context/contextProvider";
+import { ContextProvider } from "../context/contextProvider";
 import Header from "@/components/header/Header";
 
 function page() {

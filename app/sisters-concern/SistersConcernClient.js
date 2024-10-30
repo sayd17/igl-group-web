@@ -59,7 +59,7 @@ export default function SistersConcernClient() {
 
             <span
               className="animate__animated animate__fadeInUp word-wrap"
-              style={{ "text-align": "justify" }}
+              style={{ textAlign: "justify" }}
             >
               {currentSister?.long_description}
             </span>

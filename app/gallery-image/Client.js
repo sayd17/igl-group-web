@@ -14,7 +14,6 @@ function GalleryImageClient() {
   const [image, setImage] = useState(null);
   const album = Cookies.get("album");
   const gallery = album ? JSON.parse(album) : [];
-  console.log(items);
 
   useEffect(() => {
     const fetchData = () => {
@@ -101,7 +100,7 @@ function GalleryImageClient() {
       </div>
       <div>
         <div
-          className={`row justify-content-center  pt-5 content-wrapper `}
+          className={`row justify-content-center  pt-5 content-wrapper`}
           style={{ minHeight: "400px" }}
         >
           {items?.map((image, imgIndex) => (

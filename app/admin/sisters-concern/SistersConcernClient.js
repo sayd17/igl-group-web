@@ -332,8 +332,8 @@ export default function SistersConcern({ initialData }) {
                             message: "Please enter your description",
                           },
                           maxLength: {
-                            value: 30,
-                            message: "Please use 30 characters or less",
+                            value: 100,
+                            message: "Please use 100 characters or less",
                           },
                         })}
                         className="form-control"

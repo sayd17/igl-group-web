@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useStateContext } from "../context/contextProvider";
 
 const axiosApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,

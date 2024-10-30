@@ -167,6 +167,7 @@ const Footer = () => {
           <section className="mb-4">
             {socialMedia.map((media, index) => (
               <MDBBtn
+                key={index}
                 outline
                 color="light"
                 floating

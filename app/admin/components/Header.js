@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import Link from "next/link";
 import { useStateContext } from "@/app/context/contextProvider";
 
-const Header = ({ toggleContent }) => {
+const Header = () => {
   const { user } = useStateContext();
   return (
     <>

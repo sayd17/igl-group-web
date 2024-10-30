@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import styles from "./contact.module.css";
 import allStyles from "../all.module.css";
 import { MailIcon } from "@heroicons/react/solid";
-import AlbumService from "../api/services/AlbumService";
 import AlertService from "../api/services/AlertService";
 
 const ContactForm = () => {
@@ -31,6 +30,44 @@ const ContactForm = () => {
       setAlertInfo({ display: false, message: "", type: "" });
     }, 5000);
   };
+
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+
+  // function submit(e) {
+  //   // This will prevent page refresh
+  //   e.preventDefault();
+
+  //   // replace this with your own unique endpoint URL
+  //   fetch("https://formcarry.com/s/XXXXXXX", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json",
+  //     },
+  //     body: JSON.stringify({ email: email, message: message }),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       if (res.code === 200) {
+  //         setSubmitted(true);
+  //       } else {
+  //         setError(res.message);
+  //       }
+  //     })
+  //     .catch((error) => setError(error));
+  // }
+
+  // if (error) {
+  //   return <p>{error}</p>;
+  // }
+
+  // if (submitted) {
+  //   return <p>We've received your message, thank you for contacting us!</p>;
+  // }
 
   // Function called on submit that uses emailjs to send email of valid contact form
   const onSubmit = (data) => {
@@ -69,16 +106,16 @@ const ContactForm = () => {
           width="1280"
           height="400"
         />
-        <div className={`content-wrapper ${allStyles.imageText}`}>
-          <div className="row text-center mb-5">
-            <div className="col">
-              <h1 className="display-4 animate__animated animate__fadeInDown">
-                Email Us
-              </h1>
-              <p className="lead animate__animated animate__fadeInUp">
-                <MailIcon width={30} height={30} /> query@iglgroup.com
-              </p>
-            </div>
+      </div>
+      <div className={`content-wrapper mt-5`}>
+        <div className="row text-center mb-5">
+          <div className="col">
+            <h1 className="display-4 bgRed animate__animated animate__fadeInDown">
+              Email Us
+            </h1>
+            <p className="lead animate__animated animate__fadeInUp">
+              <MailIcon width={30} height={30} /> query@iglgroup.com
+            </p>
           </div>
         </div>
       </div>
@@ -91,7 +128,7 @@ const ContactForm = () => {
               <div className={`${styles.innerBox}`}>
                 <h3>Main Branch</h3>
                 <div className={`${styles.text}`}>
-                  House # 33(4th Floor), Road # 4, Dhanmondi, Dhaka-1205, <br />{" "}
+                  House #33 (4th Floor), Road # 4, Dhanmondi, Dhaka-1205, <br />
                   Bangladesh.
                 </div>
                 <a href="#" className={`${styles.direction}`}>
@@ -101,14 +138,15 @@ const ContactForm = () => {
             </div>
             <div className="col-6  text-center">
               <div className={`${styles.contactForm}`}>
+                <h5 className="display-4 animate__animated animate__fadeInDown">
+                  Contact <span className={`${styles.red}`}> Us </span>
+                </h5>
                 <form
                   id="contact-form"
+                  className={`${styles.form}`}
                   onSubmit={handleSubmit(onSubmit)}
                   noValidate
                 >
-                  <h5 className="display-4 animate__animated animate__fadeInDown">
-                    Contact Us
-                  </h5>
                   {/* Row 1 of form */}
                   <div className={`${styles.formRow} row`}>
                     <div className="col-6">
@@ -204,7 +242,7 @@ const ContactForm = () => {
                     disabled={disabled}
                     type="submit"
                   >
-                    Submit
+                    Send Message
                   </button>
                 </form>
               </div>
@@ -224,7 +262,7 @@ const ContactForm = () => {
               aria-label="Close"
               onClick={() =>
                 setAlertInfo({ display: false, message: "", type: "" })
-              } // Clear the alert when close button is clicked
+              }
             ></button>
           </div>
         )}

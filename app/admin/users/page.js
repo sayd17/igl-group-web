@@ -6,6 +6,7 @@ const User = async () => {
   try {
     const response = await UserService.getAll();
     initialData = response.data.data; // Adjust according to your API response structure
+    console.log(initialData);
   } catch (error) {
     console.error("Error fetching data:", error);
   }

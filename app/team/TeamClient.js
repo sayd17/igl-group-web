@@ -27,27 +27,27 @@ export default function TeamClient() {
     <>
       <div className={`content-wrapper ${styles.imageContainer}`}>
         <img
-          src="/assets/img/backImage.jpg"
+          src="/assets/img/team.jpg"
           alt="background image"
           width="1280"
           height="400"
         />
-        <div className={`content-wrapper ${styles.imageText}`}>
-          <div className="row text-center mb-5">
-            <div className="col">
-              <h1 className="display-4 animate__animated animate__fadeInDown">
-                {currentTeam?.name}
-              </h1>
-              <p className="lead animate__animated animate__fadeInUp">
-                {currentTeam?.message}
-              </p>
-            </div>
+      </div>
+      <div className={`content-wrapper `}>
+        <div className="row text-center mt-5">
+          <div className="col">
+            <h1 className="display-4 animate__animated animate__fadeInDown">
+              {currentTeam?.name}
+            </h1>
+            <p className="lead animate__animated animate__fadeInUp">
+              {currentTeam?.message}
+            </p>
           </div>
         </div>
       </div>
       <div>
         {currentTeam && (
-          <div className={`container fixHeight ${styles.backImage} py-5`}>
+          <div className={`container fixHeight ${styles.backImage} py-4`}>
             {/* <div className="row text-center mb-5">
               <div className="col">
                 <h1 className="display-4 animate__animated animate__fadeInDown">

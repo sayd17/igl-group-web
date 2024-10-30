@@ -13,6 +13,7 @@ export default function HeaderClient({ items, teams }) {
   return (
     <>
       {/* <ContextProvider> */}
+
       <header>
         <nav
           className="navbar navbar-expand navbar-dark bg-dark fixed-top"
@@ -167,7 +168,7 @@ export default function HeaderClient({ items, teams }) {
                 </li>
                 <li className="nav-item">
                   <Link
-                    href="#"
+                    href="/contact"
                     className={`mt-2 ${
                       pathname === "/contact" ? "active" : ""
                     } nav-link`}
