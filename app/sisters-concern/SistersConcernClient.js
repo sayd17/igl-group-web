@@ -17,18 +17,18 @@ export default function SistersConcernClient() {
           width="1280"
           height="400"
         />
-        <div className={`${allStyles.imageText}`}>
-          <div className="row text-center mb-5">
-            <div className="col">
-              <div className="row mb-4 text-center">
-                <div className="col">
-                  <h1 className="display-4 animate__animated animate__fadeInDown">
-                    {currentSister?.name}
-                  </h1>
-                  <p className="lead animate__animated animate__fadeInUp">
-                    {currentSister?.short_description}
-                  </p>
-                </div>
+      </div>
+      <div className="mt-5">
+        <div className="row text-center mb-5">
+          <div className="col">
+            <div className="row mb-4 text-center">
+              <div className="col">
+                <h1 className="display-4 animate__animated animate__fadeInDown">
+                  {currentSister?.name}
+                </h1>
+                <p className="lead animate__animated animate__fadeInUp">
+                  {currentSister?.short_description}
+                </p>
               </div>
             </div>
           </div>

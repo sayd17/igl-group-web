@@ -53,13 +53,13 @@ export default function GalleryClient() {
           width="1280"
           height="400"
         />
-        <div className={`${allStyles.imageText}`}>
-          <div className="row text-center mb-5">
-            <div className="col">
-              <h1 className="display-4 animate__animated animate__fadeInDown">
-                Photo Gallery
-              </h1>
-            </div>
+      </div>
+      <div className="mt-5">
+        <div className="row text-center mb-5">
+          <div className="col">
+            <h1 className="display-4 animate__animated animate__fadeInDown">
+              Photo Gallery
+            </h1>
           </div>
         </div>
       </div>

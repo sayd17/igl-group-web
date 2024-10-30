@@ -23,15 +23,15 @@ export default function About() {
             width="1280"
             height="400"
           />
-          <div className={`${allStyles.imageText}`}>
-            <div className="row text-center mb-5">
-              <div className="col">
-                <h1 className={`display-4 ${styles.fadeIn}`}>About Us</h1>
-                <p className={`lead ${styles.fadeIn}`}>
-                  Learn more about our company, values, and the team behind our
-                  success.
-                </p>
-              </div>
+        </div>
+        <div>
+          <div className="row text-center mb-5">
+            <div className="col">
+              <h1 className={`display-4 ${styles.fadeIn}`}>About Us</h1>
+              <p className={`lead ${styles.fadeIn}`}>
+                Learn more about our company, values, and the team behind our
+                success.
+              </p>
             </div>
           </div>
         </div>
