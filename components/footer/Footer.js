@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 import { ChevronDoubleRightIcon } from "@heroicons/react/solid";
@@ -14,6 +14,17 @@ import {
 } from "mdb-react-ui-kit";
 
 const Footer = () => {
+  const [showSocialNav, setShowSocialNav] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("wheel", (event) => {
+      if (event.deltaY > 0) {
+        setShowSocialNav(true);
+      } else {
+        setShowSocialNav(false);
+      }
+    });
+  });
   return (
     <>
       <footer
@@ -29,7 +40,7 @@ const Footer = () => {
                   <li key={index}>
                     <a
                       href="#"
-                      className={`${styles.footer} text-light text-decoration-none`}
+                      className={`${styles.footer} text-decoration-none`}
                     >
                       <ChevronDoubleRightIcon height={15} width={15} />
                       {title.title}
@@ -46,7 +57,7 @@ const Footer = () => {
                   <li key={index}>
                     <a
                       href="#"
-                      className={`${styles.footer} text-light text-decoration-none`}
+                      className={`${styles.footer} text-decoration-none`}
                     >
                       <ChevronDoubleRightIcon height={15} width={15} />
                       {title.title}
@@ -63,7 +74,7 @@ const Footer = () => {
                   <li key={index}>
                     <a
                       href="#"
-                      className={`${styles.footer} text-light text-decoration-none`}
+                      className={`${styles.footer} text-decoration-none`}
                     >
                       <ChevronDoubleRightIcon height={15} width={15} />
                       {title.title}
@@ -80,7 +91,7 @@ const Footer = () => {
                   <li key={index}>
                     <a
                       href="#"
-                      className={`${styles.footer} text-light text-decoration-none`}
+                      className={`${styles.footer} text-decoration-none`}
                     >
                       <ChevronDoubleRightIcon height={15} width={15} />
                       {title.title}
@@ -169,7 +180,7 @@ const Footer = () => {
               <MDBBtn
                 key={index}
                 outline
-                color="light"
+                color={media.color}
                 floating
                 className={`m-1 ${styles.fixedWidthHeight}`}
                 href={media.link}
@@ -196,6 +207,38 @@ const Footer = () => {
           <Link href="/admin">Admin</Link>
         </div>
       </MDBFooter>
+      <div
+        className={`${styles.socialNav} ${!showSocialNav ? "hide" : ""}`}
+        // style={{ display: "none" }}
+      >
+        <ul className={`social-links-fix ${styles.list}`}>
+          {socialMedia.map((media, index) => (
+            <li key={index} className={`buble-facebook`}>
+              <MDBBtn
+                key={index}
+                outline
+                color={media.color}
+                floating
+                className={`${styles.fixedWidthHeight} btn-floating ${styles.list}`}
+                href={media.link}
+                role="button"
+              >
+                <MDBIcon icon={media.icon} />
+              </MDBBtn>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div
+        className={`${styles.scrollToTop} ${!showSocialNav ? "hide" : ""}  `}
+        // style={{ display: "none" }}
+      >
+        <a href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path d="M201.4 137.4c12.5-12.5 32.8-12.5 45.3 0l160 160c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L224 205.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160z" />
+          </svg>
+        </a>
+      </div>
     </>
   );
 };

@@ -12,7 +12,7 @@ export default function SistersConcernClient() {
     <>
       <div className={`content-wrapper ${allStyles.imageContainer}`}>
         <img
-          src="/assets/img/backImage.jpg"
+          src="/assets/img/sisters_concern.jpg"
           alt="background image"
           width="1280"
           height="400"
@@ -35,9 +35,7 @@ export default function SistersConcernClient() {
         </div>
       </div>
       {currentSister && (
-        <div
-          className={`container py-5 fixHeight ${styles.backImage} content-wrapper`}
-        >
+        <div className={`container fixHeight  content-wrapper`}>
           <div className={`m-5 animate__animated `}>
             <img
               src={currentSister.logo}

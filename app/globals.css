@@ -73,7 +73,7 @@ a {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Roboto, sans-serif;
+  font-family: Titillium Web, sans-serif;
   /* -webkit-font-smoothing: antialiased; */
   /* -moz-osx-font-smoothing: grayscale; */
 }
@@ -192,4 +192,8 @@ textarea.invoice-input {
 textarea.invoice-input:focus-visible {
   outline: 1px solid blue;
   border: 1px solid blue;
+}
+
+.hide {
+  display: none;
 }

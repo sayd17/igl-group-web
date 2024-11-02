@@ -1,6 +1,6 @@
 .footer {
   text-decoration: none;
-  color: #ffffff;
+  color: #666;
 }
 
 .footer hover {
@@ -17,10 +17,55 @@
 .fixedWidthHeight {
   width: 40px;
   height: 40px;
-  /* border-radius: 50%; */
+  /* border-radius: 0%; */
 }
 .customBtn:focus,
 .customBtn:active {
   transform: scale(1); /* Prevents the button from scaling */
   box-shadow: none; /* Removes any additional box-shadow, if any */
+}
+
+.socialNav {
+  position: fixed;
+  top: 35%;
+  right: 0;
+  /* box-sizing: border-box; */
+  z-index: 16;
+  box-shadow: 0 0 0 0 transparent;
+  /* background-color: transparent; */
+  /* border-radius: 4px 0 0 4px; */
+  /* padding: 4px; */
+}
+
+.list {
+  list-style-type: none;
+  box-sizing: border-box;
+  /* border: 0; */
+}
+
+.scrollToTop {
+  position: fixed;
+  top: 70%;
+  right: 15px;
+  width: 45px;
+  height: 45px;
+  color: #ffffff;
+  font-size: 20px;
+  text-transform: uppercase;
+  line-height: 40px;
+  text-align: center;
+  z-index: 100;
+  cursor: pointer;
+  background: #1e2022;
+  display: block;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  -ms-transition: all 300ms ease;
+  -o-transition: all 300ms ease;
+  -moz-transition: all 300ms ease;
+  transition: all 300ms ease;
+}
+.scrollToTop:hover {
+  color: #ffffff;
+  background: #17b6e6;
 }

@@ -18,13 +18,13 @@ export default function About() {
       <div className="content-wrapper pb-5">
         <div className={`row ${allStyles.imageContainer}`}>
           <img
-            src="/assets/img/backImage.jpg"
+            src="/assets/img/about-us.jpg"
             alt="background image"
             width="1280"
             height="400"
           />
         </div>
-        <div>
+        {/* <div>
           <div className="row text-center mb-5">
             <div className="col">
               <h1 className={`display-4 ${styles.fadeIn}`}>About Us</h1>
@@ -34,7 +34,7 @@ export default function About() {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="row d-flex mt-5 justify-content-center">
           {/* About Section */}

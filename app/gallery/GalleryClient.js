@@ -48,7 +48,7 @@ export default function GalleryClient() {
     <div className="fixedHeight content-wrapper">
       <div className={` ${allStyles.imageContainer}`}>
         <img
-          src="/assets/img/backImage.jpg"
+          src="/assets/img/gallery.jpg"
           alt="background image"
           width="1280"
           height="400"
