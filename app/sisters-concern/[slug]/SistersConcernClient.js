@@ -1,8 +1,8 @@
 "use client";
 import "animate.css";
-import { useStateContext } from "../context/contextProvider";
+import { useStateContext } from "../../context/contextProvider";
 import styles from "./sisters-concern.module.css";
-import allStyles from "../all.module.css";
+import allStyles from "../../all.module.css";
 import Footer from "@/components/footer/Footer";
 
 export default function SistersConcernClient() {

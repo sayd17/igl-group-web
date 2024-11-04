@@ -1,8 +1,14 @@
-"use client";
-import { useState } from "react";
 import ContactForm from "./ContactForm";
 import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
+import AlbumService from "../api/services/AlbumService";
+
+export const metadata = {
+  title: {
+    absolute: "Contact Us",
+  },
+  description: "contact us for any query",
+};
 
 export default function Fetch() {
   return (
@@ -16,9 +22,9 @@ export default function Fetch() {
           width="1280"
           height="450"
           style={{ border: 0 }}
-          allowfullscreen=""
+          allowFullScreen=""
           loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
+          referrerPolicy="no-referrer-when-downgrade"
         ></iframe>
       </div>
       <Footer />

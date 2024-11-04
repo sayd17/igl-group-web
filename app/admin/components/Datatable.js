@@ -7,7 +7,7 @@ const DataTable = ({ data, handleDelete, handleEditShow }) => {
       <table
         id="myTable"
         className="table-bordered table table-hover "
-        style={{ "border-radius": "5px" }}
+        style={{ borderRadius: "5px" }}
       >
         <thead>
           <tr className="table-info">

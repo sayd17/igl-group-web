@@ -7,6 +7,14 @@ import Header from "@/components/header/Header";
 import { ContextProvider } from "../context/contextProvider";
 import Footer from "@/components/footer/Footer";
 import allStyles from "../all.module.css";
+import AlbumService from "../api/services/AlbumService";
+
+export const metadata = {
+  title: {
+    absolute: "About",
+  },
+  description: "know IGL Group",
+};
 
 export default function About() {
   return (

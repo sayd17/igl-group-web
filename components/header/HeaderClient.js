@@ -93,7 +93,7 @@ export default function HeaderClient({ items, teams }) {
                           <li key={index}>
                             <Link
                               className="dropdown-item"
-                              href="/sisters-concern"
+                              href={`/sisters-concern/${item?.id}`}
                               onClick={(e) => {
                                 setCurrentSister(item);
                               }}

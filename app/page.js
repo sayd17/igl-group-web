@@ -6,9 +6,9 @@ import { ContextProvider } from "./context/contextProvider";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 
-export default function Home() {
+export default async function Home() {
   return (
-    <div>
+    <>
       <ContextProvider>
         <Header />
       </ContextProvider>
@@ -24,6 +24,6 @@ export default function Home() {
       <LogoSlider />
 
       <Footer />
-    </div>
+    </>
   );
 }
