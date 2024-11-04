@@ -13,10 +13,11 @@ import {
 import DataTable from "@/app/admin/components/Datatable";
 import { useForm } from "react-hook-form";
 import styles from "./sister.module.css";
+import axiosApi from "@/app/api/axios-common";
 
-export default function SistersConcern({ initialData }) {
+export default function SistersConcernClient({ initialData }) {
   const [data, setData] = useState(initialData);
-
+  const [base64Image, setBase64Image] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [file, setFile] = useState(null);
@@ -63,6 +64,7 @@ export default function SistersConcern({ initialData }) {
 
     if (file) formData.append("logo", file);
 
+    console.log(formData);
     SistersConcernService.post("/sisters-concern", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -87,20 +89,34 @@ export default function SistersConcern({ initialData }) {
     router.push("/admin/sisters-concern");
   };
 
-  const handleEditSubmit = (e) => {
-    e.preventDefault();
+  const handleEditSubmit = () => {
     const formData = new FormData();
 
     Object.keys(user).map((key) => {
-      formData.append(key, user[key]);
+      if (key !== "logo") formData.append(key, user[key]);
     });
 
-    if (file) formData.append("logo", file);
+    file
+      ? formData.append("logo", file)
+      : formData.append("logo", user["logo"]);
 
-    SistersConcernService.update(user["id"], formData)
+    // const { id, ...updatedUser } = user;
+
+    // updatedUser["logo"] = file;
+
+    // console.log(Object.fromEntries(formData.entries()));
+
+    axiosApi
+      .post("sisters-concern/update", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then(({ data }) => {
         console.log(data);
         fetchData();
+        setFile(null);
+        setUser(null);
         AlertService.success(`Sister ${user.name} has been updated!`);
 
         console.log("sister updated successful");
@@ -158,6 +174,10 @@ export default function SistersConcern({ initialData }) {
         console.log("sisters-concern api error", err);
       });
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div>
@@ -276,7 +296,7 @@ export default function SistersConcern({ initialData }) {
                         })}
                         id="name"
                         name="name"
-                        value={user.name}
+                        value={user?.name}
                         onChange={handleInputChange}
                         required
                       />
@@ -339,7 +359,7 @@ export default function SistersConcern({ initialData }) {
                         className="form-control"
                         id="short_description"
                         name="short_description"
-                        value={user.short_description}
+                        value={user?.short_description}
                         onChange={handleInputChange}
                         required
                       />
@@ -368,7 +388,7 @@ export default function SistersConcern({ initialData }) {
                         })}
                         id="long_description"
                         name="long_description"
-                        value={user.long_description}
+                        value={user?.long_description}
                         onChange={handleInputChange}
                         required
                       />
@@ -399,7 +419,7 @@ export default function SistersConcern({ initialData }) {
                         className="form-control"
                         id="web_url"
                         name="web_url"
-                        value={user.web_url}
+                        value={user?.web_url}
                         onChange={handleInputChange}
                         required
                       />

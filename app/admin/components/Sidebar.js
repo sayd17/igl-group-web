@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useStateContext } from "@/app/context/contextProvider";
 import { MenuIcon } from "@heroicons/react/solid";
+import Link from "next/link";
 
 const menu = [
   {
@@ -82,7 +83,7 @@ function Sidebar() {
           </a>
         </li>
         <li className="nav-item">
-          <a href="/admin/sisters-concern" className="nav-link">
+          <Link href="/admin/sisters-concern" className="nav-link">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width={16}
@@ -98,7 +99,7 @@ function Sidebar() {
               />
             </svg>
             <span className="link-text">Sisters Concern</span>
-          </a>
+          </Link>
         </li>
         <li className="nav-item">
           <a href="/admin/teams" className="nav-link">

@@ -122,6 +122,10 @@ export default function TeamMemberClient({ initialData }) {
       });
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div>
       {/* Add New Modal */}

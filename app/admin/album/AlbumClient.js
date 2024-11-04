@@ -1,6 +1,6 @@
 "use client";
 import AlbumService from "@/app/api/services/AlbumService";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import AlertService from "@/app/api/services/AlertService";
 import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
@@ -141,6 +141,10 @@ export default function AlbumClient({ initialData }) {
         console.log("album api error", err);
       });
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div>

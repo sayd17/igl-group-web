@@ -38,10 +38,18 @@ const DataTable = ({ data, handleDelete, handleEditShow }) => {
                 />
               </td>
               <td className="w-2">
-                {fixedSizeString(user.short_description, 10)}
+                {user.short_description !== null
+                  ? fixedSizeString(user.short_description, 10)
+                  : ""}
               </td>
-              <td>{fixedSizeString(user.long_description, 10)}</td>
-              <td>{fixedSizeString(user.web_url, 15)}</td>
+              <td>
+                {user.long_description !== null
+                  ? fixedSizeString(user.long_description, 10)
+                  : ""}
+              </td>
+              <td>
+                {user.web_url !== null ? fixedSizeString(user.web_url, 15) : ""}
+              </td>
               <td>
                 <button
                   onClick={() => handleEditShow(user)}

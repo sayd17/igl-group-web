@@ -39,7 +39,8 @@ const Footer = () => {
                 {abouIgl.map((title, index) => (
                   <li key={index}>
                     <a
-                      href="#"
+                      href={title.link}
+                      target="_blank"
                       className={`${styles.footer} text-decoration-none`}
                     >
                       <ChevronDoubleRightIcon height={15} width={15} />
@@ -56,7 +57,8 @@ const Footer = () => {
                 {sisters.map((title, index) => (
                   <li key={index}>
                     <a
-                      href="#"
+                      href={title.link}
+                      target="_blank"
                       className={`${styles.footer} text-decoration-none`}
                     >
                       <ChevronDoubleRightIcon height={15} width={15} />
@@ -73,7 +75,8 @@ const Footer = () => {
                 {services.map((title, index) => (
                   <li key={index}>
                     <a
-                      href="#"
+                      href={title.link}
+                      target="_blank"
                       className={`${styles.footer} text-decoration-none`}
                     >
                       <ChevronDoubleRightIcon height={15} width={15} />
@@ -90,7 +93,8 @@ const Footer = () => {
                 {products.map((title, index) => (
                   <li key={index}>
                     <a
-                      href="#"
+                      href={title.link}
+                      target="_blank"
                       className={`${styles.footer} text-decoration-none`}
                     >
                       <ChevronDoubleRightIcon height={15} width={15} />
@@ -229,8 +233,10 @@ const Footer = () => {
           ))}
         </ul>
       </div>
-      <div
-        className={`${styles.scrollToTop} ${!showSocialNav ? "hide" : ""}  `}
+      {/* <div
+        className={`${styles.scrollToTop} ${
+          !showSocialNav ? "hide" : ""
+        } `}
         // style={{ display: "none" }}
       >
         <a href="#">
@@ -238,7 +244,7 @@ const Footer = () => {
             <path d="M201.4 137.4c12.5-12.5 32.8-12.5 45.3 0l160 160c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L224 205.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l160-160z" />
           </svg>
         </a>
-      </div>
+      </div> */}
     </>
   );
 };

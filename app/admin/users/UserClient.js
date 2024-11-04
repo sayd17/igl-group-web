@@ -144,6 +144,10 @@ export default function UserClient({ initialData }) {
       });
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div>
       {/* Add New Modal */}

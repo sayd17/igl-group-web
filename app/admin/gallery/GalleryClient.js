@@ -148,6 +148,7 @@ export default function Gallery({ initialData }) {
   };
 
   useEffect(() => {
+    fetchData();
     AlbumService.getAll()
       .then(({ data }) => {
         let obj = data.data;
