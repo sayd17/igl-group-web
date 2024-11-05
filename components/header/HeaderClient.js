@@ -91,15 +91,16 @@ export default function HeaderClient({ items, teams }) {
                       >
                         {items?.map((item, index) => (
                           <li key={index}>
-                            <Link
+                            <a
                               className="dropdown-item"
                               href={`/sisters-concern/${item?.id}`}
+                              target="_blank"
                               onClick={(e) => {
                                 setCurrentSister(item);
                               }}
                             >
                               {item?.name}
-                            </Link>
+                            </a>
                           </li>
                         ))}
                       </ul>

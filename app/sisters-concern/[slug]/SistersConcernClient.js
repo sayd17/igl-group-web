@@ -4,9 +4,26 @@ import { useStateContext } from "../../context/contextProvider";
 import styles from "./sisters-concern.module.css";
 import allStyles from "../../all.module.css";
 import Footer from "@/components/footer/Footer";
+import { useEffect, useState } from "react";
+import SistersConcernService from "@/app/api/services/SistersConcernService";
 
-export default function SistersConcernClient() {
+export default function SistersConcernClient({ slug }) {
   const { currentSister } = useStateContext();
+  const [items, setItems] = useState(null);
+
+  useEffect(() => {
+    SistersConcernService.getAll()
+      .then((res) => {
+        const data = res?.data?.data;
+        const array = Object.values(data);
+        // console.log(typeof array);
+        const filteredArray = array.filter((item) => item.id == slug);
+        if (filteredArray) setItems(filteredArray[0]);
+      })
+      .catch((err) => {
+        console.log("team error", err);
+      });
+  }, []);
 
   return (
     <>
@@ -24,22 +41,22 @@ export default function SistersConcernClient() {
             <div className="row mb-4 text-center">
               <div className="col">
                 <h1 className="display-4 animate__animated animate__fadeInDown">
-                  {currentSister?.name}
+                  {items?.name}
                 </h1>
                 <p className="lead animate__animated animate__fadeInUp">
-                  {currentSister?.short_description}
+                  {items?.short_description}
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {currentSister && (
+      {items && (
         <div className={`container fixHeight  content-wrapper`}>
           <div className={`m-5 animate__animated `}>
             <img
-              src={currentSister.logo}
-              alt={currentSister?.name}
+              src={items.logo}
+              alt={items?.name}
               width={300}
               style={{
                 float: "left",
@@ -51,7 +68,7 @@ export default function SistersConcernClient() {
 
             <span>
               <h3 className="mt-3 animate__animated animate__fadeInDown">
-                {currentSister?.name}
+                {items?.name}
               </h3>
             </span>
 
@@ -59,12 +76,12 @@ export default function SistersConcernClient() {
               className="animate__animated animate__fadeInUp word-wrap"
               style={{ textAlign: "justify" }}
             >
-              {currentSister?.long_description}
+              {items?.long_description}
             </span>
             <div>
               <a
                 // href="#"
-                href={currentSister?.web_url}
+                href={items?.web_url}
                 // target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-primary animate__animated animate__fadeInUp"
@@ -72,7 +89,6 @@ export default function SistersConcernClient() {
                 Visit Website
               </a>
             </div>
-            {/* </span> */}
           </div>
         </div>
       )}

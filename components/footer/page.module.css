@@ -3,8 +3,11 @@
   color: #666;
 }
 
-.footer hover {
-  color: #ff0000;
+.footer:hover {
+  color: #f5efef;
+  /* color: #ffffff; */
+  /* background: #4c6066; */
+  text-decoration: underline;
 }
 
 .customHeading::before {

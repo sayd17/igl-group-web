@@ -1,6 +1,6 @@
 "use client";
 import SistersConcernService from "@/app/api/services/SistersConcernService";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import AlertService from "@/app/api/services/AlertService";
@@ -17,7 +17,8 @@ import axiosApi from "@/app/api/axios-common";
 
 export default function SistersConcernClient({ initialData }) {
   const [data, setData] = useState(initialData);
-  const [base64Image, setBase64Image] = useState(null);
+  const modalRef = useRef(null);
+  const modalEditRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [file, setFile] = useState(null);
@@ -40,7 +41,11 @@ export default function SistersConcernClient({ initialData }) {
     formState: { errors },
   } = useForm();
 
-  const handleShow = () => setShowModal(true);
+  const handleShow = () => {
+    setUser(null);
+    setShowModal(true);
+  };
+
   const handleEditShow = (user) => {
     setUser(user);
     setShowEditModal(true);
@@ -175,6 +180,30 @@ export default function SistersConcernClient({ initialData }) {
       });
   };
 
+  // Close modal if clicked outside of the modal content
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setShowModal(false);
+    } else if (
+      modalEditRef.current &&
+      !modalEditRef.current.contains(event.target)
+    ) {
+      setShowEditModal(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showModal || setShowEditModal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showModal, showEditModal]);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -189,7 +218,7 @@ export default function SistersConcernClient({ initialData }) {
             role="dialog"
             style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
           >
-            <div className="modal-dialog" role="document">
+            <div className="modal-dialog" role="document" ref={modalRef}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Add New Sister</h5>
@@ -461,7 +490,7 @@ export default function SistersConcernClient({ initialData }) {
             role="dialog"
             style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
           >
-            <div className="modal-dialog" role="document">
+            <div className="modal-dialog" role="document" ref={modalEditRef}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Add New Sister</h5>

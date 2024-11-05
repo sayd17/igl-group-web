@@ -1,29 +1,38 @@
 "use client";
 import SistersConcernService from "@/app/api/services/SistersConcernService";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import AlertService from "@/app/api/services/AlertService";
 import TeamMemberService from "@/app/api/services/TeamMemberService";
 import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
+import TeamService from "@/app/api/services/TeamService";
+import Select from "react-select";
 
 export default function TeamMemberClient({ initialData }) {
   const [data, setData] = useState(initialData);
+  const modalRef = useRef(null);
+  const modalEditRef = useRef(null);
   const [file, setFile] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const router = useRouter();
   const [error, setError] = useState(null);
 
   // State to store teamMember details
   const [teamMember, setTeamMember] = useState({
-    team: "",
+    team: selectedOption,
     name: "",
     image: "",
     designation: "",
   });
 
-  const handleShow = () => setShowModal(true);
+  const handleShow = () => {
+    setTeamMember(null);
+    setShowModal(true);
+  };
   const handleEditShow = (teamMember) => {
     setTeamMember(teamMember);
     setShowEditModal(true);
@@ -122,8 +131,51 @@ export default function TeamMemberClient({ initialData }) {
       });
   };
 
+  // Close modal if clicked outside of the modal content
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setShowModal(false);
+    } else if (
+      modalEditRef.current &&
+      !modalEditRef.current.contains(event.target)
+    ) {
+      setShowEditModal(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showModal || setShowEditModal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showModal, showEditModal]);
+
   useEffect(() => {
     fetchData();
+    TeamService.getAll()
+      .then(({ data }) => {
+        let obj = data?.data;
+        const customArray = Object.keys(obj).map((key) => obj[key]);
+        let array = [];
+        customArray.map((team) => {
+          let newOption = {
+            value: team.name,
+            label: team.name,
+          };
+          array.push(newOption);
+        });
+        // console.log("custom array", array);
+
+        setOptions(array);
+      })
+      .catch((err) => {
+        console.log("gallery api error", err);
+      });
   }, []);
 
   return (
@@ -136,7 +188,7 @@ export default function TeamMemberClient({ initialData }) {
             role="dialog"
             style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
           >
-            <div className="modal-dialog" role="document">
+            <div className="modal-dialog" role="document" ref={modalRef}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Add New Member</h5>
@@ -168,7 +220,12 @@ export default function TeamMemberClient({ initialData }) {
                       <label htmlFor="team" className="form-label">
                         Team
                       </label>
-                      <input
+                      <Select
+                        defaultValue={selectedOption}
+                        onChange={setSelectedOption}
+                        options={options}
+                      />
+                      {/* <input
                         type="text"
                         className="form-control"
                         id="team"
@@ -176,7 +233,7 @@ export default function TeamMemberClient({ initialData }) {
                         value={teamMember.team}
                         onChange={handleInputChange}
                         required
-                      />
+                      /> */}
                     </div>
 
                     <div className="mb-3">
@@ -265,7 +322,7 @@ export default function TeamMemberClient({ initialData }) {
             role="dialog"
             style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
           >
-            <div className="modal-dialog" role="document">
+            <div className="modal-dialog" role="document" ref={modalEditRef}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Add New Sister</h5>

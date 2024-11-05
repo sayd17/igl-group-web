@@ -1,6 +1,6 @@
 "use client";
 import SistersConcernService from "@/app/api/services/SistersConcernService";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import UserService from "@/app/api/services/UserService";
@@ -14,6 +14,8 @@ import Select from "react-select";
 export default function UserClient({ initialData }) {
   const [data, setData] = useState(initialData);
   const [selectedOption, setSelectedOption] = useState(null);
+  const modalRef = useRef(null);
+  const modalEditRef = useRef(null);
 
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -144,6 +146,30 @@ export default function UserClient({ initialData }) {
       });
   };
 
+  // Close modal if clicked outside of the modal content
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setShowModal(false);
+    } else if (
+      modalEditRef.current &&
+      !modalEditRef.current.contains(event.target)
+    ) {
+      setShowEditModal(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showModal || setShowEditModal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showModal, showEditModal]);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -158,7 +184,7 @@ export default function UserClient({ initialData }) {
             role="dialog"
             style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
           >
-            <div className="modal-dialog" role="document">
+            <div className="modal-dialog" role="document" ref={modalRef}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Add New User</h5>
@@ -279,7 +305,7 @@ export default function UserClient({ initialData }) {
             role="dialog"
             style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
           >
-            <div className="modal-dialog" role="document">
+            <div className="modal-dialog" role="document" ref={modalEditRef}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Edit New User</h5>

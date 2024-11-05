@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useStateContext } from "@/app/context/contextProvider";
 import { MenuIcon } from "@heroicons/react/solid";
 import Link from "next/link";
+import styles from "./styles/logoutModal.module.css";
+import LogoutModal from "./LogoutModal.js";
 
 const menu = [
   {
@@ -29,9 +31,17 @@ const menu = [
 
 function Sidebar() {
   const { token, setToken } = useStateContext();
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  // const [isOpen, setIsOpen] = useState(false);
+
+  // const togglePopup = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
   const onLogout = () => {
     setToken();
+    setModalOpen(false);
   };
 
   return (
@@ -166,7 +176,23 @@ function Sidebar() {
           </a>
         </li>
         <li className="nav-item">
-          <a href="#" onClick={onLogout} className="nav-link">
+          <a href="/admin/cover-image" className="nav-link">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="icon bi bi-images"
+              viewBox="0 0 16 16"
+            >
+              <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
+              <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2M14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1M2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1z" />
+            </svg>
+            <span className="link-text">Cover Image</span>
+          </a>
+        </li>
+        <li className="nav-item">
+          <div href="#" className="nav-link">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -184,91 +210,23 @@ function Sidebar() {
                 d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"
               />
             </svg>
-            <span className="link-text">Logout</span>
-          </a>
+
+            <button
+              className="btn btn-danger"
+              onClick={() => setModalOpen(true)}
+            >
+              Logout
+            </button>
+            <LogoutModal
+              isOpen={isModalOpen}
+              onClose={() => setModalOpen(false)}
+              onLogout={onLogout}
+            />
+          </div>
         </li>
       </ul>
     </div>
   );
 }
-// <div style={{ width: "300px" }}>
-//   <div
-//     className="offcanvas offcanvas-start"
-//     style={{ width: "200px" }}
-//     data-bs-scroll="true"
-//     // tabindex="-1"
-//     id="offcanvasWithBothOptions"
-//     aria-labelledby="offcanvasWithBothOptionsLabel"
-//   >
-//     <div className="offcanvas-header">
-//       <h5 className="offcanvas-title" id="offcanvasWithBothOptionsLabel">
-//         Dashboard
-//       </h5>
-//       <button
-//         type="button"
-//         className="btn-close"
-//         data-bs-dismiss="offcanvas"
-//         aria-label="Close"
-//       ></button>
-//     </div>
-//     <div className="offcanvas-body ">
-//       {menu.map((item, index) => (
-//         <div className="nav offcanvas-body">
-//           <li className="nav-item">
-//             <Link href={item.route} className="nav-link ">
-//               {/* <i className="mdi mdi-home menu-icon"></i> */}
-//               <span className="menu-title">
-//                 <Trans>{item.name}</Trans>
-//               </span>
-//             </Link>
-//           </li>
-//         </div>
-//       ))}
-//     </div>
-//     <button className="btn btn-secondary" onClick={() => setToken()}>
-//       Logout
-//     </button>
-//   </div>
-// </div>
-
-// {/* <nav className="sidebar col-2 align-items" id="sidebar">
-//   <ul className="nav">
-//     <li className={`nav-item active`}>
-//       <Link className="nav-link" href="/admin">
-//         <span className="menu-title">Dashboard</span>
-//         <i className="mdi mdi-home menu-icon"></i>
-//       </Link>
-//       <Link className="nav-link" href="/admin">
-//         <span className="menu-title">Users</span>
-//         <i className="mdi mdi-home menu-icon"></i>
-//       </Link>
-//       <Link className="nav-link" href="/admin">
-//         <span className="menu-title"> Sisters Concern</span>
-//         <i className="mdi mdi-home menu-icon"></i>
-//       </Link>
-//       <Link className="nav-link" href="/admin">
-//         <span className="menu-title">Teams</span>
-//         <i className="mdi mdi-home menu-icon"></i>
-//       </Link>
-//       <Link className="nav-link" href="/admin">
-//         <span className="menu-title">Team Members</span>
-//         <i className="mdi mdi-home menu-icon"></i>
-//       </Link>
-//       <Link className="nav-link" href="/admin">
-//         <span className="menu-title"> Image Gallery</span>
-//         <i className="mdi mdi-home menu-icon"></i>
-//       </Link>
-//     </li>
-//   </ul>
-// </nav> */}
-
-// <div className="bg-light border-right" id="sidebar-wrapper">
-// {
-//   /* <div className="sidebar-heading m-3 bg-blue">Admin Panel</div> */
-// }
-
-// {
-//   /* </div> */
-// }
 
 export default Sidebar;

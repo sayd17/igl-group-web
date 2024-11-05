@@ -1,19 +1,39 @@
 "use client";
 import React from "react";
-import GalleryService from "@/app/api/services/GalleryService";
+import CoverService from "@/app/api/services/CoverService";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import AlertService from "@/app/api/services/AlertService";
 import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
-import AlbumService from "@/app/api/services/AlbumService";
 import Select from "react-select";
 import axiosApi from "@/app/api/axios-common";
 
-export default function Gallery({ initialData }) {
+export default function CoverClient({ initialData }) {
   const [data, setData] = useState(initialData);
   const modalRef = useRef(null);
   const modalEditRef = useRef(null);
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState([
+    {
+      value: "about_us",
+      label: "about_us",
+    },
+    {
+      value: "sisters_concern",
+      label: "sisters_concern",
+    },
+    {
+      value: "team",
+      label: "team",
+    },
+    {
+      value: "gallery",
+      label: "gallery",
+    },
+    {
+      value: "contact_us",
+      label: "contact_us",
+    },
+  ]);
   const [selectedOption, setSelectedOption] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
@@ -25,8 +45,7 @@ export default function Gallery({ initialData }) {
 
   // State to store user details
   const [user, setUser] = useState({
-    album: "",
-    caption: "",
+    page_name: "",
   });
 
   const handleShow = () => {
@@ -38,7 +57,7 @@ export default function Gallery({ initialData }) {
     setUser(user);
     setFile(null);
     const filteredArray = options.filter(
-      (option) => option.label == user.album
+      (option) => option.label == user?.page_name
     );
     if (filteredArray) setSelectedOption(filteredArray[0]);
     setShowEditModal(true);
@@ -56,14 +75,12 @@ export default function Gallery({ initialData }) {
     }
     const formData = new FormData();
 
-    Object.keys(user).map((key) => {
-      formData.append(key, user[key]);
-    });
+    if (selectedOption) formData.append("page_name", selectedOption.label);
 
     if (file) formData.append("image", file);
-    if (selectedOption) formData.append("album", selectedOption.label);
+    if (selectedOption) formData.append("page_name", selectedOption.label);
 
-    GalleryService.post("/gallery", formData, {
+    CoverService.post("/cover-image", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -83,25 +100,22 @@ export default function Gallery({ initialData }) {
 
     setShowModal(false);
 
-    router.push("/admin/gallery");
+    router.push("/admin/cover-image");
   };
 
   const handleEditSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
 
-    Object.keys(user).map((key) => {
-      if (key !== "image" && key != "album") formData.append(key, user[key]);
-    });
-
-    if (selectedOption) formData.append("album", selectedOption.label);
+    if (selectedOption) formData.append("page_name", selectedOption.label);
+    if (user) formData.append("id", user.id);
 
     file
       ? formData.append("image", file)
       : formData.append("image", user["image"]);
 
     axiosApi
-      .post("gallery/update", formData, {
+      .post("cover-image/update", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -111,9 +125,9 @@ export default function Gallery({ initialData }) {
         fetchData();
         setFile(null);
         setUser(null);
-        AlertService.success(`gallery ${user.name} has been updated!`);
+        AlertService.success(`cover-image ${user.name} has been updated!`);
 
-        console.log("gallery updated successful");
+        console.log("cover-image updated successful");
       })
       .catch((err) => {
         const response = err.response;
@@ -124,7 +138,7 @@ export default function Gallery({ initialData }) {
 
     setShowEditModal(false);
 
-    router.push("/admin/gallery");
+    router.push("/admin/cover-image");
   };
 
   // Handle input changes
@@ -141,12 +155,12 @@ export default function Gallery({ initialData }) {
   };
 
   const handleDelete = (id) => {
-    GalleryService.remove(id)
+    CoverService.remove(id)
       .then(({ res }) => {
         fetchData();
         AlertService.success(`Image has been removed!`);
         console.log("removed Image successful");
-        router.push("/admin/gallery");
+        router.push("/admin/cover-image");
       })
       .catch((err) => {
         const response = err.response;
@@ -157,14 +171,14 @@ export default function Gallery({ initialData }) {
   };
 
   const fetchData = () => {
-    GalleryService.getAll()
+    CoverService.getAll()
       .then(({ data }) => {
         let obj = data.data;
         const customArray = Object.keys(obj).map((key) => obj[key]);
         setData(customArray);
       })
       .catch((err) => {
-        console.log("gallery api error", err);
+        console.log("cover-image api error", err);
       });
   };
 
@@ -194,25 +208,6 @@ export default function Gallery({ initialData }) {
 
   useEffect(() => {
     fetchData();
-    AlbumService.getAll()
-      .then(({ data }) => {
-        let obj = data.data;
-        const customArray = Object.keys(obj).map((key) => obj[key]);
-        let array = [];
-        customArray.map((album) => {
-          let newOption = {
-            value: album.name,
-            label: album.name,
-          };
-          array.push(newOption);
-        });
-        // console.log("custom array", array);
-
-        setOptions(array);
-      })
-      .catch((err) => {
-        console.log("gallery api error", err);
-      });
   }, []);
 
   return (
@@ -240,42 +235,18 @@ export default function Gallery({ initialData }) {
                   <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                       <label htmlFor="text" className="form-label">
-                        Caption
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="caption"
-                        name="caption"
-                        value={user?.caption}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="mb-3">
-                      <label htmlFor="text" className="form-label">
-                        Album
+                        Page Name
                       </label>
                       <Select
                         defaultValue={selectedOption}
                         onChange={setSelectedOption}
                         options={options}
                       />
-                      {/* <label htmlFor="album" className="form-label">
-                        Album
-                      </label>
-                      <input
-                        className="form-control"
-                        id="album"
-                        name="album"
-                        value={user.album}
-                        onChange={handleInputChange}
-                        required
-                      /> */}
                     </div>
+
                     <div className="mb-3">
                       <label htmlFor="image" className="form-label">
-                        image
+                        Image
                       </label>
                       <input
                         type="file"
@@ -332,8 +303,8 @@ export default function Gallery({ initialData }) {
                 <div className="modal-body">
                   <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                      <label htmlFor="album" className="form-label">
-                        Album
+                      <label htmlFor="text" className="form-label">
+                        Page Name
                       </label>
                       <Select
                         defaultValue={selectedOption}
@@ -343,22 +314,8 @@ export default function Gallery({ initialData }) {
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="caption" className="form-label">
-                        Caption
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="caption"
-                        name="caption"
-                        value={user?.caption}
-                        onChange={handleEditInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="mb-3">
                       <label htmlFor="image" className="form-label">
-                        image
+                        Image
                       </label>
                       <input
                         type="file"
@@ -396,7 +353,7 @@ export default function Gallery({ initialData }) {
       <div className="container table-rounded">
         <div className="row d-flex flex-row">
           <div className="col-6">
-            <h1 className="mb-4">Manage Gallery</h1>
+            <h1 className="mb-4">Manage Cover image</h1>
           </div>
           <div className="col-6 pt-4 text-end">
             <button onClick={handleShow} className="btn btn-secondary">
@@ -408,8 +365,7 @@ export default function Gallery({ initialData }) {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Caption</th>
-              <th>Album</th>
+              <th>Page Name</th>
               <th>Image</th>
             </tr>
           </thead>
@@ -420,12 +376,11 @@ export default function Gallery({ initialData }) {
                 className={index % 2 === 0 ? "table-primary" : "table-success"}
               >
                 <td>{user.id}</td>
-                <td>{user.caption}</td>
-                <td>{user.album}</td>
+                <td>{user.page_name}</td>
                 <td>
                   <img
                     src={user.image}
-                    alt={user.caption}
+                    alt={user.page_name}
                     width={100}
                     style={{ borderRadius: "10%" }}
                     height={100}

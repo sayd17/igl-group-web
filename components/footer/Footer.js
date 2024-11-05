@@ -33,7 +33,7 @@ const Footer = () => {
       >
         <div className="content-wrapper">
           <div className="row d-flex flex-row justify-content-between">
-            <div className="col-md-3 mb-0">
+            <div className="col-md-2 mb-0">
               <h5>About IGL Group</h5>
               <ul className="list-unstyled">
                 {abouIgl.map((title, index) => (
@@ -41,7 +41,7 @@ const Footer = () => {
                     <a
                       href={title.link}
                       target="_blank"
-                      className={`${styles.footer} text-decoration-none`}
+                      className={`${styles.footer}`}
                     >
                       <ChevronDoubleRightIcon height={15} width={15} />
                       {title.title}
@@ -51,7 +51,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="col-md-3 mb-0">
+            <div className="col-md-2 mb-0">
               <h5>Our Sisters Concern</h5>
               <ul className="list-unstyled">
                 {sisters.map((title, index) => (
@@ -59,7 +59,7 @@ const Footer = () => {
                     <a
                       href={title.link}
                       target="_blank"
-                      className={`${styles.footer} text-decoration-none`}
+                      className={`${styles.footer} `}
                     >
                       <ChevronDoubleRightIcon height={15} width={15} />
                       {title.title}
@@ -68,8 +68,18 @@ const Footer = () => {
                 ))}
               </ul>
             </div>
-
-            <div className="col-md-3 mb-0">
+            <div className={`col-md-3 mb-0`}>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3652.1888135355393!2d90.3784708!3d23.740645400000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b5c1cbd409%3A0x33ef8cc2e2b3fc6e!2z4KaG4KaH4Kac4Ka_4KaP4KayIOCml-CnjeCmsOCngeCmqg!5e0!3m2!1sbn!2sbd!4v1730521802847!5m2!1sbn!2sbd"
+                width="300"
+                height="200"
+                style={{ border: 0, borderRadius: "10px" }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            <div className="col-md-2 mb-0">
               <h5>Our Services</h5>
               <ul className="list-unstyled">
                 {services.map((title, index) => (
@@ -77,7 +87,7 @@ const Footer = () => {
                     <a
                       href={title.link}
                       target="_blank"
-                      className={`${styles.footer} text-decoration-none`}
+                      className={`${styles.footer}`}
                     >
                       <ChevronDoubleRightIcon height={15} width={15} />
                       {title.title}
@@ -87,7 +97,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="col-md-3 mb-0">
+            <div className="col-md-2 mb-0">
               <h5>Our Products</h5>
               <ul className="list-unstyled">
                 {products.map((title, index) => (
@@ -95,7 +105,7 @@ const Footer = () => {
                     <a
                       href={title.link}
                       target="_blank"
-                      className={`${styles.footer} text-decoration-none`}
+                      className={`${styles.footer}`}
                     >
                       <ChevronDoubleRightIcon height={15} width={15} />
                       {title.title}

@@ -55,8 +55,8 @@ export default function About() {
             </p>
           </div>
           <div className={`col-md-5 ${styles.zoomIn}`}>
-            <Image
-              src={aboutImage}
+            <img
+              src="/assets/img/blog-post-img-4.jpg"
               alt="About Us"
               className="img-fluid rounded"
               width={500}
@@ -74,8 +74,8 @@ export default function About() {
             </p>
           </div>
           <div className={`col-md-5 ${styles.zoomIn}`}>
-            <Image
-              src={teamImage}
+            <img
+              src="assets/img/about-img-2.jpg"
               alt="Our Team"
               className="img-fluid rounded"
               width={500}

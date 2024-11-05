@@ -1,13 +1,15 @@
 "use client";
 import AlbumService from "@/app/api/services/AlbumService";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import AlertService from "@/app/api/services/AlertService";
 import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
+import { fixedSizeString } from "@/helpers/helpers";
 
 export default function AlbumClient({ initialData }) {
   const [data, setData] = useState(initialData);
-
+  const modalRef = useRef(null);
+  const modalEditRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [file, setFile] = useState(null);
@@ -21,7 +23,11 @@ export default function AlbumClient({ initialData }) {
     year: "",
   });
 
-  const handleShow = () => setShowModal(true);
+  const handleShow = () => {
+    setAlbum(null);
+    setShowModal(true);
+  };
+
   const handleEditShow = (album) => {
     setAlbum(album);
     setShowEditModal(true);
@@ -30,6 +36,7 @@ export default function AlbumClient({ initialData }) {
   const handleClose = () => setShowModal(false);
   const handleEditClose = () => setShowEditModal(false);
 
+  // store new album
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -119,7 +126,6 @@ export default function AlbumClient({ initialData }) {
       .then(({ res }) => {
         fetchData();
         AlertService.success(`Image has been removed!`);
-        console.log("removed Image successful");
         router.push("/admin/album");
       })
       .catch((err) => {
@@ -133,7 +139,7 @@ export default function AlbumClient({ initialData }) {
   const fetchData = () => {
     AlbumService.getAll()
       .then(({ data }) => {
-        let obj = data.data;
+        let obj = data?.data;
         const customArray = Object.keys(obj).map((key) => obj[key]);
         setData(customArray);
       })
@@ -141,6 +147,30 @@ export default function AlbumClient({ initialData }) {
         console.log("album api error", err);
       });
   };
+
+  // Close modal if clicked outside of the modal content
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setShowModal(false);
+    } else if (
+      modalEditRef.current &&
+      !modalEditRef.current.contains(event.target)
+    ) {
+      setShowEditModal(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showModal || setShowEditModal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showModal, showEditModal]);
 
   useEffect(() => {
     fetchData();
@@ -156,7 +186,7 @@ export default function AlbumClient({ initialData }) {
             role="dialog"
             style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
           >
-            <div className="modal-dialog" role="document">
+            <div className="modal-dialog" role="document " ref={modalRef}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Add New Image</h5>
@@ -177,7 +207,7 @@ export default function AlbumClient({ initialData }) {
                         type="text"
                         className="form-control"
                         name="name"
-                        value={album.name}
+                        value={album?.name}
                         onChange={handleInputChange}
                         required
                       />
@@ -191,7 +221,7 @@ export default function AlbumClient({ initialData }) {
                         className="form-control"
                         id="year"
                         name="year"
-                        value={album.year}
+                        value={album?.year}
                         onChange={handleInputChange}
                         required
                       />
@@ -242,7 +272,7 @@ export default function AlbumClient({ initialData }) {
             role="dialog"
             style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
           >
-            <div className="modal-dialog" role="document">
+            <div className="modal-dialog" role="document" ref={modalEditRef}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Add New Image</h5>
@@ -344,11 +374,11 @@ export default function AlbumClient({ initialData }) {
           <tbody>
             {data?.map((album, index) => (
               <tr
-                key={album.year}
+                key={index}
                 className={index % 2 === 0 ? "table-primary" : "table-success"}
               >
                 <td>{album.id}</td>
-                <td>{album.name}</td>
+                <td> {fixedSizeString(album.name, 15)}</td>
                 <td>{album.year}</td>
                 <td>
                   <img

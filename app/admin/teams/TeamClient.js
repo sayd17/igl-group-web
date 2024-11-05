@@ -1,13 +1,16 @@
 "use client";
 import SistersConcernService from "@/app/api/services/SistersConcernService";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import AlertService from "@/app/api/services/AlertService";
 import TeamService from "@/app/api/services/TeamService";
 import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
+import { fixedSizeString } from "@/helpers/helpers";
 
 export default function team({ initialData }) {
   const [data, setData] = useState(initialData);
+  const modalRef = useRef(null);
+  const modalEditRef = useRef(null);
 
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -20,9 +23,11 @@ export default function team({ initialData }) {
     message: "",
   });
 
-  const handleShow = () => setShowModal(true);
+  const handleShow = () => {
+    setTeam(null);
+    setShowModal(true);
+  };
   const handleEditShow = (team) => {
-    console.log(team);
     setTeam(team);
     setShowEditModal(true);
   };
@@ -114,6 +119,30 @@ export default function team({ initialData }) {
       });
   };
 
+  // Close modal if clicked outside of the modal content
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setShowModal(false);
+    } else if (
+      modalEditRef.current &&
+      !modalEditRef.current.contains(event.target)
+    ) {
+      setShowEditModal(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showModal || setShowEditModal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showModal, showEditModal]);
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -128,7 +157,7 @@ export default function team({ initialData }) {
             role="dialog"
             style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
           >
-            <div className="modal-dialog" role="document">
+            <div className="modal-dialog" role="document" ref={modalRef}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Add New Sister</h5>
@@ -151,7 +180,7 @@ export default function team({ initialData }) {
                         className="form-control"
                         id="name"
                         name="name"
-                        value={team.name}
+                        value={team?.name}
                         onChange={handleInputChange}
                         required
                       />
@@ -165,7 +194,7 @@ export default function team({ initialData }) {
                         className="form-control"
                         id="message"
                         name="message"
-                        value={team.message}
+                        value={team?.message}
                         onChange={handleInputChange}
                       />
                     </div>
@@ -201,7 +230,7 @@ export default function team({ initialData }) {
             role="dialog"
             style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
           >
-            <div className="modal-dialog" role="document">
+            <div className="modal-dialog" role="document" ref={modalEditRef}>
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Add New Sister</h5>
@@ -293,7 +322,7 @@ export default function team({ initialData }) {
               >
                 <td>{team.id}</td>
                 <td>{team.name}</td>
-                <td>{team.message}</td>
+                <td>{fixedSizeString(team.message, 25)}</td>
                 <td>
                   <button
                     onClick={() => handleEditShow(team)}
