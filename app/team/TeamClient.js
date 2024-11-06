@@ -7,19 +7,28 @@ import styles from "./team.module.css";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-// import contentImage from "./backImage.jpg";
 
 export default function TeamClient() {
   // const { currentTeam } = useStateContext();
 
   const [currentTeam, setCurrentTeam] = useState(null);
+  const { coverImage } = useStateContext();
+  const [coverImgUrl, setCoverImgUrl] = useState("");
+
+  // if (!currentTeam) return null;
+
+  useEffect(() => {
+    const imageIrl = Object.values(coverImage).map((image) => {
+      console.log(image?.image);
+      if (image["page_name"] == "team") setCoverImgUrl(image?.image);
+    });
+  }, [coverImage]);
 
   useEffect(() => {
     const teamCookie = Cookies.get("currentTeam");
     setCurrentTeam(teamCookie ? JSON.parse(teamCookie) : "");
   }, []);
 
-  if (!currentTeam) return null;
   // let currentTeam = Cookies.get("currentTeam");
   // currentTeam = currentTeam ? JSON.parse(currentTeam) : "";
 
@@ -27,7 +36,7 @@ export default function TeamClient() {
     <>
       <div className={`content-wrapper ${styles.imageContainer}`}>
         <img
-          src="/assets/img/team.jpg"
+          src={coverImgUrl}
           alt="background image"
           width="1280"
           height="400"

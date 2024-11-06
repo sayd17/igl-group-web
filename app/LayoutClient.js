@@ -17,7 +17,7 @@ function LayoutClient() {
   return (
     <>
       <Toaster
-        position="top-center"
+        position="top-right"
         reverseOrder={true}
         gutter={8}
         containerClassName=""

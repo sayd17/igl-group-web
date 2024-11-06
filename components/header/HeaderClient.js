@@ -20,13 +20,15 @@ export default function HeaderClient({ items, teams }) {
           // style={{ backgroundColor: "#03141b" }}
         >
           <div className="container-fluid content-wrapper">
-            <img
-              src="/assets/img/logo.png"
-              alt="Logo"
-              width="60"
-              height="60"
-              className="d-inline-block align-top"
-            />
+            <Link href="/" className="ms-3 navbar-brand">
+              <img
+                src="/assets/img/logo.png"
+                alt="Logo"
+                width="60"
+                height="60"
+                className="d-inline-block align-top"
+              />
+            </Link>
             <Link href="/" className="ms-3 navbar-brand">
               IGL Group
             </Link>

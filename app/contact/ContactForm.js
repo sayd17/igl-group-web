@@ -1,12 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./contact.module.css";
 import allStyles from "../all.module.css";
 import { MailIcon } from "@heroicons/react/solid";
 import AlertService from "../api/services/AlertService";
+import { useStateContext } from "../context/contextProvider";
 
 const ContactForm = () => {
+  const [coverImgUrl, setCoverImgUrl] = useState("");
+  const { coverImage } = useStateContext();
   const {
     register,
     handleSubmit,
@@ -69,6 +72,13 @@ const ContactForm = () => {
   //   return <p>We've received your message, thank you for contacting us!</p>;
   // }
 
+  useEffect(() => {
+    const imageIrl = Object.values(coverImage).map((image) => {
+      console.log(image?.image);
+      if (image["page_name"] == "contact_us") setCoverImgUrl(image?.image);
+    });
+  }, [coverImage]);
+
   // Function called on submit that uses emailjs to send email of valid contact form
   const onSubmit = (data) => {
     // Destrcture data object
@@ -101,7 +111,7 @@ const ContactForm = () => {
     <>
       <div className={`content-wrapper ${allStyles.imageContainer}`}>
         <img
-          src="/assets/img/backImage.jpg"
+          src={coverImgUrl}
           alt="background image"
           width="1280"
           height="400"

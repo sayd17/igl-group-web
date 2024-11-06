@@ -13,7 +13,7 @@ export default function SistersConcern() {
 
   const handle = (item) => {
     setCurrentSister(item);
-    router.push("/sisters-concern");
+    router.push(`/sisters-concern/${item?.id}`);
   };
 
   useEffect(() => {
@@ -43,7 +43,9 @@ export default function SistersConcern() {
               />
               <div className="card-body">
                 <h3 className="card-title">{fixedSizeString(item.name, 12)}</h3>
-                <p className="card-text">{item.short_description}</p>
+                <p className="card-text">
+                  {fixedSizeString(item.short_description, 30)}
+                </p>
                 <button
                   onClick={() => handle(item)}
                   className={`border-0 btn btn-danger ${styles.buttonAnimated} my-2`}

@@ -7,6 +7,8 @@ import TeamMemberService from "@/app/api/services/TeamMemberService";
 import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
 import TeamService from "@/app/api/services/TeamService";
 import Select from "react-select";
+import DeleteAlert from "../components/SweetAlert2";
+import axiosApi from "@/app/api/axios-common";
 
 export default function TeamMemberClient({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -23,7 +25,7 @@ export default function TeamMemberClient({ initialData }) {
 
   // State to store teamMember details
   const [teamMember, setTeamMember] = useState({
-    team: selectedOption,
+    team: selectedOption?.label,
     name: "",
     image: "",
     designation: "",
@@ -34,13 +36,19 @@ export default function TeamMemberClient({ initialData }) {
     setShowModal(true);
   };
   const handleEditShow = (teamMember) => {
+    setFile(null);
     setTeamMember(teamMember);
+    const filteredArray = options.filter(
+      (option) => option.label == teamMember?.team
+    );
+    if (filteredArray) setSelectedOption(filteredArray[0]);
     setShowEditModal(true);
   };
 
   const handleClose = () => setShowModal(false);
   const handleEditClose = () => setShowEditModal(false);
 
+  // add team member
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -51,6 +59,8 @@ export default function TeamMemberClient({ initialData }) {
     });
 
     if (file) formData.append("image", file);
+
+    formData.append("team", selectedOption?.label);
 
     TeamMemberService.create(formData)
       .then(({ data }) => {
@@ -72,12 +82,33 @@ export default function TeamMemberClient({ initialData }) {
   };
 
   const handleEditSubmit = () => {
-    TeamMemberService.update(teamMember["id"], teamMember)
+    const formData = new FormData();
+
+    Object.keys(teamMember).map((key) => {
+      if (key !== "image" && key != "team")
+        formData.append(key, teamMember[key]);
+    });
+
+    if (selectedOption) formData.append("team", selectedOption.label);
+
+    file
+      ? formData.append("image", file)
+      : formData.append("image", teamMember["image"]);
+
+    axiosApi
+      .post("team-member/update", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then(({ data }) => {
         console.log(data);
-        AlertService.success(`teamMember ${teamMember.name} has been updated!`);
         fetchData();
-        console.log("sister updated successful");
+        setFile(null);
+        setTeamMember(null);
+        AlertService.success(`teamMember ${teamMember.name} has been updated!`);
+
+        console.log("teamMember updated successful");
       })
       .catch((err) => {
         const response = err.response;
@@ -107,8 +138,6 @@ export default function TeamMemberClient({ initialData }) {
     TeamMemberService.remove(id)
       .then(({ res }) => {
         fetchData();
-        AlertService.success("teamMember Deleted successfully");
-        console.log("removed sister successful");
         router.push("/admin/team-members");
       })
       .catch((err) => {
@@ -210,7 +239,7 @@ export default function TeamMemberClient({ initialData }) {
                         className="form-control"
                         id="name"
                         name="name"
-                        value={teamMember.name}
+                        value={teamMember?.name}
                         onChange={handleInputChange}
                         required
                       />
@@ -244,7 +273,7 @@ export default function TeamMemberClient({ initialData }) {
                         className="form-control"
                         id="designation"
                         name="designation"
-                        value={teamMember.designation}
+                        value={teamMember?.designation}
                         onChange={handleInputChange}
                       />
                     </div>
@@ -257,7 +286,7 @@ export default function TeamMemberClient({ initialData }) {
                         type="file"
                         id="image"
                         name="image"
-                        value={teamMember.image}
+                        // value={teamMember?.image}
                         onChange={(event) => setFile(event.target.files[0])}
                       />
                     </div>
@@ -325,7 +354,7 @@ export default function TeamMemberClient({ initialData }) {
             <div className="modal-dialog" role="document" ref={modalEditRef}>
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title">Add New Sister</h5>
+                  <h5 className="modal-title">Update Member</h5>
                   <button
                     type="button"
                     className="btn-close"
@@ -336,20 +365,6 @@ export default function TeamMemberClient({ initialData }) {
                 <div className="modal-body">
                   <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                      <label htmlFor="team_id" className="form-label">
-                        Team Id
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="team_id"
-                        name="team_id"
-                        value={teamMember.team_id}
-                        onChange={handleEditInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="mb-3">
                       <label htmlFor="name" className="form-label">
                         Name
                       </label>
@@ -358,34 +373,55 @@ export default function TeamMemberClient({ initialData }) {
                         className="form-control"
                         id="name"
                         name="name"
-                        value={teamMember.name}
+                        value={teamMember?.name}
                         onChange={handleEditInputChange}
                         required
                       />
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="position" className="form-label">
-                        Position
+                      <label htmlFor="team" className="form-label">
+                        Team
+                      </label>
+                      <Select
+                        defaultValue={selectedOption}
+                        onChange={setSelectedOption}
+                        options={options}
+                      />
+                      {/* <input
+                        type="text"
+                        className="form-control"
+                        id="team"
+                        name="team"
+                        value={teamMember.team}
+                        onChange={handleInputChange}
+                        required
+                      /> */}
+                    </div>
+
+                    <div className="mb-3">
+                      <label htmlFor="designation" className="form-label">
+                        Designation
                       </label>
                       <input
                         className="form-control"
-                        id="position"
-                        name="position"
-                        value={teamMember.position}
+                        id="designation"
+                        name="designation"
+                        value={teamMember?.designation}
                         onChange={handleEditInputChange}
                       />
                     </div>
                     <div className="mb-3">
-                      <label htmlFor="description" className="form-label">
-                        Description
+                      <label htmlFor="image" className="form-label">
+                        Photo
                       </label>
                       <input
                         className="form-control"
-                        id="description"
-                        name="description"
-                        value={teamMember.description}
-                        onChange={handleEditInputChange}
+                        type="file"
+                        id="image"
+                        name="image"
+                        // value={teamMember?.image}
+                        onChange={(event) => setFile(event.target.files[0])}
                       />
                     </div>
                   </form>
@@ -460,12 +496,7 @@ export default function TeamMemberClient({ initialData }) {
                   >
                     <PencilIcon width="15px" height="15px" />
                   </button>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(teamMember.id)}
-                  >
-                    <TrashIcon width="15px" height="15px" />
-                  </button>
+                  <DeleteAlert onDelete={handleDelete} id={teamMember?.id} />
                 </td>
               </tr>
             ))}

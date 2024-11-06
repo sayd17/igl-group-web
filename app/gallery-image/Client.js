@@ -5,15 +5,25 @@ import Cookies from "js-cookie";
 import { XCircleIcon } from "@heroicons/react/solid";
 import styles from "./image.module.css";
 import allStyles from "../all.module.css";
+import { useStateContext } from "../context/contextProvider";
 import GalleryService from "../api/services/GalleryService";
 
 function GalleryImageClient() {
   // const { currentAlbum } = useGalleryContext();
   const [items, setItems] = useState([]);
+  const [coverImgUrl, setCoverImgUrl] = useState("");
+  const { coverImage } = useStateContext();
 
   const [image, setImage] = useState(null);
   const album = Cookies.get("album");
   const gallery = album ? JSON.parse(album) : [];
+
+  useEffect(() => {
+    const imageIrl = Object.values(coverImage).map((image) => {
+      console.log(image?.image);
+      if (image["page_name"] == "gallery") setCoverImgUrl(image?.image);
+    });
+  }, [coverImage]);
 
   useEffect(() => {
     const fetchData = () => {
@@ -37,7 +47,7 @@ function GalleryImageClient() {
     <div className={`${allStyles.backImage}`}>
       <div className={`content-wrapper ${allStyles.imageContainer}`}>
         <img
-          src="/assets/img/gallery.jpg"
+          src={coverImgUrl}
           alt="background image"
           width="1280"
           height="400"

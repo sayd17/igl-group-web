@@ -1,11 +1,14 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import CoverService from "../api/services/CoverService";
 
 const StateContext = createContext({
   currentUser: null,
   token: null,
+  coverImage: null,
+  setCoverImage: () => {},
   notification: null,
   setUser: () => {},
   currentSister: {},
@@ -21,6 +24,7 @@ export const ContextProvider = ({ children }) => {
   const [token, _setToken] = useState(Cookies.get("token"));
   const [currentSister, setCurrentSister] = useState(null);
   const [currentTeam, setCurrentTeam] = useState(null);
+  const [coverImage, setCoverImage] = useState([]);
   const [notification, _setNotification] = useState("");
 
   const setToken = () => {
@@ -41,6 +45,20 @@ export const ContextProvider = ({ children }) => {
     }, 5000);
   };
 
+  useEffect(() => {
+    CoverService.getAll()
+      .then(({ data }) => {
+        let obj = data?.data;
+        const customArray = Object.keys(obj).map((key) => obj[key]);
+        setCoverImage(customArray);
+      })
+      .catch((err) => {
+        console.log("gallery api error", err);
+      });
+  }, []);
+
+  console.log(coverImage);
+
   return (
     <StateContext.Provider
       value={{
@@ -54,6 +72,7 @@ export const ContextProvider = ({ children }) => {
         setToken,
         notification,
         setNotification,
+        coverImage,
       }}
     >
       {children}

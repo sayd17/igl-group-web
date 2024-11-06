@@ -8,6 +8,7 @@ import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
 import AlbumService from "@/app/api/services/AlbumService";
 import Select from "react-select";
 import axiosApi from "@/app/api/axios-common";
+import DeleteAlert from "../components/SweetAlert2";
 
 export default function Gallery({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -37,9 +38,12 @@ export default function Gallery({ initialData }) {
   const handleEditShow = (user) => {
     setUser(user);
     setFile(null);
+    console.log(user);
     const filteredArray = options.filter(
-      (option) => option.label == user.album
+      (option) => option.label == user?.album
     );
+    console.log(options);
+    console.log(filteredArray);
     if (filteredArray) setSelectedOption(filteredArray[0]);
     setShowEditModal(true);
   };
@@ -144,7 +148,6 @@ export default function Gallery({ initialData }) {
     GalleryService.remove(id)
       .then(({ res }) => {
         fetchData();
-        AlertService.success(`Image has been removed!`);
         console.log("removed Image successful");
         router.push("/admin/gallery");
       })
@@ -438,12 +441,7 @@ export default function Gallery({ initialData }) {
                   >
                     <PencilIcon width="15px" height="15px" />
                   </button>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(user.id)}
-                  >
-                    <TrashIcon width="15px" height="15px" />
-                  </button>
+                  <DeleteAlert onDelete={handleDelete} id={user?.id} />
                 </td>
               </tr>
             ))}

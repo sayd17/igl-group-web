@@ -10,6 +10,15 @@ import SistersConcernService from "@/app/api/services/SistersConcernService";
 export default function SistersConcernClient({ slug }) {
   const { currentSister } = useStateContext();
   const [items, setItems] = useState(null);
+  const [coverImgUrl, setCoverImgUrl] = useState("");
+  const { coverImage } = useStateContext();
+
+  useEffect(() => {
+    const imageIrl = Object.values(coverImage).map((image) => {
+      console.log(image?.image);
+      if (image["page_name"] == "sisters_concern") setCoverImgUrl(image?.image);
+    });
+  }, [coverImage]);
 
   useEffect(() => {
     SistersConcernService.getAll()
@@ -29,7 +38,7 @@ export default function SistersConcernClient({ slug }) {
     <>
       <div className={`content-wrapper ${allStyles.imageContainer}`}>
         <img
-          src="/assets/img/sisters_concern.jpg"
+          src={coverImgUrl}
           alt="background image"
           width="1280"
           height="400"
@@ -82,7 +91,7 @@ export default function SistersConcernClient({ slug }) {
               <a
                 // href="#"
                 href={items?.web_url}
-                // target="_blank"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-primary animate__animated animate__fadeInUp"
               >

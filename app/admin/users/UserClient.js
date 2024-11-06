@@ -10,6 +10,7 @@ import userSchema from "@/validations/UserValidation";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Select from "react-select";
+import DeleteAlert from "../components/SweetAlert2";
 
 export default function UserClient({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -122,7 +123,6 @@ export default function UserClient({ initialData }) {
     UserService.remove(id)
       .then(({ res }) => {
         fetchData();
-        AlertService.success("User Deleted successfully");
         console.log("removed sister successful");
         router.push("/admin/users");
       })
@@ -453,12 +453,7 @@ export default function UserClient({ initialData }) {
                   >
                     <PencilIcon width="15px" height="15px" />
                   </button>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(user.id)}
-                  >
-                    <TrashIcon width="15px" height="15px" />
-                  </button>
+                  <DeleteAlert onDelete={handleDelete} id={user?.id} />
                 </td>
               </tr>
             ))}

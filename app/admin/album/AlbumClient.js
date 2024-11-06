@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import AlertService from "@/app/api/services/AlertService";
 import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
 import { fixedSizeString } from "@/helpers/helpers";
+import DeleteAlert from "../components/SweetAlert2";
 
 export default function AlbumClient({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -125,7 +126,6 @@ export default function AlbumClient({ initialData }) {
     AlbumService.remove(id)
       .then(({ res }) => {
         fetchData();
-        AlertService.success(`Image has been removed!`);
         router.push("/admin/album");
       })
       .catch((err) => {
@@ -397,12 +397,7 @@ export default function AlbumClient({ initialData }) {
                   >
                     <PencilIcon width="15px" height="15px" />
                   </button>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(album.id)}
-                  >
-                    <TrashIcon width="15px" height="15px" />
-                  </button>
+                  <DeleteAlert onDelete={handleDelete} id={album?.id} />
                 </td>
               </tr>
             ))}

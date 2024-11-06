@@ -6,6 +6,7 @@ import AlertService from "@/app/api/services/AlertService";
 import TeamService from "@/app/api/services/TeamService";
 import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
 import { fixedSizeString } from "@/helpers/helpers";
+import DeleteAlert from "../components/SweetAlert2";
 
 export default function team({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -95,7 +96,6 @@ export default function team({ initialData }) {
     TeamService.remove(id)
       .then(({ res }) => {
         fetchData();
-        AlertService.success("team Deleted successfully");
         console.log("removed sister successful");
         router.push("/admin/teams");
       })
@@ -330,12 +330,7 @@ export default function team({ initialData }) {
                   >
                     <PencilIcon width="15px" height="15px" />
                   </button>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(team.id)}
-                  >
-                    <TrashIcon width="15px" height="15px" />
-                  </button>
+                  <DeleteAlert onDelete={handleDelete} id={team?.id} />
                 </td>
               </tr>
             ))}

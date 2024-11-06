@@ -21,6 +21,10 @@ export default async function Home() {
 
       <SistersConcern />
 
+      <div className={`${styles.sistersConcern} content-wrapper`}>
+        Our Partners
+      </div>
+
       <LogoSlider />
 
       <Footer />

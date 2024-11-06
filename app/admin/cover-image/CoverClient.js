@@ -7,6 +7,7 @@ import AlertService from "@/app/api/services/AlertService";
 import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
 import Select from "react-select";
 import axiosApi from "@/app/api/axios-common";
+import DeleteAlert from "../components/SweetAlert2";
 
 export default function CoverClient({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -158,7 +159,6 @@ export default function CoverClient({ initialData }) {
     CoverService.remove(id)
       .then(({ res }) => {
         fetchData();
-        AlertService.success(`Image has been removed!`);
         console.log("removed Image successful");
         router.push("/admin/cover-image");
       })
@@ -393,12 +393,7 @@ export default function CoverClient({ initialData }) {
                   >
                     <PencilIcon width="15px" height="15px" />
                   </button>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(user.id)}
-                  >
-                    <TrashIcon width="15px" height="15px" />
-                  </button>
+                  <DeleteAlert onDelete={handleDelete} id={user?.id} />
                 </td>
               </tr>
             ))}

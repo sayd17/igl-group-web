@@ -6,13 +6,17 @@ import { useGalleryContext } from "../context/galleryContext";
 import Cookies from "js-cookie";
 import AlbumService from "../api/services/AlbumService";
 import allStyles from "../all.module.css";
+import { useStateContext } from "../context/contextProvider";
+import { type } from "jquery";
 
 export default function GalleryClient() {
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [items, setItems] = useState([]);
+  const [coverImgUrl, setCoverImgUrl] = useState("");
   const { setCurrentAlbum, currentAlbum } = useGalleryContext();
+  const { coverImage } = useStateContext();
   const router = useRouter();
-
+  console.log(coverImage);
   const toggleAlbum = (albumName) => {
     if (selectedAlbum === albumName) {
       setSelectedAlbum(null);
@@ -28,6 +32,13 @@ export default function GalleryClient() {
     Cookies.set("album", serializedArray);
     router.push("/gallery-image");
   };
+
+  useEffect(() => {
+    const imageIrl = Object.values(coverImage).map((image) => {
+      console.log(image?.image);
+      if (image["page_name"] == "gallery") setCoverImgUrl(image?.image);
+    });
+  }, [coverImage]);
 
   useEffect(() => {
     const fetchData = () => {
@@ -48,7 +59,7 @@ export default function GalleryClient() {
     <div className="fixedHeight content-wrapper">
       <div className={` ${allStyles.imageContainer}`}>
         <img
-          src="/assets/img/gallery.jpg"
+          src={coverImgUrl}
           alt="background image"
           width="1280"
           height="400"

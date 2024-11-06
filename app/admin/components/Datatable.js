@@ -1,5 +1,6 @@
 import { fixedSizeString } from "@/helpers/helpers";
 import { TrashIcon, PencilIcon } from "@heroicons/react/solid";
+import DeleteAlert from "./SweetAlert2";
 
 const DataTable = ({ data, handleDelete, handleEditShow }) => {
   return (
@@ -57,12 +58,7 @@ const DataTable = ({ data, handleDelete, handleEditShow }) => {
                 >
                   <PencilIcon width="15px" height="15px" />
                 </button>
-                <button
-                  className="btn btn-sm btn-danger"
-                  onClick={() => handleDelete(user.id)}
-                >
-                  <TrashIcon width="15px" height="15px" />
-                </button>
+                <DeleteAlert onDelete={handleDelete} id={user?.id} />
               </td>
             </tr>
           ))}

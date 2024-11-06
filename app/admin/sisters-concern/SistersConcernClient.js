@@ -6,7 +6,6 @@ import Link from "next/link";
 import AlertService from "@/app/api/services/AlertService";
 import {
   UserAddIcon,
-  PencilIcon,
   PlusCircleIcon,
   XCircleIcon,
 } from "@heroicons/react/solid";
@@ -42,6 +41,7 @@ export default function SistersConcernClient({ initialData }) {
   } = useForm();
 
   const handleShow = () => {
+    reset();
     setUser(null);
     setShowModal(true);
   };
@@ -156,7 +156,6 @@ export default function SistersConcernClient({ initialData }) {
     SistersConcernService.remove(id)
       .then(({ res }) => {
         fetchData();
-        AlertService.success(`Sister has been removed!`);
         console.log("removed sister successful");
         router.push("/admin/sisters-concern");
       })
@@ -421,12 +420,12 @@ export default function SistersConcernClient({ initialData }) {
                         onChange={handleInputChange}
                         required
                       />
+                      {errors.long_description && (
+                        <span className={`${styles.errorMessage}`}>
+                          {errors.long_description.message}
+                        </span>
+                      )}
                     </div>
-                    {errors.long_description && (
-                      <span className={`${styles.errorMessage}`}>
-                        {errors.long_description.message}
-                      </span>
-                    )}
 
                     <div className="mb-3">
                       <label htmlFor="web_url" className="form-label">
@@ -452,12 +451,12 @@ export default function SistersConcernClient({ initialData }) {
                         onChange={handleInputChange}
                         required
                       />
+                      {errors.web_url && (
+                        <span className={`${styles.errorMessage}`}>
+                          {errors.web_url.message}
+                        </span>
+                      )}
                     </div>
-                    {errors.web_url && (
-                      <span className={`${styles.errorMessage}`}>
-                        {errors.web_url.message}
-                      </span>
-                    )}
                   </form>
                 </div>
                 <div className="modal-footer">
@@ -502,13 +501,23 @@ export default function SistersConcernClient({ initialData }) {
                   ></button>
                 </div>
                 <div className="modal-body">
-                  <form onSubmit={submitData}>
+                  <form onSubmit={handleSubmit(submitData)}>
                     <div className="mb-3">
                       <label htmlFor="name" className="form-label">
                         Name
                       </label>
                       <input
                         type="text"
+                        {...register("name", {
+                          required: {
+                            value: true,
+                            message: "Please enter your name",
+                          },
+                          maxLength: {
+                            value: 30,
+                            message: "Please use 30 characters or less",
+                          },
+                        })}
                         className="form-control"
                         id="name"
                         name="name"
@@ -516,6 +525,11 @@ export default function SistersConcernClient({ initialData }) {
                         onChange={handleEditInputChange}
                         required
                       />
+                      {errors.name && (
+                        <span className={`${styles.errorMessage}`}>
+                          {errors.name.message}
+                        </span>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -537,6 +551,16 @@ export default function SistersConcernClient({ initialData }) {
                       </label>
                       <input
                         type="short_description"
+                        {...register("short_description", {
+                          required: {
+                            value: true,
+                            message: "Please enter your description",
+                          },
+                          maxLength: {
+                            value: 100,
+                            message: "Please use 100 characters or less",
+                          },
+                        })}
                         className="form-control"
                         id="short_description"
                         name="short_description"
@@ -544,6 +568,11 @@ export default function SistersConcernClient({ initialData }) {
                         onChange={handleEditInputChange}
                         required
                       />
+                      {errors.short_description && (
+                        <span className={`${styles.errorMessage}`}>
+                          {errors.short_description.message}
+                        </span>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -552,6 +581,16 @@ export default function SistersConcernClient({ initialData }) {
                       </label>
                       <input
                         type="long_description"
+                        {...register("long_description", {
+                          required: {
+                            value: true,
+                            message: "Please enter your description",
+                          },
+                          maxLength: {
+                            value: 32535,
+                            message: "Please use 32535 characters or less",
+                          },
+                        })}
                         className="form-control"
                         id="long_description"
                         name="long_description"
@@ -559,6 +598,11 @@ export default function SistersConcernClient({ initialData }) {
                         onChange={handleEditInputChange}
                         required
                       />
+                      {errors.long_description && (
+                        <span className={`${styles.errorMessage}`}>
+                          {errors.long_description.message}
+                        </span>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -567,12 +611,28 @@ export default function SistersConcernClient({ initialData }) {
                       </label>
                       <input
                         type="url"
+                        {...register("web_url", {
+                          required: {
+                            value: true,
+                            message: "Please enter a URL",
+                          },
+                          pattern: {
+                            value:
+                              /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w-]*)*(\?.*)?$/,
+                            message: "Please enter a valid URL",
+                          },
+                        })}
                         className="form-control"
                         id="web_url"
                         name="web_url"
                         value={user.web_url}
                         onChange={handleEditInputChange}
                       />
+                      {errors.web_url && (
+                        <span className={`${styles.errorMessage}`}>
+                          {errors.web_url.message}
+                        </span>
+                      )}
                     </div>
                   </form>
                 </div>
@@ -585,7 +645,7 @@ export default function SistersConcernClient({ initialData }) {
                     Close
                   </button>
                   <button
-                    onClick={handleEditSubmit}
+                    onClick={handleSubmit(handleEditSubmit)}
                     type="button"
                     className="btn btn-primary"
                   >

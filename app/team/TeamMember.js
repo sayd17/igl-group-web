@@ -41,8 +41,8 @@ function TeamMember() {
               <img
                 src={member.image}
                 alt={member.name}
-                className="card-img-top img-fluid"
-                width={300}
+                className="card-img-top"
+                // width={300}
                 height={300}
               />
               <div className="card-body">
