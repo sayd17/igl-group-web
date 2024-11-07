@@ -4,4 +4,12 @@ const fixedSizeString = (str, length) => {
   return fixedString;
 };
 
-export { fixedSizeString };
+// get capitalized string
+const capitalizeWords = (str) => {
+  return str
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+};
+
+export { fixedSizeString, capitalizeWords };

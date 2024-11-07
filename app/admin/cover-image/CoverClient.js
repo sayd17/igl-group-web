@@ -8,6 +8,7 @@ import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
 import Select from "react-select";
 import axiosApi from "@/app/api/axios-common";
 import DeleteAlert from "../components/SweetAlert2";
+import { capitalizeWords } from "@/helpers/helpers";
 
 export default function CoverClient({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -16,23 +17,23 @@ export default function CoverClient({ initialData }) {
   const [options, setOptions] = useState([
     {
       value: "about_us",
-      label: "about_us",
+      label: "About Us",
     },
     {
       value: "sisters_concern",
-      label: "sisters_concern",
+      label: "Sisters Concern",
     },
     {
       value: "team",
-      label: "team",
+      label: "Team",
     },
     {
       value: "gallery",
-      label: "gallery",
+      label: "Gallery",
     },
     {
       value: "contact_us",
-      label: "contact_us",
+      label: "Contact Us",
     },
   ]);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -51,11 +52,13 @@ export default function CoverClient({ initialData }) {
 
   const handleShow = () => {
     setUser(null);
+    setError(null);
     setShowModal(true);
   };
 
   const handleEditShow = (user) => {
     setUser(user);
+    setError(null);
     setFile(null);
     const filteredArray = options.filter(
       (option) => option.label == user?.page_name
@@ -70,16 +73,21 @@ export default function CoverClient({ initialData }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (error) return;
+
     if (!file) {
       AlertService.error("Please select a file first!");
       return;
     }
+
     const formData = new FormData();
 
     if (selectedOption) formData.append("page_name", selectedOption.label);
 
     if (file) formData.append("image", file);
     if (selectedOption) formData.append("page_name", selectedOption.label);
+
+    let flag = 0;
 
     CoverService.post("/cover-image", formData, {
       headers: {
@@ -95,10 +103,17 @@ export default function CoverClient({ initialData }) {
       .catch((err) => {
         const response = err.response;
         if (response && response.status === 422) {
+          flag = 1;
+          AlertService.error(response.data.message);
+          console.log(response.data.message);
           setError(response.data.message);
         }
       });
 
+    if (flag) {
+      return;
+    }
+    setError(null);
     setShowModal(false);
 
     router.push("/admin/cover-image");
@@ -233,6 +248,7 @@ export default function CoverClient({ initialData }) {
                 </div>
                 <div className="modal-body">
                   <form onSubmit={handleSubmit}>
+                    <div className="red">{error}</div>
                     <div className="mb-3">
                       <label htmlFor="text" className="form-label">
                         Page Name
@@ -302,6 +318,7 @@ export default function CoverClient({ initialData }) {
                 </div>
                 <div className="modal-body">
                   <form onSubmit={handleSubmit}>
+                    <div className="red">{error}</div>
                     <div className="mb-3">
                       <label htmlFor="text" className="form-label">
                         Page Name
@@ -353,7 +370,7 @@ export default function CoverClient({ initialData }) {
       <div className="container table-rounded">
         <div className="row d-flex flex-row">
           <div className="col-6">
-            <h1 className="mb-4">Manage Cover image</h1>
+            <h1 className="mb-4">Manage Cover Image</h1>
           </div>
           <div className="col-6 pt-4 text-end">
             <button onClick={handleShow} className="btn btn-secondary">
@@ -376,7 +393,7 @@ export default function CoverClient({ initialData }) {
                 className={index % 2 === 0 ? "table-primary" : "table-success"}
               >
                 <td>{user.id}</td>
-                <td>{user.page_name}</td>
+                <td>{capitalizeWords(user.page_name)}</td>
                 <td>
                   <img
                     src={user.image}

@@ -6,6 +6,7 @@ import AlertService from "@/app/api/services/AlertService";
 import { TrashIcon, PencilIcon, UserAddIcon } from "@heroicons/react/solid";
 import { fixedSizeString } from "@/helpers/helpers";
 import DeleteAlert from "../components/SweetAlert2";
+import axiosApi from "@/app/api/axios-common";
 
 export default function AlbumClient({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -84,18 +85,27 @@ export default function AlbumClient({ initialData }) {
     const formData = new FormData();
 
     Object.keys(album).map((key) => {
-      formData.append(key, album[key]);
+      if (key !== "image") formData.append(key, album[key]);
     });
 
-    if (file) formData.append("image", file);
+    file
+      ? formData.append("image", file)
+      : formData.append("image", album?.image);
 
-    AlbumService.update(album["id"], formData)
+    axiosApi
+      .post("album/update", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then(({ data }) => {
         console.log(data);
         fetchData();
-        AlertService.success(`Image has been updated!`);
+        setFile(null);
+        setUser(null);
+        AlertService.success(`cover-image ${user?.name} has been updated!`);
 
-        console.log("Image updated successful");
+        console.log("cover-image updated successful");
       })
       .catch((err) => {
         const response = err.response;
@@ -103,6 +113,21 @@ export default function AlbumClient({ initialData }) {
           setError(response.data.message);
         }
       });
+
+    // AlbumService.update(album["id"], formData)
+    //   .then(({ data }) => {
+    //     console.log(data);
+    //     fetchData();
+    //     AlertService.success(`Image has been updated!`);
+
+    //     console.log("Image updated successful");
+    //   })
+    //   .catch((err) => {
+    //     const response = err.response;
+    //     if (response && response.status === 422) {
+    //       setError(response.data.message);
+    //     }
+    //   });
 
     setShowEditModal(false);
 
@@ -117,7 +142,6 @@ export default function AlbumClient({ initialData }) {
 
   // Handle input changes
   const handleEditInputChange = (e) => {
-    console.log(e.target.name);
     const { name, value } = e.target;
     setAlbum({ ...album, [name]: value });
   };
@@ -205,6 +229,7 @@ export default function AlbumClient({ initialData }) {
                       </label>
                       <input
                         type="text"
+                        maxLength={40}
                         className="form-control"
                         name="name"
                         value={album?.name}
@@ -217,7 +242,9 @@ export default function AlbumClient({ initialData }) {
                         Year
                       </label>
                       <input
-                        type="text"
+                        type="number"
+                        min="1900"
+                        max={new Date().getFullYear()}
                         className="form-control"
                         id="year"
                         name="year"
@@ -236,6 +263,7 @@ export default function AlbumClient({ initialData }) {
                         className="form-control "
                         id="image"
                         name="image"
+                        required
                         // value={album.image}
                         onChange={(event) => setFile(event.target.files[0])}
                       />
@@ -291,6 +319,7 @@ export default function AlbumClient({ initialData }) {
                       </label>
                       <input
                         type="text"
+                        maxLength={40}
                         className="form-control"
                         id="name"
                         name="name"
@@ -305,7 +334,9 @@ export default function AlbumClient({ initialData }) {
                         Year
                       </label>
                       <input
-                        type="text"
+                        type="number"
+                        min="1900"
+                        max={new Date().getFullYear()}
                         className="form-control"
                         id="year"
                         name="year"

@@ -178,6 +178,7 @@ export default function team({ initialData }) {
                       <input
                         type="text"
                         className="form-control"
+                        maxLength={40}
                         id="name"
                         name="name"
                         value={team?.name}
@@ -190,9 +191,10 @@ export default function team({ initialData }) {
                       <label htmlFor="message" className="form-label">
                         Message
                       </label>
-                      <input
+                      <textarea
                         className="form-control"
                         id="message"
+                        maxLength={100}
                         name="message"
                         value={team?.message}
                         onChange={handleInputChange}
@@ -250,6 +252,7 @@ export default function team({ initialData }) {
                       <input
                         type="text"
                         className="form-control"
+                        maxLength={40}
                         id="name"
                         name="name"
                         value={team.name}
@@ -262,8 +265,9 @@ export default function team({ initialData }) {
                       <label htmlFor="message" className="form-label">
                         Message
                       </label>
-                      <input
+                      <textarea
                         className="form-control"
+                        maxLength={100}
                         id="message"
                         name="message"
                         value={team.message}

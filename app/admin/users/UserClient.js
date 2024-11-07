@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Select from "react-select";
 import DeleteAlert from "../components/SweetAlert2";
+import { fixedSizeString } from "@/helpers/helpers";
 
 export default function UserClient({ initialData }) {
   const [data, setData] = useState(initialData);
@@ -25,8 +26,8 @@ export default function UserClient({ initialData }) {
   const [error, setError] = useState(null);
 
   const options = [
-    { value: true, label: "Active" },
-    { value: false, label: "Passive" },
+    { value: 1, label: "Active" },
+    { value: 0, label: "Passive" },
   ];
 
   const [user, setUser] = useState({
@@ -34,7 +35,7 @@ export default function UserClient({ initialData }) {
     phone: "",
     email: "",
     password: "",
-    is_active: selectedOption,
+    is_active: selectedOption?.value,
   });
 
   const _form = useForm({
@@ -44,38 +45,47 @@ export default function UserClient({ initialData }) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = _form;
 
   const handleShow = () => {
     setUser(null);
+    reset();
+    setSelectedOption(null);
     setError(null);
     setShowModal(true);
   };
   const handleEditShow = (user) => {
-    console.log(user);
     setUser(user);
+    const filteredArray = options.filter(
+      (option) => option.value == user?.is_active
+    );
+    if (filteredArray) setSelectedOption(filteredArray[0]);
     setShowEditModal(true);
   };
 
   const handleClose = () => setShowModal(false);
   const handleEditClose = () => setShowEditModal(false);
 
-  const onSubmit = (e) => {
-    let flag = null;
+  const onSubmit = () => {
+    const formData = new FormData();
 
-    UserService.create(user)
+    Object.keys(user).map((key) => {
+      if (key !== "is_active") formData.append(key, user[key]);
+    });
+
+    formData.append("is_active", selectedOption?.value);
+
+    UserService.create(formData)
       .then(({ data }) => {
-        console.log(data);
         AlertService.success("User created successfully");
         fetchData();
       })
       .catch((err) => {
-        flag = true;
         const response = err.response;
         if (response && response.status === 422) {
           setError(response.data.message);
-          flag = true;
         }
       });
 
@@ -86,6 +96,8 @@ export default function UserClient({ initialData }) {
   };
 
   const handleEditSubmit = () => {
+    if (selectedOption) user["is_active"] = selectedOption.value;
+
     UserService.update(user["id"], user)
       .then(({ data }) => {
         console.log(data);
@@ -206,6 +218,7 @@ export default function UserClient({ initialData }) {
                         type="text"
                         className="form-control"
                         id="name"
+                        maxLength={40}
                         name="name"
                         value={user?.name}
                         onChange={handleInputChange}
@@ -264,7 +277,7 @@ export default function UserClient({ initialData }) {
                         Password
                       </label>
                       <input
-                        type="is_active"
+                        type="password"
                         className="form-control"
                         id="password"
                         name="password"
@@ -326,6 +339,7 @@ export default function UserClient({ initialData }) {
                         type="text"
                         className="form-control"
                         id="name"
+                        maxLength={50}
                         name="name"
                         value={user.name}
                         onChange={handleEditInputChange}
@@ -339,11 +353,17 @@ export default function UserClient({ initialData }) {
                       </label>
                       <input
                         className="form-control"
+                        {...register("phone")}
                         id="phone"
                         name="phone"
                         value={user.phone}
                         onChange={handleEditInputChange}
                       />
+                      {errors?.phone && (
+                        <div className="text-danger">
+                          {errors.phone.message}{" "}
+                        </div>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -352,6 +372,7 @@ export default function UserClient({ initialData }) {
                       </label>
                       <input
                         type="email"
+                        {...register("email")}
                         className="form-control"
                         id="email"
                         name="email"
@@ -359,6 +380,11 @@ export default function UserClient({ initialData }) {
                         onChange={handleEditInputChange}
                         required
                       />
+                      {errors?.email && (
+                        <div className="text-danger">
+                          {errors.email.message}{" "}
+                        </div>
+                      )}
                     </div>
 
                     <div className="mb-3">
@@ -440,11 +466,11 @@ export default function UserClient({ initialData }) {
                 className={index % 2 === 0 ? "table-primary" : "table-success"}
               >
                 <td>{user.id}</td>
-                <td>{user.name}</td>
+                <td>{fixedSizeString(user.name, 15)}</td>
                 <td>{user.phone}</td>
                 <td>{user.email}</td>
-                <td></td>
-                <td>{user.is_active}</td>
+                <td>{user.password}</td>
+                <td>{user.is_active ? "Active" : "InActive"}</td>
 
                 <td>
                   <button
